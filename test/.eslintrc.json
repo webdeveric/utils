@@ -7,6 +7,9 @@
   "plugins": [
     "jest"
   ],
+  "globals": {
+    "BigInt": true
+  },
   "env": {
     "jest/globals": true
   },
