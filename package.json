@@ -1,0 +1,40 @@
+{
+  "name": "@webdeveric/utils",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Just another collection of utilities.",
+  "main": "./dist/index.js",
+  "exports": {
+    "./": "./dist/"
+  },
+  "scripts": {
+    "clean": "rimraf ./dist/",
+    "build": "npm run clean && babel ./src --out-dir ./dist",
+    "lint": "eslint ./*.js ./src/ ./test/ --ext .js --fix",
+    "test": "NODE_ENV=test jest",
+    "prepublishOnly": "npm run lint && npm test && npm run build"
+  },
+  "keywords": [
+    "utilities"
+  ],
+  "author": {
+    "email": "eric@webdeveric.com",
+    "name": "Eric King",
+    "url": "http://webdeveric.com/"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.3",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-private-methods": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "core-js": "^3.6.4",
+    "eslint": "^6.8.0",
+    "eslint-config-webdeveric": "^0.4.0",
+    "eslint-plugin-jest": "^23.6.0",
+    "jest": "^25.1.0",
+    "regenerator-runtime": "^0.13.3",
+    "rimraf": "^3.0.1"
+  }
+}
