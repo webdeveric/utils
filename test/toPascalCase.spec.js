@@ -1,4 +1,4 @@
-import toPascalCase from '../src/toPascalCase';
+import { toPascalCase } from '../src/toPascalCase';
 
 describe('toPascalCase()', () => {
   it('Removes non alphanumeric', () => {

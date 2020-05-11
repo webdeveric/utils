@@ -1,4 +1,4 @@
-export default function secToString( time )
+export function secToString( time )
 {
   const secTime = {
     century: 3.1556926 * Math.pow(10, 9),

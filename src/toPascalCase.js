@@ -1,4 +1,4 @@
-export default function toPascalCase(text, customWords)
+export function toPascalCase(text, customWords)
 {
   let words = String(text).match( /[A-Z][a-z']+|\d+|[a-z']+/g );
 

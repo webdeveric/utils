@@ -1,4 +1,4 @@
-import delay from '../src/delay';
+import { delay } from '../src/delay';
 
 describe('delay()', () => {
   beforeEach( () => {

@@ -112,7 +112,7 @@ function callUntil( fn, delay, controller )
  * @param  {Number}   timeout
  * @return {Promise}
  */
-export default function until( fn, delay = 10, timeout = null )
+export function until( fn, delay = 10, timeout = null )
 {
   if ( typeof fn !== 'function' ) {
     throw new Error('fn must be a function');

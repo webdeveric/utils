@@ -1,4 +1,4 @@
-import until from '../src/until';
+import { until } from '../src/until';
 
 describe('until()', () => {
   it('Waits until the callback is truthy', async () => {

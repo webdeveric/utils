@@ -1,4 +1,4 @@
-import secToString from '../src/secToString';
+import { secToString } from '../src/secToString';
 
 describe('secToString()', () => {
   it('Returns string representation of the number of seconds', async () => {
