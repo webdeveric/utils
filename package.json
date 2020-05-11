@@ -9,7 +9,8 @@
   },
   "scripts": {
     "clean": "rimraf ./dist/",
-    "build": "npm run clean && babel ./src --out-dir ./dist",
+    "prebuild": "npm run clean",
+    "build": "babel ./src --out-dir ./dist",
     "lint": "eslint ./*.js ./src/ ./test/ --ext .js --fix",
     "test": "NODE_ENV=test jest",
     "prepublishOnly": "npm run lint && npm test && npm run build"
@@ -25,16 +26,16 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.3",
+    "@babel/core": "^7.9.6",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-private-methods": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
-    "core-js": "^3.6.4",
-    "eslint": "^6.8.0",
+    "@babel/preset-env": "^7.9.6",
+    "core-js": "^3.6.5",
+    "eslint": "^7.0.0",
     "eslint-config-webdeveric": "^0.4.0",
-    "eslint-plugin-jest": "^23.6.0",
-    "jest": "^25.1.0",
-    "regenerator-runtime": "^0.13.3",
-    "rimraf": "^3.0.1"
+    "eslint-plugin-jest": "^23.10.0",
+    "jest": "^26.0.1",
+    "regenerator-runtime": "^0.13.5",
+    "rimraf": "^3.0.2"
   }
 }
