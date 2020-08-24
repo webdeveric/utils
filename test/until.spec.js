@@ -13,7 +13,7 @@ describe('until()', () => {
 
     const untilTrue = until(
       (resolve, reject, context) => {
-        if ( context.callCount >= callLimit ) {
+        if ( context.callCount === callLimit ) {
           resolve(true);
         }
       },
@@ -22,7 +22,7 @@ describe('until()', () => {
 
     await expect( untilTrue ).resolves.toBeTruthy();
 
-    expect( mockDelay.mock.calls.length ).toBe( callLimit );
+    expect( mockDelay.mock.calls ).toHaveLength( callLimit );
   });
 
   it('Callback checks an external variable', async () => {
