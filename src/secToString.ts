@@ -1,4 +1,4 @@
-export function secToString( time )
+export function secToString( time: number ) : string
 {
   const secTime = {
     century: 3.1556926 * Math.pow(10, 9),
@@ -19,9 +19,9 @@ export function secToString( time )
       continue;
     }
 
-    const currentValue = Math.floor( time / seconds );
+    const currentValue: number = Math.floor( time / seconds );
 
-    const suffix = currentValue === 1 ? units : `${units}s`;
+    const suffix: string = currentValue === 1 ? units : `${units}s`;
 
     str = `${str} ${currentValue} ${suffix}`;
 

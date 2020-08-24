@@ -1,11 +1,36 @@
 {
-  "extends": [
-    "webdeveric"
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
   ],
-  "parserOptions": {
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "modules": true
+  "extends": [
+    "webdeveric",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      {
+        "allowExpressions": true
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.js"
+      ],
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off"
+      }
     }
+  ],
+  "env": {
+    "browser": false,
+    "es6": true,
+    "mocha": true,
+    "node": true
   }
 }

@@ -1,12 +1,28 @@
 import { until } from '../src/until';
 
 describe('until()', () => {
-  it('Waits until the callback is truthy', async () => {
-    const mock = jest.fn( () => true );
-
-    const untilTrue = until( mock );
+  it('Waits until the callback resolves or rejects', async () => {
+    const untilTrue = until( resolve => resolve(true) );
 
     await expect( untilTrue ).resolves.toBeTruthy();
+  });
+
+  it('delay can be a callback that accepts a context', async () => {
+    const mockDelay = jest.fn( context => context.callCount );
+    const callLimit = 2;
+
+    const untilTrue = until(
+      (resolve, reject, context) => {
+        if ( context.callCount >= callLimit ) {
+          resolve(true);
+        }
+      },
+      mockDelay,
+    );
+
+    await expect( untilTrue ).resolves.toBeTruthy();
+
+    expect( mockDelay.mock.calls.length ).toBe( callLimit );
   });
 
   it('Callback checks an external variable', async () => {
@@ -16,11 +32,11 @@ describe('until()', () => {
       doSomething = true;
     }, 3 );
 
-    await expect( until( ({ resolve }) => {
+    await expect( until( resolve => {
       if ( doSomething ) {
         resolve( true );
       }
-    }, 1 ) ).resolves.toBeTruthy();
+    }, 1, 10 ) ).resolves.toBeTruthy();
   });
 
   it('Waits for some time to pass', async () => {
@@ -32,9 +48,9 @@ describe('until()', () => {
 
     const someTimeHasPassed = msFromNow( 5 );
 
-    const callback = controller => {
+    const callback = resolve => {
       if ( someTimeHasPassed() ) {
-        controller.resolve(2);
+        resolve(2);
       }
     };
 
@@ -46,6 +62,8 @@ describe('until()', () => {
   });
 
   describe('Invalid arguments throw an error', () => {
+    const cb = resolve => resolve(true);
+
     it('fn must be a function', () => {
       expect(() => {
         until('not a function');
@@ -54,27 +72,36 @@ describe('until()', () => {
 
     it('delay must be a function or a number', () => {
       expect( () => {
-        until( () => true, 1 );
-        until( () => true, () => 1 );
+        until( cb, 1 );
+        until( cb, () => 1 );
       }).not.toThrow();
 
       expect( () => {
-        until( () => true, false );
-        until( () => true, 'not a number' );
+        until( cb, false );
+      }).toThrow();
+
+      expect( () => {
+        until( cb, 'not a number' );
       }).toThrow();
     });
 
-    it('timeout must be null, function, or number', () => {
+    it('timeout must be undefined, function, or number', () => {
       expect( () => {
-        until( () => true, 1, null );
-        until( () => true, 1, undefined );
-        until( () => true, 1, 10 );
-        until( () => true, 1, () => 10 );
+        until( cb, 1, undefined );
+        until( cb, 1, 10 );
+        until( cb, 1, () => 10 );
       }).not.toThrow();
 
       expect( () => {
-        until( () => true, 1, false );
-        until( () => true, 1, 'not a number' );
+        until( cb, 1, null );
+      }).toThrow();
+
+      expect( () => {
+        until( cb, 1, false );
+      }).toThrow();
+
+      expect( () => {
+        until( cb, 1, 'not a number' );
       }).toThrow();
     });
   });
