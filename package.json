@@ -30,6 +30,11 @@
       "import": "./dist-mjs/"
     }
   },
+  "files": [
+    "dist",
+    "dist-mjs",
+    "src"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/webdeveric/utils.git"
@@ -46,7 +51,7 @@
     "build:babel": "babel --extensions '.ts' ./src --out-dir ./dist-babel",
     "build": "npm run build:cjs && npm run build:mjs",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint ./*.{js,cjs,mjs} ./src/ --ext .ts --fix",
+    "lint": "eslint ./*.js ./src/ --ext .ts --fix",
     "test": "NODE_ENV=test jest",
     "spellcheck": "cspell \"./{.github,src,test}/**/*.{js,json}\" \"./*.{md,js}\" \"./package.json\"",
     "prepublishOnly": "npm run spellcheck && npm run lint && npm test && npm run build"
