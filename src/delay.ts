@@ -1,4 +1,4 @@
-export function delay(ms: number, value: unknown) : Promise<typeof value>
+export function delay<T = undefined>(ms: number, value?: T) : Promise<T>
 {
   if ( ! Number.isInteger( ms ) ) {
     throw new Error('delay ms must be an integer');
