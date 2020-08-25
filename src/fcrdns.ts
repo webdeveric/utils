@@ -1,9 +1,9 @@
 import { promises as dns } from 'dns';
-import net from 'net';
+import { isIP } from 'net';
 
 export async function hostnameResolvesToIp( hostname: string, ip: string ) : Promise<boolean>
 {
-  const ipVersion = net.isIP( ip );
+  const ipVersion = isIP( ip );
 
   if ( ! ipVersion ) {
     throw new Error(`Invalid IP: ${ip}`);
