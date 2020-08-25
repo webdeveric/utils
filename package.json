@@ -1,8 +1,22 @@
 {
   "name": "@webdeveric/utils",
-  "version": "0.0.0",
-  "private": true,
   "description": "Just another collection of utilities.",
+  "version": "0.0.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "keywords": [
+    "utilities",
+    "delay",
+    "fcrdns",
+    "PascalCase"
+  ],
+  "author": {
+    "email": "eric@webdeveric.com",
+    "name": "Eric King",
+    "url": "http://webdeveric.com/"
+  },
   "type": "commonjs",
   "main": "./dist/index.js",
   "exports": {
@@ -15,6 +29,14 @@
       "import": "./dist-mjs/"
     }
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webdeveric/utils.git"
+  },
+  "bugs": {
+    "url": "https://github.com/webdeveric/utils/issues"
+  },
+  "homepage": "https://github.com/webdeveric/utils/#readme",
   "scripts": {
     "clean": "rimraf ./dist/ ./dist-*",
     "prebuild": "npm run clean",
@@ -28,15 +50,6 @@
     "spellcheck": "cspell \"./{.github,src,test}/**/*.{js,json}\" \"./*.{md,js}\" \"./package.json\"",
     "prepublishOnly": "npm run spellcheck && npm run lint && npm test && npm run build"
   },
-  "keywords": [
-    "utilities"
-  ],
-  "author": {
-    "email": "eric@webdeveric.com",
-    "name": "Eric King",
-    "url": "http://webdeveric.com/"
-  },
-  "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.4",
