@@ -1,9 +1,10 @@
 type Context = {
   callCount: number;
   lastCall?: number;
+  data?: Record<string, unknown>;
 };
 
-type DelayFn = (context?: Context) => number;
+type DelayFn = (context?: Readonly<Context>) => number;
 
 type Delay = DelayFn | number;
 
@@ -11,7 +12,7 @@ type ResolveFn<T> = (value?: T) => void;
 
 type RejectFn = (error?: Error) => void;
 
-type UntilCallback<T> = (resolve: ResolveFn<T>, reject: RejectFn, context: Context) => void;
+type UntilCallback<T> = (resolve: ResolveFn<T>, reject: RejectFn, context: Readonly<Context>) => void;
 
 function looksLikeDelay( delay: unknown ) : delay is Delay
 {
@@ -65,13 +66,22 @@ export function until<T>( fn: UntilCallback<T>, delay: Delay = 10, timeout?: num
       finish();
     };
 
+    const context: Readonly<Context> = Object.freeze({
+      get callCount() {
+        return callCount;
+      },
+      get lastCall() {
+        return lastCall;
+      },
+      data: {},
+    });
+
     const callUntilDone = ( fn: UntilCallback<T>, delay: Delay, resolve: ResolveFn<T>, reject: RejectFn ) : void => {
       try {
-        const context: Context = Object.freeze({ callCount, lastCall });
+        ++callCount;
 
         fn( resolve, reject, context );
 
-        ++callCount;
         lastCall = Date.now();
 
         if ( ! done ) {

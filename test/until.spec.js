@@ -22,7 +22,7 @@ describe('until()', () => {
 
     await expect( untilTrue ).resolves.toBeTruthy();
 
-    expect( mockDelay.mock.calls ).toHaveLength( callLimit );
+    expect( mockDelay.mock.calls ).toHaveLength( callLimit - 1 );
   });
 
   it('Callback checks an external variable', async () => {
@@ -59,6 +59,12 @@ describe('until()', () => {
 
   it('Can timeout', async () => {
     await expect( until( () => {}, 1, 1 ) ).rejects.toBeInstanceOf(Error);
+  });
+
+  it('fn that throws will cause a rejection', async () => {
+    await expect( until( () => {
+      throw new Error('rejected');
+    }, 1, 1 ) ).rejects.toBeInstanceOf(Error);
   });
 
   describe('Invalid arguments throw an error', () => {
@@ -106,9 +112,32 @@ describe('until()', () => {
     });
   });
 
-  it('fn that throws will cause a rejection', async () => {
-    await expect( until( () => {
-      throw new Error('rejected');
-    }, 1, 1 ) ).rejects.toBeInstanceOf(Error);
-  });
+  describe('context', () => {
+    it('Keeps track of how many times the callback was called', async () => {
+      const context = await until( (resolve, reject, context) => {
+        if ( context.callCount === 2 ) {
+          resolve(context);
+        }
+      }, 0, 10 );
+
+      expect( context.callCount ).toBe(2);
+    });
+
+    it('Keeps track of the last time the callback was called', async () => {
+      const context = await until( (resolve, reject, context) => {
+        resolve(context);
+      }, 0, 10 );
+
+      expect( typeof context.lastCall ).toBe('number');
+    });
+
+    it('Keeps track of arbitrary data', async () => {
+      const context = await until( (resolve, reject, context) => {
+        context.data.demo = true;
+        resolve(context);
+      }, 0, 10 );
+
+      expect( context.data.demo ).toBeTruthy();
+    });
+  })
 });

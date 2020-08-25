@@ -1,5 +1,5 @@
-export { delay } from './delay';
-export { secToString } from './secToString';
-export { toPascalCase } from './toPascalCase';
-export { until } from './until';
-export { fcrdns } from './fcrdns';
+export { delay } from './delay.js';
+export { secToString } from './secToString.js';
+export { toPascalCase } from './toPascalCase.js';
+export { until } from './until.js';
+export { fcrdns } from './fcrdns.js';
