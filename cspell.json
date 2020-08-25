@@ -1,0 +1,13 @@
+{
+  "version": "0.1",
+  "language": "en",
+  "words": [
+    "corejs",
+    "fcrdns",
+    "prebuild",
+    "tslib",
+    "typecheck",
+    "webdeveric"
+  ],
+  "flagWords": []
+}

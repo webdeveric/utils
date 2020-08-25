@@ -5,7 +5,7 @@ describe('delay()', () => {
     jest.useFakeTimers();
   });
 
-  it('Delays by some number of miliseconds', async () => {
+  it('Delays by some number of milliseconds', async () => {
     const tenSecondDelay = delay(10000);
 
     jest.runOnlyPendingTimers();

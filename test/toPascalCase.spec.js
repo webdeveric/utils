@@ -29,6 +29,7 @@ describe('toPascalCase()', () => {
   });
 
   it('Handles apostrophe', () => {
+    /* cspell:disable-next-line */
     expect(toPascalCase('Didn\'t can\'t isn\'t would\'ve')).toBe('DidntCantIsntWouldve');
   });
 

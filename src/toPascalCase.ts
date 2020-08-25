@@ -7,7 +7,7 @@ export function toPascalCase(text: string, customWords?: Record<string, string>)
   }
 
   // Uppercase the first letter of each word and replace apostrophe.
-  words = words.map( w =>  w[0].toUpperCase() + w.substring(1).replace('\'', '') );
+  words = words.map( w =>  w[ 0 ].toUpperCase() + w.substring(1).replace('\'', '') );
 
   if ( customWords && Object.prototype.toString.call( customWords ) === '[object Object]' ) {
     const replacements = Object.entries( customWords ).map(([ key, value ]) => [
