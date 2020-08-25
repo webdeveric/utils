@@ -7,6 +7,7 @@
     "sourceMap": true,
     "outDir": "./dist",
     "importHelpers": true,
+    "isolatedModules": true,
     "strict": true,
     "alwaysStrict": true,
     "noUnusedLocals": true,
