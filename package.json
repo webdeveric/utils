@@ -18,21 +18,20 @@
     "url": "http://webdeveric.com/"
   },
   "type": "commonjs",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "types": "./dist/cjs/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/index.js",
-      "import": "./dist-mjs/index.js"
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/mjs/index.js"
     },
     "./": {
-      "require": "./dist/",
-      "import": "./dist-mjs/"
+      "require": "./dist/cjs/",
+      "import": "./dist/mjs/"
     }
   },
   "files": [
     "dist",
-    "dist-mjs",
     "src"
   ],
   "repository": {
@@ -44,10 +43,10 @@
   },
   "homepage": "https://github.com/webdeveric/utils/#readme",
   "scripts": {
-    "clean": "rimraf ./dist/ ./dist-*",
+    "clean": "rimraf ./dist/",
     "prebuild": "npm run clean",
-    "build:cjs": "tsc -p ./tsconfig.json && echo '{\"type\":\"commonjs\"}' > ./dist/package.json",
-    "build:mjs": "tsc -p ./tsconfig.mjs.json && echo '{\"type\":\"module\"}' > ./dist-mjs/package.json",
+    "build:cjs": "tsc -p ./tsconfig.json && echo '{\"type\":\"commonjs\"}' > ./dist/cjs/package.json",
+    "build:mjs": "tsc -p ./tsconfig.mjs.json && echo '{\"type\":\"module\"}' > ./dist/mjs/package.json",
     "build:babel": "babel --extensions '.ts' ./src --out-dir ./dist-babel",
     "build": "npm run build:cjs && npm run build:mjs",
     "typecheck": "tsc --noEmit",
@@ -57,24 +56,24 @@
     "prepublishOnly": "npm run spellcheck && npm run lint && npm test && npm run build"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.11.4",
-    "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/plugin-proposal-private-methods": "^7.10.4",
-    "@babel/preset-env": "^7.11.0",
-    "@babel/preset-typescript": "^7.10.4",
-    "@types/node": "^14.6.0",
-    "@typescript-eslint/eslint-plugin": "^3.10.1",
-    "@typescript-eslint/parser": "^3.10.1",
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-proposal-private-methods": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-typescript": "^7.12.1",
+    "@types/node": "^14.14.6",
+    "@typescript-eslint/eslint-plugin": "^4.6.1",
+    "@typescript-eslint/parser": "^4.6.1",
     "core-js": "^3.6.5",
-    "cspell": "^4.1.0",
-    "eslint": "^7.7.0",
+    "cspell": "^4.1.3",
+    "eslint": "^7.12.1",
     "eslint-config-webdeveric": "^0.7.0",
-    "eslint-plugin-jest": "^23.20.0",
-    "jest": "^26.4.2",
+    "eslint-plugin-jest": "^24.1.0",
+    "jest": "^26.6.3",
     "regenerator-runtime": "^0.13.7",
     "rimraf": "^3.0.2",
     "ts-node": "^9.0.0",
-    "typescript": "^4.0.2"
+    "typescript": "^4.0.5"
   }
 }
