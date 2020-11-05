@@ -4,6 +4,7 @@
   "words": [
     "corejs",
     "fcrdns",
+    "hostnames",
     "prebuild",
     "tslib",
     "typecheck",
