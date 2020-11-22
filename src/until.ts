@@ -8,7 +8,9 @@ type DelayFn = (context?: Readonly<Context>) => number;
 
 type Delay = DelayFn | number;
 
-type ResolveFn<T> = (value?: T) => void;
+type ResolverValue<T> = T | PromiseLike<T>;
+
+type ResolveFn<T> = (value: ResolverValue<T>) => void;
 
 type RejectFn = (error?: Error) => void;
 
@@ -19,7 +21,7 @@ function looksLikeDelay( delay: unknown ) : delay is Delay
   return Number.isInteger( delay ) || typeof delay === 'function';
 }
 
-function getDelay( delay: Delay, context?: Context ) : number
+function getDelay( delay: Delay, context: Context ) : number
 {
   return typeof delay === 'function' ? delay( context ) : delay;
 }
@@ -27,7 +29,7 @@ function getDelay( delay: Delay, context?: Context ) : number
 /**
  * Return a Promise that delegates resolving/rejecting to the passed in function.
  */
-export function until<T>( fn: UntilCallback<T>, delay: Delay = 10, timeout?: number ) : Promise<T>
+export function until<T>( fn: UntilCallback<T>, delay: Delay = 10, timeout?: Delay ) : Promise<T>
 {
   if ( typeof fn !== 'function' ) {
     throw new Error('fn must be a function');
@@ -56,7 +58,7 @@ export function until<T>( fn: UntilCallback<T>, delay: Delay = 10, timeout?: num
       clearTimeout( timeoutTimer );
     };
 
-    const resolve: ResolveFn<T> = (value?: T) : void => {
+    const resolve: ResolveFn<T> = (value: ResolverValue<T>) : void => {
       resolutionFn( value );
       finish();
     };
@@ -99,7 +101,7 @@ export function until<T>( fn: UntilCallback<T>, delay: Delay = 10, timeout?: num
         () => {
           reject( new Error('until: timed out') );
         },
-        getDelay( timeout ),
+        getDelay( timeout, context ),
       );
     }
   });

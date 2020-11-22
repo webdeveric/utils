@@ -8,7 +8,7 @@ describe('until()', () => {
   });
 
   it('delay can be a callback that accepts a context', async () => {
-    const mockDelay = jest.fn( context => context.callCount );
+    const mockFn = jest.fn( context => context.callCount );
     const callLimit = 2;
 
     const untilTrue = until(
@@ -17,12 +17,26 @@ describe('until()', () => {
           resolve(true);
         }
       },
-      mockDelay,
+      mockFn,
     );
 
     await expect( untilTrue ).resolves.toBeTruthy();
 
-    expect( mockDelay.mock.calls ).toHaveLength( callLimit - 1 );
+    expect( mockFn.mock.calls[ 0 ] ).toHaveLength(1);
+
+    expect( mockFn ).toHaveBeenCalledTimes( callLimit - 1 );
+  });
+
+  it('timeout can be a callback that accepts a context', async () => {
+    const mockFn = jest.fn( context => context.callCount );
+
+    const willTimeout = until( () => {}, 1000, mockFn );
+
+    await expect( willTimeout ).rejects.toBeInstanceOf(Error);
+
+    expect( mockFn.mock.calls[ 0 ] ).toHaveLength(1);
+
+    expect( mockFn ).toHaveBeenCalledTimes( 1 );
   });
 
   it('Callback checks an external variable', async () => {
