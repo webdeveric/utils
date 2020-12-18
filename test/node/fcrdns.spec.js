@@ -1,4 +1,4 @@
-import { hostnameResolvesToIp, fcrdns } from '../src/fcrdns';
+import { hostnameResolvesToIp, fcrdns } from '../../src/node/fcrdns';
 
 jest.mock('dns', () => {
   return {
