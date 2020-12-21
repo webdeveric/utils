@@ -1,12 +1,22 @@
-type Context = {
+interface Context {
   callCount: number;
   lastCall?: number;
   data?: Record<string, unknown>;
-};
+}
 
 type DelayFn = (context?: Readonly<Context>) => number;
 
 type Delay = DelayFn | number;
+
+type Options = {
+  delay: Delay;
+  timeout?: Delay;
+  callLimit?: number;
+};
+
+interface Context {
+  options: Options;
+}
 
 type ResolverValue<T> = T | PromiseLike<T>;
 
@@ -26,14 +36,24 @@ function getDelay( delay: Delay, context: Context ) : number
   return typeof delay === 'function' ? delay( context ) : delay;
 }
 
+const defaultOptions: Options = {
+  delay: 10,
+};
+
 /**
  * Return a Promise that delegates resolving/rejecting to the passed in function.
  */
-export function until<T>( fn: UntilCallback<T>, delay: Delay = 10, timeout?: Delay ) : Promise<T>
+export function until<T>( fn: UntilCallback<T>, options: Options = defaultOptions ) : Promise<T>
 {
   if ( typeof fn !== 'function' ) {
     throw new Error('fn must be a function');
   }
+
+  if ( ! options || typeof options !== 'object' ) {
+    throw new Error(`invalid options: ${JSON.stringify(options)}`);
+  }
+
+  const { delay, timeout, callLimit } = Object.assign({}, defaultOptions, options);
 
   if ( ! looksLikeDelay( delay ) ) {
     throw new Error('invalid delay value');
@@ -41,6 +61,10 @@ export function until<T>( fn: UntilCallback<T>, delay: Delay = 10, timeout?: Del
 
   if ( timeout !== undefined && ! looksLikeDelay( timeout ) ) {
     throw new Error('invalid timeout value');
+  }
+
+  if ( callLimit !== undefined && ! Number.isInteger( callLimit ) ) {
+    throw new Error('invalid callLimit value');
   }
 
   return new Promise<T>( ( resolutionFn: ResolveFn<T>, rejectionFn: RejectFn ) => {
@@ -75,11 +99,18 @@ export function until<T>( fn: UntilCallback<T>, delay: Delay = 10, timeout?: Del
       get lastCall() {
         return lastCall;
       },
+      get options() {
+        return options;
+      },
       data: {},
     });
 
     const callUntilDone = ( fn: UntilCallback<T>, delay: Delay, resolve: ResolveFn<T>, reject: RejectFn ) : void => {
       try {
+        if ( callLimit && callCount >= callLimit ) {
+          throw new Error(`until callLimit reached: ${callLimit}`);
+        }
+
         ++callCount;
 
         fn( resolve, reject, context );
