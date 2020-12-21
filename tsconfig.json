@@ -4,6 +4,7 @@
     "module": "commonjs",
     "declaration": true,
     "declarationMap": true,
+    "declarationDir": "./dist/types",
     "sourceMap": true,
     "outDir": "./dist/cjs",
     "isolatedModules": true,

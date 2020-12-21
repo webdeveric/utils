@@ -19,7 +19,7 @@
   },
   "type": "commonjs",
   "main": "./dist/cjs/index.js",
-  "types": "./dist/cjs/index.d.ts",
+  "types": "./dist/types/index.d.ts",
   "engines": {
     "node": ">=14.13.0"
   },
@@ -31,8 +31,7 @@
     "./*": {
       "require": "./dist/cjs/*",
       "import": "./dist/mjs/*"
-    },
-    "./src/*": "./src/*"
+    }
   },
   "files": [
     "dist",
