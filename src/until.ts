@@ -1,10 +1,11 @@
-interface Context {
+export interface UntilContext {
   callCount: number;
   lastCall?: number;
-  data?: Record<string, unknown>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: Record<string, any>;
 }
 
-type DelayFn = (context?: Readonly<Context>) => number;
+type DelayFn = (context: Readonly<UntilContext>) => number;
 
 type Delay = DelayFn | number;
 
@@ -14,7 +15,7 @@ type Options = {
   callLimit?: number;
 };
 
-interface Context {
+export interface UntilContext {
   options: Options;
 }
 
@@ -24,14 +25,14 @@ type ResolveFn<T> = (value: ResolverValue<T>) => void;
 
 type RejectFn = (error?: Error) => void;
 
-type UntilCallback<T> = (resolve: ResolveFn<T>, reject: RejectFn, context: Readonly<Context>) => void;
+type UntilCallback<T> = (resolve: ResolveFn<T>, reject: RejectFn, context: Readonly<UntilContext>) => void;
 
 function looksLikeDelay( delay: unknown ) : delay is Delay
 {
   return Number.isInteger( delay ) || typeof delay === 'function';
 }
 
-function getDelay( delay: Delay, context: Context ) : number
+function getDelay( delay: Delay, context: UntilContext ) : number
 {
   return typeof delay === 'function' ? delay( context ) : delay;
 }
@@ -92,7 +93,7 @@ export function until<T>( fn: UntilCallback<T>, options: Options = defaultOption
       finish();
     };
 
-    const context: Readonly<Context> = Object.freeze({
+    const context: Readonly<UntilContext> = Object.freeze({
       get callCount() {
         return callCount;
       },
