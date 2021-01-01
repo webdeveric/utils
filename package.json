@@ -58,6 +58,7 @@
     "spellcheck": "cspell \"./{.github,src,test}/**/*.{js,json}\" \"./*.{md,js}\" \"./package.json\"",
     "prepublishOnly": "npm run spellcheck && npm run lint && npm test && npm run build"
   },
+  "dependencies": {},
   "devDependencies": {
     "@babel/cli": "^7.12.7",
     "@babel/core": "^7.12.7",
