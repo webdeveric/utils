@@ -59,15 +59,15 @@
     "prepublishOnly": "npm run spellcheck && npm run lint && npm test && npm run build"
   },
   "devDependencies": {
-    "@babel/cli": "^7.13.10",
-    "@babel/core": "^7.13.13",
+    "@babel/cli": "^7.13.14",
+    "@babel/core": "^7.13.14",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/plugin-proposal-private-methods": "^7.13.0",
     "@babel/preset-env": "^7.13.12",
     "@babel/preset-typescript": "^7.13.0",
     "@types/node": "^14.14.37",
     "@webdeveric/eslint-config-ts": "^0.1.1",
-    "core-js": "^3.9.1",
+    "core-js": "^3.10.0",
     "cspell": "^5.3.9",
     "eslint": "^7.23.0",
     "eslint-plugin-jest": "^24.3.2",
