@@ -1,15 +1,16 @@
 {
-  "version": "0.1",
-  "language": "en",
-  "words": [
-    "corejs",
-    "fcrdns",
-    "hostnames",
-    "prebuild",
-    "tslib",
-    "twasn't",
-    "typecheck",
-    "webdeveric"
-  ],
-  "flagWords": []
+    "version": "0.1",
+    "language": "en",
+    "words": [
+        "corejs",
+        "escaperegexp",
+        "fcrdns",
+        "hostnames",
+        "prebuild",
+        "tslib",
+        "twasn't",
+        "typecheck",
+        "webdeveric"
+    ],
+    "flagWords": []
 }
