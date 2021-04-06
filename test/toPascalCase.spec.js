@@ -31,6 +31,8 @@ describe('toPascalCase()', () => {
   it('Handles apostrophe', () => {
     /* cspell:disable-next-line */
     expect(toPascalCase('Didn\'t can\'t isn\'t would\'ve')).toBe('DidntCantIsntWouldve');
+    // cSpell:ignore TwasntShouldntve
+    expect(toPascalCase("'twasn't shouldn't've")).toBe('TwasntShouldntve');
   });
 
   it('Supports custom word mapping', () => {
