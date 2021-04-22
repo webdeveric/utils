@@ -36,8 +36,8 @@ export async function fcrdns( hostname: string, ip: string ) : Promise<boolean>
   // This is an array of booleans.
   const results: boolean[] = await Promise.all(
     hostnames.map(
-      name => hostnameResolvesToIp( name, ip )
-    )
+      name => hostnameResolvesToIp( name, ip ),
+    ),
   );
 
   return results.some( val => val );
