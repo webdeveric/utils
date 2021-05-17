@@ -1,4 +1,5 @@
 export * from './asArray.js';
+export * from './compose.js';
 export * from './delay.js';
 export * from './joinStrings.js';
 export * from './secToString.js';
