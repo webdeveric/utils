@@ -1,3 +1,6 @@
+/**
+ * @jest-environment node
+ */
 import { hostnameResolvesToIp, fcrdns } from '../../src/node/fcrdns';
 
 jest.mock('dns', () => {
