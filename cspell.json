@@ -7,6 +7,7 @@
         "escaperegexp",
         "fcrdns",
         "hostnames",
+        "postbuild",
         "prebuild",
         "tslib",
         "twasn't",

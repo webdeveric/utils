@@ -48,8 +48,10 @@
   "scripts": {
     "clean": "rimraf ./dist/",
     "prebuild": "npm run clean",
-    "build:cjs": "tsc -p ./tsconfig.json && echo '{\"type\":\"commonjs\"}' > ./dist/cjs/package.json",
-    "build:mjs": "tsc -p ./tsconfig.mjs.json && echo '{\"type\":\"module\"}' > ./dist/mjs/package.json",
+    "build:cjs": "tsc -p ./tsconfig.json",
+    "build:mjs": "tsc -p ./tsconfig.mjs.json",
+    "postbuild:cjs": "echo '{\"type\":\"commonjs\"}' > ./dist/cjs/package.json",
+    "postbuild:mjs": "echo '{\"type\":\"module\"}' > ./dist/mjs/package.json",
     "build:babel": "babel --extensions '.ts' ./src --out-dir ./dist-babel",
     "build": "npm run build:cjs && npm run build:mjs",
     "typecheck": "tsc --noEmit",
