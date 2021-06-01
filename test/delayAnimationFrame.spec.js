@@ -2,7 +2,7 @@ import { delayAnimationFrame, delayAnimationFrames } from '../src/delayAnimation
 
 describe('delay animation frames', () => {
   beforeEach(() => {
-    jest.spyOn(window, 'requestAnimationFrame').mockImplementation(cb => setImmediate(cb));
+    jest.spyOn(window, 'requestAnimationFrame').mockImplementation(cb => setTimeout(cb, 0));
   });
 
   afterEach(() => {
@@ -24,16 +24,18 @@ describe('delay animation frames', () => {
   });
 
   describe('delayAnimationFrames()', () => {
-    it('Delays one animation frame', async () => {
-      const delay = delayAnimationFrames();
+    it('delays the specified number of times', async () => {
+      const frameCount = 10;
 
-      await expect(delay).resolves.toBeUndefined();
+      await expect( delayAnimationFrames(frameCount, 'value') ).resolves.toBe('value');
+
+      expect( window.requestAnimationFrame ).toHaveBeenCalledTimes(frameCount);
     });
 
     it('Specifies the return value', async () => {
-      const delay = delayAnimationFrames(2, 'value');
+      const delay = delayAnimationFrames(1, true);
 
-      await expect(delay).resolves.toBe('value');
+      await expect(delay).resolves.toBe(true);
     });
 
     it('Throws when provided invalid frames value', async () => {
