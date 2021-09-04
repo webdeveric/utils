@@ -38,7 +38,7 @@ describe('delay animation frames', () => {
       await expect(delay).resolves.toBe(true);
     });
 
-    it('Throws when provided invalid frames value', async () => {
+    it('Rejects when provided invalid frames value', async () => {
       expect.assertions(2);
 
       await expect( delayAnimationFrames(null) ).rejects.toBeInstanceOf(Error);
