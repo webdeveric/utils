@@ -122,7 +122,7 @@ export function until<T>( fn: UntilCallback<T>, options: Options = defaultOption
           timer = setTimeout( callUntilDone, getDelay( delay, context ), fn, delay, resolve, reject );
         }
       } catch ( error ) {
-        reject( error );
+        reject( error instanceof Error ? error : new Error(`${error}`) );
       }
     };
 

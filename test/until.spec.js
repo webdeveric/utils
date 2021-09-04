@@ -81,6 +81,10 @@ describe('until()', () => {
     await expect( until( () => {
       throw new Error('rejected');
     }, { delay: 1, timeout: 1 } ) ).rejects.toBeInstanceOf(Error);
+
+    await expect( until( () => {
+      throw 'error';
+    }, { delay: 1, timeout: 1 } ) ).rejects.toBeInstanceOf(Error);
   });
 
   it('Will reject after options.callLimit is reached', async () => {
