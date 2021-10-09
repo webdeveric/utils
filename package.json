@@ -8,9 +8,18 @@
   "license": "MIT",
   "keywords": [
     "utilities",
+    "asArray",
+    "compose",
     "delay",
+    "delayAnimationFrame",
     "fcrdns",
-    "PascalCase"
+    "joinStrings",
+    "secToString",
+    "toPascalCase",
+    "trimEnd",
+    "trimStart",
+    "uniqueItems",
+    "until"
   ],
   "author": {
     "email": "eric@webdeveric.com",
