@@ -9,7 +9,7 @@ describe('compose()', () => {
 
     const composed = compose(fn1, fn2, fn3, fn4);
 
-    expect(composed("composed")).toEqual("COMPOSED");
+    expect(composed('composed')).toBe('COMPOSED');
     expect(fn1).toHaveBeenCalled();
     expect(fn2).toHaveBeenCalled();
     expect(fn3).toHaveBeenCalled();

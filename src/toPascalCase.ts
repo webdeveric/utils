@@ -1,3 +1,5 @@
+import { getType } from './getType.js';
+
 export function toPascalCase(text: string, customWords?: Record<string, string>) : string
 {
   let words = String(text).match( /[A-Z][a-z']+|\d+|[a-z']+/g );
@@ -13,7 +15,7 @@ export function toPascalCase(text: string, customWords?: Record<string, string>)
     return w[ 0 ].toUpperCase() + w.substring(1);
   });
 
-  if ( customWords && Object.prototype.toString.call( customWords ) === '[object Object]' ) {
+  if ( customWords && getType(customWords) === 'Object' ) {
     const replacements = Object.entries( customWords ).map(([ key, value ]) => [
       key.toLowerCase(),
       value,

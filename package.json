@@ -13,6 +13,7 @@
     "delay",
     "delayAnimationFrame",
     "fcrdns",
+    "getType",
     "joinStrings",
     "secToString",
     "toPascalCase",
@@ -30,7 +31,7 @@
   "main": "./dist/cjs/index.js",
   "types": "./dist/types/index.d.ts",
   "engines": {
-    "node": ">=14.13.0"
+    "node": ">=14.17.0"
   },
   "exports": {
     ".": {
@@ -61,24 +62,18 @@
     "build:mjs": "tsc -p ./tsconfig.mjs.json",
     "postbuild:cjs": "echo '{\"type\":\"commonjs\"}' > ./dist/cjs/package.json",
     "postbuild:mjs": "echo '{\"type\":\"module\"}' > ./dist/mjs/package.json",
-    "build:babel": "babel --extensions '.ts' ./src --out-dir ./dist-babel",
     "build": "npm run build:cjs && npm run build:mjs",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint ./*.js ./src/ --ext .ts --fix",
+    "lint": "eslint ./*.js ./src/ ./test/ --ext .ts --fix",
     "test": "NODE_ENV=test jest",
-    "spellcheck": "cspell \"./{.github,src,test}/**/*.{js,json}\" \"./*.{md,js}\" \"./package.json\"",
+    "spellcheck": "cspell './{.github,src,test}/**/*.{ts,json}' './*.{md,js}' './package.json'",
     "prepublishOnly": "npm run spellcheck && npm run lint && npm test && npm run build"
   },
   "dependencies": {
     "lodash.escaperegexp": "^4.1.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.13.16",
-    "@babel/core": "^7.14.0",
-    "@babel/plugin-proposal-class-properties": "^7.13.0",
-    "@babel/plugin-proposal-private-methods": "^7.13.0",
-    "@babel/preset-env": "^7.14.0",
-    "@babel/preset-typescript": "^7.13.0",
+    "@types/jest": "^27.0.2",
     "@types/lodash.escaperegexp": "^4.1.6",
     "@types/node": "^16.4.0",
     "@webdeveric/eslint-config-ts": "^0.4.0",
@@ -88,8 +83,8 @@
     "eslint-plugin-jest": "^25.2.1",
     "jest": "^27.0.3",
     "jest-ts-webcompat-resolver": "^1.0.0",
-    "regenerator-runtime": "^0.13.7",
     "rimraf": "^3.0.2",
+    "ts-jest": "^27.0.7",
     "ts-node": "^10.0.0",
     "typescript": "^4.4.4"
   }

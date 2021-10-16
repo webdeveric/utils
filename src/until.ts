@@ -9,14 +9,14 @@ type DelayFn = (context: Readonly<UntilContext>) => number;
 
 type Delay = DelayFn | number;
 
-type Options = {
+export type UntilOptions = {
   delay: Delay;
   timeout?: Delay;
   callLimit?: number;
 };
 
 export interface UntilContext {
-  options: Options;
+  options: UntilOptions;
 }
 
 type ResolverValue<T> = T | PromiseLike<T>;
@@ -25,7 +25,7 @@ type ResolveFn<T> = (value: ResolverValue<T>) => void;
 
 type RejectFn = (error?: Error) => void;
 
-type UntilCallback<T> = (resolve: ResolveFn<T>, reject: RejectFn, context: Readonly<UntilContext>) => void;
+export type UntilCallback<T> = (resolve: ResolveFn<T>, reject: RejectFn, context: Readonly<UntilContext>) => void;
 
 function looksLikeDelay( delay: unknown ) : delay is Delay
 {
@@ -37,14 +37,14 @@ function getDelay( delay: Delay, context: UntilContext ) : number
   return typeof delay === 'function' ? delay( context ) : delay;
 }
 
-const defaultOptions: Options = {
+const defaultOptions: UntilOptions = {
   delay: 10,
 };
 
 /**
  * Return a Promise that delegates resolving/rejecting to the passed in function.
  */
-export function until<T>( fn: UntilCallback<T>, options: Options = defaultOptions ) : Promise<T>
+export function until<T>( fn: UntilCallback<T>, options: UntilOptions = defaultOptions ) : Promise<T>
 {
   if ( typeof fn !== 'function' ) {
     throw new Error('fn must be a function');

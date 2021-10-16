@@ -22,6 +22,6 @@ describe('delay()', () => {
   });
 
   it('Rejects when provided invalid milliseconds', async () => {
-    await expect( delay('wrong milliseconds value') ).rejects.toThrow();
+    await expect( delay('wrong milliseconds value' as unknown as number) ).rejects.toThrow();
   });
 });

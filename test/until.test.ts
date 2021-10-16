@@ -1,4 +1,6 @@
-import { until } from '../src/until';
+import {
+  until, UntilCallback, UntilContext, UntilOptions,
+} from '../src/until';
 
 describe('until()', () => {
   it('Waits until the callback resolves or rejects', async () => {
@@ -12,14 +14,14 @@ describe('until()', () => {
     const callLimit = 2;
 
     const untilTrue = until(
-      (resolve, reject, context) => {
+      (resolve, _reject, context) => {
         if ( context.callCount === callLimit ) {
           resolve(true);
         }
       },
       {
         delay: mockFn,
-      }
+      },
     );
 
     await expect( untilTrue ).resolves.toBeTruthy();
@@ -32,7 +34,8 @@ describe('until()', () => {
   it('timeout can be a callback that accepts a context', async () => {
     const mockFn = jest.fn( context => context.callCount );
 
-    const willTimeout = until( () => {}, { timeout: mockFn } );
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    const willTimeout = until( () => {}, { delay: 1, timeout: mockFn } );
 
     await expect( willTimeout ).rejects.toBeInstanceOf(Error);
 
@@ -46,7 +49,7 @@ describe('until()', () => {
 
     setTimeout( () => {
       doSomething = true;
-    }, { delay: 3 } );
+    }, 3 );
 
     await expect( until( resolve => {
       if ( doSomething ) {
@@ -56,7 +59,7 @@ describe('until()', () => {
   });
 
   it('Waits for some time to pass', async () => {
-    function msFromNow(ms) {
+    function msFromNow(ms: number): () => boolean {
       const start = Date.now();
 
       return () => Date.now() - start >= ms;
@@ -64,7 +67,7 @@ describe('until()', () => {
 
     const someTimeHasPassed = msFromNow( 5 );
 
-    const callback = resolve => {
+    const callback = (resolve: (input: number) => void): void => {
       if ( someTimeHasPassed() ) {
         resolve(2);
       }
@@ -74,6 +77,7 @@ describe('until()', () => {
   });
 
   it('Can timeout', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     await expect( until( () => {}, { delay: 1, timeout: 1 } ) ).rejects.toBeInstanceOf(Error);
   });
 
@@ -83,6 +87,7 @@ describe('until()', () => {
     }, { delay: 1, timeout: 1 } ) ).rejects.toBeInstanceOf(Error);
 
     await expect( until( () => {
+      // eslint-disable-next-line no-throw-literal
       throw 'error';
     }, { delay: 1, timeout: 1 } ) ).rejects.toBeInstanceOf(Error);
   });
@@ -93,17 +98,18 @@ describe('until()', () => {
       callLimit: 3,
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const results = until( () => {}, options );
 
     await expect( results ).rejects.toBeInstanceOf(Error);
   });
 
   describe('Invalid arguments throw an error', () => {
-    const cb = resolve => resolve(true);
+    const cb = (resolve: (input: boolean) => void): void => resolve(true);
 
     it('fn must be a function', () => {
       expect(() => {
-        until('not a function');
+        until('not a function' as unknown as UntilCallback<unknown>);
       }).toThrow();
     });
 
@@ -115,26 +121,26 @@ describe('until()', () => {
         }).not.toThrow();
 
         expect( () => {
-          until( cb, null );
+          until( cb, null as unknown as UntilOptions );
         }).toThrow();
 
         expect( () => {
-          until( cb, false );
+          until( cb, false as unknown as UntilOptions );
         }).toThrow();
       });
 
       it('options.delay must be a function or a number', () => {
         expect( () => {
           until( cb, { delay: 1 } );
-          until( cb, { delay: () => 1} );
+          until( cb, { delay: () => 1 } );
         }).not.toThrow();
 
         expect( () => {
-          until( cb, { delay: false } );
+          until( cb, { delay: false as unknown as number } );
         }).toThrow();
 
         expect( () => {
-          until( cb, { delay: 'not a number' } );
+          until( cb, { delay: 'not a number' as unknown as number } );
         }).toThrow();
       });
 
@@ -146,26 +152,26 @@ describe('until()', () => {
         }).not.toThrow();
 
         expect( () => {
-          until( cb, { delay: 1, timeout: null } );
+          until( cb, { delay: 1, timeout: null as unknown as number } );
         }).toThrow();
 
         expect( () => {
-          until( cb, { delay: 1, timeout: false } );
+          until( cb, { delay: 1, timeout: false as unknown as number } );
         }).toThrow();
 
         expect( () => {
-          until( cb, { delay: 1, timeout: 'not a number' } );
+          until( cb, { delay: 1, timeout: 'not a number' as unknown as number } );
         }).toThrow();
       });
 
       it('options.callLimit must be undefined or number', () => {
         expect( () => {
-          until( cb, { callLimit: undefined } );
-          until( cb, { callLimit: 2 } );
+          until( cb, { delay: 1, callLimit: undefined } );
+          until( cb, { delay: 1, callLimit: 2 } );
         }).not.toThrow();
 
         expect( () => {
-          until( cb, { callLimit: 'test' } );
+          until( cb, { delay: 1, callLimit: 'test' as unknown as number } );
         }).toThrow();
       });
     });
@@ -173,7 +179,7 @@ describe('until()', () => {
 
   describe('context', () => {
     it('Keeps track of how many times the callback was called', async () => {
-      const context = await until( (resolve, reject, context) => {
+      const context = await until<UntilContext>( (resolve, _reject, context) => {
         if ( context.callCount === 2 ) {
           resolve(context);
         }
@@ -183,7 +189,7 @@ describe('until()', () => {
     });
 
     it('Keeps track of the last time the callback was called', async () => {
-      const context = await until( (resolve, reject, context) => {
+      const context = await until<UntilContext>( (resolve, _reject, context) => {
         resolve(context);
       }, { delay: 0, timeout: 10 } );
 
@@ -191,7 +197,7 @@ describe('until()', () => {
     });
 
     it('Keeps track of arbitrary data', async () => {
-      const context = await until( (resolve, reject, context) => {
+      const context = await until<UntilContext>( (resolve, _reject, context) => {
         context.data.demo = true;
         resolve(context);
       }, { delay: 0, timeout: 10 } );
@@ -205,11 +211,11 @@ describe('until()', () => {
         timeout: 10,
       };
 
-      const contextOptions = await until( (resolve, reject, context) => {
+      const contextOptions = await until( (resolve, _reject, context) => {
         resolve(context.options);
       }, options );
 
       expect( contextOptions ).toBe( options );
     });
-  })
+  });
 });

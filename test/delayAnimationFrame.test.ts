@@ -6,7 +6,7 @@ describe('delay animation frames', () => {
   });
 
   afterEach(() => {
-    window.requestAnimationFrame.mockRestore();
+    jest.restoreAllMocks();
   });
 
   describe('delayAnimationFrame()', () => {
@@ -41,7 +41,7 @@ describe('delay animation frames', () => {
     it('Rejects when provided invalid frames value', async () => {
       expect.assertions(2);
 
-      await expect( delayAnimationFrames(null) ).rejects.toBeInstanceOf(Error);
+      await expect( delayAnimationFrames(null as unknown as number) ).rejects.toBeInstanceOf(Error);
       await expect( delayAnimationFrames(-1) ).rejects.toBeInstanceOf(Error);
     });
   });

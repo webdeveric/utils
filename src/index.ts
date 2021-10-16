@@ -2,6 +2,7 @@ export * from './asArray.js';
 export * from './compose.js';
 export * from './delay.js';
 export * from './delayAnimationFrame.js';
+export * from './getType.js';
 export * from './joinStrings.js';
 export * from './secToString.js';
 export * from './toPascalCase.js';

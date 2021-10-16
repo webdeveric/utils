@@ -1,3 +1,5 @@
+import { getType } from './getType.js';
+
 /**
  * Delay a specified number of milliseconds before resolving.
  * The `ms` value can be between zero and the max delay value for `setTimeout`.
@@ -8,9 +10,7 @@ export function delay<T>(milliseconds: number, value?: T) : Promise<T>
 {
   return new Promise( (resolve, reject) => {
     if ( typeof milliseconds !== 'number' ) {
-      const providedType = Object.prototype.toString.call(milliseconds).match(/\[\w+\s(?<type>.+)\]/)?.groups?.type;
-
-      reject( new TypeError(`milliseconds must be a number. ${providedType} was provided.`) );
+      reject( new TypeError(`milliseconds must be a number. ${getType(milliseconds)} was provided.`) );
 
       return;
     }
