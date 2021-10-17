@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
     "target": "ES2018",
-    "module": "commonjs",
+    "module": "es2015",
     "declaration": true,
     "declarationMap": true,
     "declarationDir": "./dist/types",
     "sourceMap": true,
-    "outDir": "./dist/cjs",
+    "outDir": "./dist/",
     "isolatedModules": true,
     "strict": true,
     "alwaysStrict": true,
@@ -23,6 +23,5 @@
   ],
   "exclude": [
     "node_modules",
-    "**/*.test.ts"
   ]
 }
