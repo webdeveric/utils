@@ -13,7 +13,7 @@
     "delay",
     "delayAnimationFrame",
     "fcrdns",
-    "getOwnObjectKeys",
+    "getOwnKeys",
     "getType",
     "joinStrings",
     "normalize",
