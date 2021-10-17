@@ -28,5 +28,6 @@ export function secToString( time: number ) : string
     time %= seconds;
   }
 
+  // cSpell:ignore centurys
   return str.replace('centurys', 'centuries').trim();
 }
