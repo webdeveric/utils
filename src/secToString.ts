@@ -1,33 +1,48 @@
-export function secToString( time: number ) : string
-{
-  const secTime = {
-    century: 3.1556926 * Math.pow(10, 9),
-    decade: 315569260,
-    year: 31556926,
-    month: 2629743.83,
-    week: 604800,
-    day: 86400,
-    hour: 3600,
-    minute: 60,
-    second: 1,
-  };
+export enum Seconds {
+  Second = 1,
+  Minute = 60 * Second,
+  Hour = 60 * Minute,
+  Day = 24 * Hour,
+  Week = 7 * Day,
+  Month = (365.25 / 12) * Day,
+  Year = 12 * Month,
+  Decade = 10 * Year,
+  Century = 10 * Decade,
+  Millennium = 10 * Century,
+}
 
-  let str = '';
+type SecondsTuple = [key: Lowercase<keyof typeof Seconds>, seconds: Seconds];
 
-  for ( const [ units, seconds ] of Object.entries( secTime ) ) {
-    if ( seconds > time ) {
-      continue;
-    }
+export function secToString(time: number, joinString = ' '): string {
+  const secTime: SecondsTuple[] = [
+    [ 'millennium', Seconds.Millennium ],
+    [ 'century', Seconds.Century ],
+    [ 'decade', Seconds.Decade ],
+    [ 'year', Seconds.Year ],
+    [ 'month', Seconds.Month ],
+    [ 'week', Seconds.Week ],
+    [ 'day', Seconds.Day ],
+    [ 'hour', Seconds.Hour ],
+    [ 'minute', Seconds.Minute ],
+    [ 'second', Seconds.Second ],
+  ];
 
-    const currentValue: number = Math.floor( time / seconds );
+  const parts = secTime.reduce<string[]>(
+    (output, [ units, seconds ]) => {
+      if (seconds <= time) {
+        const currentValue = Math.floor(time / seconds);
+        const suffix = currentValue === 1 ? units : `${units}s`;
 
-    const suffix: string = currentValue === 1 ? units : `${units}s`;
+        time %= seconds;
 
-    str = `${str} ${currentValue} ${suffix}`;
+        output.push(`${currentValue} ${suffix}`);
+      }
 
-    time %= seconds;
-  }
+      return output;
+    },
+    [],
+  );
 
   // cSpell:ignore centurys
-  return str.replace('centurys', 'centuries').trim();
+  return parts.join(joinString).replace('centurys', 'centuries');
 }
