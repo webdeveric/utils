@@ -11,9 +11,9 @@ export async function hostnameResolvesToIp( hostname: string, ip: string ) : Pro
 
   const resolve = ipVersion === 4 ? dns.resolve4 : dns.resolve6;
 
-  const resolved: string[] = await resolve( hostname );
+  const resolved = await resolve( hostname );
 
-  return resolved.some( (addr: string) : boolean => addr === ip );
+  return resolved.some( addr => addr === ip );
 }
 
 /**
@@ -23,18 +23,17 @@ export async function hostnameResolvesToIp( hostname: string, ip: string ) : Pro
  */
 export async function fcrdns( hostname: string, ip: string ) : Promise<boolean>
 {
-  const hostnames: string[] = await dns.reverse(ip);
+  const hostnames = await dns.reverse(ip);
 
   if ( ! hostnames.length ) {
     throw new Error(`Unable to get hostnames for ${ip}`);
   }
 
-  if ( ! hostnames.every( (name: string) : boolean => name.endsWith( hostname ) ) ) {
+  if ( ! hostnames.every( name => name.endsWith( hostname ) ) ) {
     throw new Error(`${ip} does not belong to ${hostname}`);
   }
 
-  // This is an array of booleans.
-  const results: boolean[] = await Promise.all(
+  const results = await Promise.all(
     hostnames.map(
       name => hostnameResolvesToIp( name, ip ),
     ),

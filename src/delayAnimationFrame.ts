@@ -14,14 +14,14 @@ export function delayAnimationFrames<T>(frames: number, value?: T): Promise<type
       return;
     }
 
-    const loop = (f: number): void => {
-      if ( f === 0 ) {
+    const loop = (frame: number): void => {
+      if (frame === 0) {
         resolve(value);
 
         return;
       }
 
-      window.requestAnimationFrame(() => loop(f - 1));
+      window.requestAnimationFrame(() => loop(frame - 1));
     };
 
     loop(frames);

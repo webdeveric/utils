@@ -10,9 +10,9 @@ export function toPascalCase(text: string, customWords?: Record<string, string>)
 
   // Remove apostrophes then uppercase the first letter of each word.
   words = words.map( word => {
-    const w = word.replace(/'/g, '');
+    const fixedWord = word.replace(/'/g, '');
 
-    return w[ 0 ].toUpperCase() + w.substring(1);
+    return fixedWord[ 0 ].toUpperCase() + fixedWord.substring(1);
   });
 
   if ( customWords && getType(customWords) === 'Object' ) {
