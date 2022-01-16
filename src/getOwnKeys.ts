@@ -1,6 +1,6 @@
-export function getOwnKeys<T>(data: T): (keyof T)[] {
+export function getOwnKeys<T, K extends keyof T>(data: T): K[] {
   return [
     ...Object.getOwnPropertyNames(data),
     ...Object.getOwnPropertySymbols(data),
-  ] as (keyof T)[];
+  ] as K[];
 }
