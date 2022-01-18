@@ -2,82 +2,79 @@ import cloneDeep from 'lodash.clonedeep';
 
 import type { Builtin } from 'ts-essentials';
 
-import { getOwnKeys } from './getOwnKeys.js';
+import { getOwnKeys } from './getOwnKeys';
+import { getType } from './getType';
 
-export type NormalizeContext<R> = {
-  record: Readonly<R>;
-  current: R;
-  data: Record<string, unknown>;
+export type NormalizeContext<OwnerRecordType> = {
+  original: Readonly<OwnerRecordType>;
+  current: OwnerRecordType;
+  data: Record<PropertyKey, unknown>;
 };
 
-export type NormalizerFn<T, R = T> = (
-  input: T,
-  context: NormalizeContext<R>
-) => T;
+export type NormalizerFn<OutputType, OwnerRecordType> = (
+  input: unknown,
+  context: NormalizeContext<OwnerRecordType>,
+) => OutputType;
 
-export type NormalizersTuple<T, R = T> = [initialize: NormalizerFn<T, R>, normalizers: NormalizersRecord<T, R>];
-
-export type NormalizersRecord<T, R = T> = {
-  [P in keyof T]?: T[P] extends Builtin
-    ? NormalizerFn<T[P], R>
-    : (NormalizerFn<T[P], R> | NormalizersRecord<T[P], T> | NormalizersTuple<T[P], R>);
+export type NormalizersRecord<RecordType, OwnerRecordType = RecordType> = {
+  [Property in keyof RecordType]?: RecordType[Property] extends Builtin
+    ? NormalizerFn<RecordType[Property], OwnerRecordType>
+    : NormalizerFn<RecordType[Property], OwnerRecordType> | NormalizersRecord<RecordType[Property], OwnerRecordType>;
 };
 
-const isObject = <T = Record<string, unknown>>(data: unknown): data is T => data !== null && typeof data === 'object' && ! Array.isArray(data);
+/**
+ * @example
+ *
+ * ```ts
+ * normalize({ demo: true }, { demo: () => false });
+ * ```
+ *
+ * ```ts
+ * normalize({ demo: true }, () => ({ demo: false }) });
+ * ```
+ *
+ * ```ts
+ * normalize(true, () => false );
+ * ```
+ */
+export function normalize<Data>(
+  input: Data,
+  normalizers?: NormalizerFn<Data, Data> | NormalizersRecord<Data, Data>,
+): Data {
+  const normalized = cloneDeep(input);
 
-const isNormalizersTuple = <T, R = T>(data: unknown): data is NormalizersTuple<T, R> => {
-  if (Array.isArray(data) && data.length === 2) {
-    return isObject(data[ 1 ]);
-  }
-
-  return false;
-};
-
-export function normalize<R>(record: R, normalizers: NormalizersRecord<R> | NormalizersTuple<R>): R {
-  const normalizedRecord = cloneDeep(record);
-
-  const context: NormalizeContext<R> = {
-    record,
-    current: normalizedRecord,
+  const context: NormalizeContext<Data> = Object.seal({
+    original: input,
+    current: normalized,
     data: {},
-  };
+  });
 
-  const walk = <CR>(currentRecord: CR, currentNormalizers: NormalizersRecord<CR, R> | NormalizersTuple<CR, R>): CR => {
-    if ( Array.isArray(currentNormalizers) ) {
-      const [ initialize, normalizers ] = currentNormalizers;
-
-      if ( typeof initialize !== 'function' ) {
-        throw new TypeError(`initialize is not a function: ${typeof initialize} was provided.`);
-      }
-
-      return walk(
-        currentRecord ?? initialize(currentRecord, context),
-        normalizers,
-      );
-    }
-
-    if (typeof currentRecord === 'undefined') {
+  const walk = <CurrentRecord>(
+    currentRecord: CurrentRecord,
+    currentNormalizers?: NormalizerFn<CurrentRecord, Data> | NormalizersRecord<CurrentRecord, Data>,
+  ): CurrentRecord => {
+    if (typeof currentNormalizers === 'undefined') {
       return currentRecord;
     }
 
-    const keys = getOwnKeys(currentNormalizers);
+    if (typeof currentNormalizers === 'function') {
+      return currentNormalizers(currentRecord, context);
+    }
 
-    for (const key of keys) {
-      const normalizer = currentNormalizers[ key ];
+    if (typeof currentNormalizers === 'object' && currentNormalizers !== null) {
+      if (typeof currentRecord === 'object' && currentRecord !== null) {
+        return getOwnKeys(currentNormalizers).reduce((data, key) => {
+          data[ key ] = walk(data[ key ], currentNormalizers[ key ]);
 
-      if (typeof normalizer === 'function') {
-        currentRecord[ key ] = normalizer(currentRecord[ key ], context);
-      } else if (isObject<NormalizersRecord<CR[keyof CR], R>>(normalizer)) {
-        currentRecord[ key ] = walk(currentRecord[ key ], normalizer);
-      } else if (isNormalizersTuple<CR[keyof CR], R>(normalizer)) {
-        currentRecord[ key ] = walk(currentRecord[ key ], normalizer);
-      } else {
-        throw new TypeError(`Unknown normalizer: ${typeof normalizer}`);
+          return data;
+        }, currentRecord);
       }
+    } else {
+      throw new TypeError(`normalizers must be function or object. ${getType(currentNormalizers)} was received.`);
     }
 
     return currentRecord;
   };
 
-  return walk<R>(normalizedRecord, normalizers);
+  return walk(normalized, normalizers);
 }

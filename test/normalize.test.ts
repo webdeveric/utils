@@ -1,4 +1,4 @@
-import { normalize, NormalizerFn } from '../src/normalize';
+import { normalize, type NormalizerFn } from '../src/normalize';
 
 type Person = {
   name: string;
@@ -8,16 +8,20 @@ type Person = {
 }
 
 describe('normalize()', () => {
-  const person: Person = {
+  const person = Object.freeze<Person>({
     name: 'Test',
     details: {
       jobTitle: 'Developer',
     },
-  };
+  });
+
+  it('Returns input when no normalizers are provided', () => {
+    expect(normalize(person)).toEqual(person);
+  });
 
   it('Returns a normalized object', () => {
     const normalizedPerson = normalize(person, {
-      name: name => name.toLowerCase(),
+      name: name => String(name).toLowerCase(),
     });
 
     expect(normalizedPerson.name).toBe('test');
@@ -26,7 +30,7 @@ describe('normalize()', () => {
   it('Returns a deeply normalized object', () => {
     const normalizedPerson = normalize<Person>(person, {
       details: {
-        jobTitle: jobTitle => jobTitle.toLocaleUpperCase(),
+        jobTitle: jobTitle => String(jobTitle).toLocaleUpperCase(),
       },
     });
 
@@ -39,83 +43,11 @@ describe('normalize()', () => {
       name: 'Test',
     }, {
       details: {
-        jobTitle: jobTitle => jobTitle.toLocaleUpperCase(),
+        jobTitle: jobTitle => String(jobTitle).toLocaleUpperCase(),
       },
     });
 
     expect(normalizedPerson.details?.jobTitle).toBeUndefined();
-  });
-
-  it('Initializes undefined values', () => {
-    const normalizedPerson = normalize<Person>({
-      name: 'Test',
-    }, {
-      details: [
-        details => {
-          return details ?? {
-            jobTitle: 'Default',
-          };
-        },
-        {
-          jobTitle: jobTitle => jobTitle.toLocaleUpperCase(),
-        },
-      ],
-    });
-
-    expect(normalizedPerson.details?.jobTitle).toBe('DEFAULT');
-  });
-
-  it('Skips initialization if not undefined', () => {
-    const normalizedPerson = normalize<Person>({
-      name: 'Test',
-      details: {
-        jobTitle: 'Tester',
-      },
-    }, {
-      details: [
-        details => {
-          return details ?? {
-            jobTitle: 'Default',
-          };
-        },
-        {
-          jobTitle: jobTitle => jobTitle.toLocaleUpperCase(),
-        },
-      ],
-    });
-
-    expect(normalizedPerson.details?.jobTitle).toBe('TESTER');
-  });
-
-  it('Initializer must be a function', () => {
-    expect(() => {
-      normalize<Person>(person, {
-        details: [
-          undefined as unknown as NormalizerFn<Person['details'], Person>,
-          {
-            jobTitle: jobTitle => jobTitle.toLocaleUpperCase(),
-          },
-        ],
-      });
-    }).toThrow();
-  });
-
-  it('Can make an object from an undefined input', () => {
-    const normalizedPerson = normalize<Person>(
-      undefined as unknown as Person,
-      [
-        person => {
-          return person ?? {
-            name: 'Default Name',
-          };
-        },
-        {
-          name: name => name.toLocaleUpperCase(),
-        },
-      ],
-    );
-
-    expect(normalizedPerson.name).toBe('DEFAULT NAME');
   });
 
   it('Throws when normalizers is invalid', () => {
@@ -127,14 +59,14 @@ describe('normalize()', () => {
   });
 
   describe('context', () => {
-    it('Has a reference to the original record', () => {
+    it('Has a reference to the original value', () => {
       expect.assertions(2);
 
       const normalizedPerson = normalize<Person>(person, {
         name: (name, context) => {
-          expect(context.record).toEqual(person);
+          expect(context.original).toEqual(person);
 
-          return name.toLocaleUpperCase();
+          return String(name).toLocaleUpperCase();
         },
       });
 
@@ -145,7 +77,7 @@ describe('normalize()', () => {
       expect.assertions(2);
 
       const normalizedPerson = normalize<Person>(person, {
-        name: name => name.toLocaleUpperCase(),
+        name: name => String(name).toLocaleUpperCase(),
         details: {
           jobTitle: (jobTitle, context) => {
             expect(context.current.name).toBe('TEST');
@@ -165,13 +97,13 @@ describe('normalize()', () => {
         name: (name, context) => {
           context.data.test = true;
 
-          return name;
+          return String(name);
         },
         details: {
           jobTitle: (jobTitle, context) => {
             expect(context.data.test).toBe(true);
 
-            return jobTitle;
+            return String(jobTitle);
           },
         },
       });
