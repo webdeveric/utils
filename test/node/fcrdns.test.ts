@@ -3,7 +3,7 @@
  */
 import { fcrdns, hostnameResolvesToIp } from '../../src/node/fcrdns';
 
-jest.mock('dns', () => {
+jest.mock('node:dns', () => {
   return {
     promises: {
       reverse: jest
