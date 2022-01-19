@@ -2,8 +2,8 @@ import cloneDeep from 'lodash.clonedeep';
 
 import type { Builtin } from 'ts-essentials';
 
-import { getOwnKeys } from './getOwnKeys';
-import { getType } from './getType';
+import { getOwnKeys } from './getOwnKeys.js';
+import { getType } from './getType.js';
 
 export type NormalizeContext<OwnerRecordType> = {
   original: Readonly<OwnerRecordType>;
