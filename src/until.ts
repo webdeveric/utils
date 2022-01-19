@@ -1,13 +1,16 @@
+import { getType } from './getType.js';
+
 export interface UntilContext {
   callCount: number;
   lastCall?: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: Record<string, any>;
+  data: Record<PropertyKey, any>;
+  options: UntilOptions;
 }
 
-type DelayFn = (context: Readonly<UntilContext>) => number;
+export type DelayFn = (context: Readonly<UntilContext>) => number;
 
-type Delay = DelayFn | number;
+export type Delay = DelayFn | number;
 
 export type UntilOptions = {
   delay: Delay;
@@ -15,29 +18,15 @@ export type UntilOptions = {
   callLimit?: number;
 };
 
-export interface UntilContext {
-  options: UntilOptions;
-}
+export type ResolverValue<T> = T | PromiseLike<T>;
 
-type ResolverValue<T> = T | PromiseLike<T>;
+export type ResolveFn<T> = (value: ResolverValue<T>) => void;
 
-type ResolveFn<T> = (value: ResolverValue<T>) => void;
-
-type RejectFn = (error?: Error) => void;
+export type RejectFn = (error?: Error) => void;
 
 export type UntilCallback<T> = (resolve: ResolveFn<T>, reject: RejectFn, context: Readonly<UntilContext>) => void;
 
-function looksLikeDelay( delay: unknown ) : delay is Delay
-{
-  return Number.isInteger( delay ) || typeof delay === 'function';
-}
-
-function getDelay( delay: Delay, context: UntilContext ) : number
-{
-  return typeof delay === 'function' ? delay( context ) : delay;
-}
-
-const defaultOptions: UntilOptions = {
+const defaultOptions: Readonly<UntilOptions> = {
   delay: 10,
 };
 
@@ -47,25 +36,29 @@ const defaultOptions: UntilOptions = {
 export function until<T>( fn: UntilCallback<T>, options: UntilOptions = defaultOptions ) : Promise<T>
 {
   if ( typeof fn !== 'function' ) {
-    throw new Error('fn must be a function');
+    return Promise.reject(new Error('fn must be a function'));
   }
 
   if ( ! options || typeof options !== 'object' ) {
-    throw new Error(`invalid options: ${JSON.stringify(options)}`);
+    return Promise.reject(new Error(`options must be an object. ${getType(options)} provided.`));
   }
 
   const { delay, timeout, callLimit } = Object.assign({}, defaultOptions, options);
 
-  if ( ! looksLikeDelay( delay ) ) {
-    throw new Error('invalid delay value');
+  const isDelay = ( input: unknown ) : input is Delay => Number.isInteger( input ) || typeof input === 'function';
+
+  const getDelay = ( delay: Delay, context: UntilContext ) : number => typeof delay === 'function' ? delay( context ) : delay;
+
+  if ( ! isDelay( delay ) ) {
+    return Promise.reject(new Error('invalid delay value'));
   }
 
-  if ( timeout !== undefined && ! looksLikeDelay( timeout ) ) {
-    throw new Error('invalid timeout value');
+  if ( timeout !== undefined && ! isDelay( timeout ) ) {
+    return Promise.reject(new Error('invalid timeout value'));
   }
 
   if ( callLimit !== undefined && ! Number.isInteger( callLimit ) ) {
-    throw new Error('invalid callLimit value');
+    return Promise.reject(new Error('invalid callLimit value'));
   }
 
   return new Promise<T>( ( resolutionFn: ResolveFn<T>, rejectionFn: RejectFn ) => {

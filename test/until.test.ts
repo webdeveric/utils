@@ -107,72 +107,51 @@ describe('until()', () => {
   describe('Invalid arguments throw an error', () => {
     const cb = (resolve: (input: boolean) => void): void => resolve(true);
 
-    it('fn must be a function', () => {
-      expect(() => {
-        until('not a function' as unknown as UntilCallback<unknown>);
-      }).toThrow();
+    it('fn must be a function', async () => {
+      await expect(until('not a function' as unknown as UntilCallback<unknown>)).rejects.toThrow();
     });
 
     describe('options', () => {
-      it('options must be an object or undefined', () => {
-        expect( () => {
-          until( cb );
-          until( cb, { delay: 1 } );
-        }).not.toThrow();
+      it('options must be an object or undefined', async () => {
+        await expect( until( cb ) ).resolves.toBeTruthy();
 
-        expect( () => {
-          until( cb, null as unknown as UntilOptions );
-        }).toThrow();
+        await expect( until( cb, { delay: 1 } ) ).resolves.toBeTruthy();
 
-        expect( () => {
-          until( cb, false as unknown as UntilOptions );
-        }).toThrow();
+        await expect( until( cb, null as unknown as UntilOptions )).rejects.toThrow();
+
+        await expect( until( cb, false as unknown as UntilOptions )).rejects.toThrow();
       });
 
-      it('options.delay must be a function or a number', () => {
-        expect( () => {
-          until( cb, { delay: 1 } );
-          until( cb, { delay: () => 1 } );
-        }).not.toThrow();
+      it('options.delay must be a function or a number', async () => {
+        await expect( until( cb, { delay: 1 } ) ).resolves.toBeTruthy();
 
-        expect( () => {
-          until( cb, { delay: false as unknown as number } );
-        }).toThrow();
+        await expect( until( cb, { delay: () => 1 } ) ).resolves.toBeTruthy();
 
-        expect( () => {
-          until( cb, { delay: 'not a number' as unknown as number } );
-        }).toThrow();
+        await expect( until( cb, { delay: false as unknown as number } )).rejects.toThrow();
+
+        await expect( until( cb, { delay: 'not a number' as unknown as number } )).rejects.toThrow();
       });
 
-      it('options.timeout must be undefined, function, or number', () => {
-        expect( () => {
-          until( cb, { delay: 1, timeout: undefined } );
-          until( cb, { delay: 1, timeout: 10 } );
-          until( cb, { delay: 1, timeout: () => 10 } );
-        }).not.toThrow();
+      it('options.timeout must be undefined, function, or number', async () => {
+        await expect( until( cb, { delay: 1, timeout: undefined } )).resolves.toBeTruthy();
 
-        expect( () => {
-          until( cb, { delay: 1, timeout: null as unknown as number } );
-        }).toThrow();
+        await expect( until( cb, { delay: 1, timeout: 10 } )).resolves.toBeTruthy();
 
-        expect( () => {
-          until( cb, { delay: 1, timeout: false as unknown as number } );
-        }).toThrow();
+        await expect( until( cb, { delay: 1, timeout: () => 10  } )).resolves.toBeTruthy();
 
-        expect( () => {
-          until( cb, { delay: 1, timeout: 'not a number' as unknown as number } );
-        }).toThrow();
+        await expect(until( cb, { delay: 1, timeout: null as unknown as number } )).rejects.toThrow();
+
+        await expect(until( cb, { delay: 1, timeout: false as unknown as number } )).rejects.toThrow();
+
+        await expect(until( cb, { delay: 1, timeout: 'not a number' as unknown as number } )).rejects.toThrow();
       });
 
-      it('options.callLimit must be undefined or number', () => {
-        expect( () => {
-          until( cb, { delay: 1, callLimit: undefined } );
-          until( cb, { delay: 1, callLimit: 2 } );
-        }).not.toThrow();
+      it('options.callLimit must be undefined or number', async () => {
+        await expect( until( cb, { delay: 1, callLimit: undefined } )).resolves.toBeTruthy();
 
-        expect( () => {
-          until( cb, { delay: 1, callLimit: 'test' as unknown as number } );
-        }).toThrow();
+        await expect( until( cb, { delay: 1, callLimit: 2 } ) ).resolves.toBeTruthy();
+
+        await expect( until( cb, { delay: 1, callLimit: 'test' as unknown as number } ) ).rejects.toBeInstanceOf(Error);
       });
     });
   });
