@@ -1,18 +1,72 @@
 {
   "root": true,
-  "extends": "@webdeveric/eslint-config-ts",
-  "rules": {
-    "@typescript-eslint/explicit-function-return-type": [
-      "error",
-      {
-        "allowExpressions": true
-      }
-    ]
-  },
+  "extends": [
+    "@webdeveric/eslint-config-ts",
+    "plugin:import/recommended",
+    "plugin:import/typescript"
+  ],
   "env": {
-    "browser": false,
+    "browser": true,
     "es6": true,
-    "mocha": true,
     "node": true
-  }
+  },
+  "settings": {
+    "import/extensions": [
+      ".ts",
+      ".mts",
+      ".cts",
+      ".js",
+      ".json"
+    ],
+    "import/resolver": {
+      "typescript": {
+        "project": "./tsconfig.json"
+      },
+      "node": {
+        "extensions": [
+          ".js",
+          ".ts",
+          ".mts",
+          ".cts"
+        ]
+      }
+    },
+    "import/parsers": {
+      "@typescript-eslint/parser": [
+        ".ts",
+        ".mts",
+        ".cts"
+      ]
+    }
+  },
+  "rules": {},
+  "overrides": [
+    {
+      "files": [
+        "./bin/*.cjs"
+      ],
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off"
+      }
+    },
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "./tsconfig.json"
+        ]
+      },
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": [
+          "error",
+          {
+            "allowExpressions": true
+          }
+        ],
+        "@typescript-eslint/no-floating-promises": "error"
+      }
+    }
+  ]
 }
