@@ -65,12 +65,13 @@
     "postbuild:cjs": "echo '{\"type\":\"commonjs\"}' > ./dist/cjs/package.json",
     "postbuild:mjs": "echo '{\"type\":\"module\"}' > ./dist/mjs/package.json",
     "build": "npm run build:cjs && npm run build:mjs",
+    "postbuild": "npm run validate",
     "typecheck": "tsc --noEmit",
     "lint": "eslint ./*.js ./src/ ./test/ --ext .ts --fix",
     "test": "NODE_ENV=test jest",
     "validate": "./bin/validate.cjs",
     "spellcheck": "cspell './{.github,src,test}/**/*.{ts,json}' './*.{md,js}' './package.json'",
-    "prepublishOnly": "npm run typecheck && npm run spellcheck && npm run lint && npm test && npm run build && npm run validate"
+    "prepublishOnly": "npm run typecheck && npm run spellcheck && npm run lint && npm test && npm run build"
   },
   "dependencies": {
     "lodash.clonedeep": "^4.5.0",
