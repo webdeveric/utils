@@ -2,7 +2,7 @@ import cloneDeep from 'lodash.clonedeep';
 
 import type { Builtin } from 'ts-essentials';
 
-import { getOwnKeys } from './getOwnKeys.js';
+import { getOwnProperties } from './getOwnProperties.js';
 import { getType } from './getType.js';
 
 export type NormalizeContext<OwnerRecordType> = {
@@ -63,7 +63,7 @@ export function normalize<Data>(
 
     if (typeof currentNormalizers === 'object' && currentNormalizers !== null) {
       if (typeof currentRecord === 'object' && currentRecord !== null) {
-        return getOwnKeys(currentNormalizers).reduce((data, key) => {
+        return getOwnProperties(currentNormalizers).reduce((data, key) => {
           data[ key ] = walk(data[ key ], currentNormalizers[ key ]);
 
           return data;

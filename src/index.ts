@@ -3,6 +3,7 @@ export * from './compose.js';
 export * from './delay.js';
 export * from './delayAnimationFrame.js';
 export * from './getOwnKeys.js';
+export * from './getOwnProperties.js';
 export * from './getType.js';
 export * from './joinStrings.js';
 export * from './normalize.js';
