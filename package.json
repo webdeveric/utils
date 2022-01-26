@@ -14,6 +14,7 @@
     "delayAnimationFrame",
     "fcrdns",
     "getOwnKeys",
+    "getOwnProperties",
     "getType",
     "joinStrings",
     "normalize",
@@ -70,6 +71,7 @@
     "lint": "eslint ./*.js ./src/ ./test/ --ext .ts --fix",
     "test": "NODE_ENV=test jest",
     "validate": "./bin/validate.cjs",
+    "update-keywords": "./bin/update-keywords.mjs",
     "spellcheck": "cspell './{.github,src,test}/**/*.{ts,json}' './*.{md,js}' './package.json'",
     "prepublishOnly": "npm run typecheck && npm run spellcheck && npm run lint && npm test && npm run build"
   },
