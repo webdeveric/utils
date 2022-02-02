@@ -1,5 +1,6 @@
 export * from './asArray.js';
 export * from './compose.js';
+export * from './convert.js';
 export * from './delay.js';
 export * from './delayAnimationFrame.js';
 export * from './getOwnKeys.js';
