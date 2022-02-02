@@ -5,6 +5,7 @@ export * from './delayAnimationFrame.js';
 export * from './getOwnKeys.js';
 export * from './getOwnProperties.js';
 export * from './getType.js';
+export * from './isEmpty.js';
 export * from './joinStrings.js';
 export * from './normalize.js';
 export * from './secToString.js';
