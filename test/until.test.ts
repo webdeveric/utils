@@ -49,13 +49,13 @@ describe('until()', () => {
 
     setTimeout( () => {
       doSomething = true;
-    }, 3 );
+    }, 5 );
 
     await expect( until( resolve => {
       if ( doSomething ) {
         resolve( true );
       }
-    },  { delay: 1, timeout: 10 } ) ).resolves.toBeTruthy();
+    },  { delay: 1, timeout: 100 } ) ).resolves.toBeTruthy();
   });
 
   it('Waits for some time to pass', async () => {
