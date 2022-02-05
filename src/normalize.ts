@@ -5,10 +5,12 @@ import type { Builtin } from 'ts-essentials';
 import { getOwnProperties } from './getOwnProperties.js';
 import { getType } from './getType.js';
 
+import type { AnyRecord } from './types';
+
 export type NormalizeContext<OwnerRecordType> = {
   original: Readonly<OwnerRecordType>;
   current: OwnerRecordType;
-  data: Record<PropertyKey, unknown>;
+  data: AnyRecord;
 };
 
 export type NormalizerFn<OutputType, OwnerRecordType> = (

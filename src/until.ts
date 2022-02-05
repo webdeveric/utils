@@ -1,10 +1,10 @@
+import type { AnyRecord } from './types';
 import { getType } from './getType.js';
 
 export interface UntilContext {
   callCount: number;
   lastCall?: number;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: Record<PropertyKey, any>;
+  data: AnyRecord;
   options: UntilOptions;
 }
 

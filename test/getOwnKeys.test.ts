@@ -1,3 +1,4 @@
+import type { AnyRecord } from '../src/types';
 import { getOwnKeys } from '../src/getOwnKeys';
 
 describe('getOwnKeys()', () => {
@@ -14,7 +15,7 @@ describe('getOwnKeys()', () => {
 
   it('Throws when not given an object or array', () => {
     expect(() => {
-      getOwnKeys(null as unknown as Record<PropertyKey, unknown>);
+      getOwnKeys(null as unknown as AnyRecord);
     }).toThrow();
   });
 });
