@@ -9,11 +9,14 @@
   "keywords": [
     "utilities",
     "asArray",
+    "clamp",
     "compose",
     "convert",
     "delay",
     "delayAnimationFrame",
     "fcrdns",
+    "getMaxValue",
+    "getMinValue",
     "getOwnKeys",
     "getOwnProperties",
     "getType",
@@ -24,6 +27,7 @@
     "toPascalCase",
     "trimEnd",
     "trimStart",
+    "types",
     "uniqueItems",
     "until"
   ],
@@ -74,7 +78,7 @@
     "test": "NODE_ENV=test jest",
     "validate": "./bin/validate.cjs",
     "update-keywords": "./bin/update-keywords.mjs",
-    "spellcheck": "cspell './{.github,src,test}/**/*.{ts,json}' './*.{md,js}' './package.json'",
+    "spellcheck": "cspell './{.github,src,test}/**/*.{ts,json}' './*.{md,js}' './package.json' --no-progress",
     "prepublishOnly": "npm run typecheck && npm run spellcheck && npm run lint && npm test && npm run build"
   },
   "dependencies": {
