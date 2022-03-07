@@ -3,26 +3,30 @@ import cloneDeep from 'lodash.clonedeep';
 import type { Builtin } from 'ts-essentials';
 
 import { getOwnProperties } from './getOwnProperties.js';
-import { getType } from './getType.js';
+import { isObject } from './isObject.js';
 
 import type { AnyRecord } from './types';
 
-export type NormalizeContext<OwnerRecordType> = {
+export type NormalizeContext<OwnerRecordType, ContextData extends AnyRecord> = {
   original: Readonly<OwnerRecordType>;
   current: OwnerRecordType;
-  data: AnyRecord;
+  data: ContextData;
 };
 
-export type NormalizerFn<OutputType, OwnerRecordType> = (
-  input: unknown,
-  context: NormalizeContext<OwnerRecordType>,
-) => OutputType;
+export type NormalizerFn<PropertyType, OwnerRecordType, ContextData extends AnyRecord = AnyRecord> = (
+  input: PropertyType,
+  context: NormalizeContext<OwnerRecordType, ContextData>,
+) => PropertyType;
 
-export type NormalizersRecord<RecordType, OwnerRecordType = RecordType> = {
-  [Property in keyof RecordType]?: RecordType[Property] extends Builtin
-    ? NormalizerFn<RecordType[Property], OwnerRecordType>
-    : NormalizerFn<RecordType[Property], OwnerRecordType> | NormalizersRecord<RecordType[Property], OwnerRecordType>;
+export type NormalizersRecord<RecordType, OwnerRecordType, ContextData extends AnyRecord = AnyRecord> = {
+  readonly [Property in keyof RecordType]?: RecordType[Property] extends Builtin
+    ? NormalizerFn<RecordType[Property], OwnerRecordType, ContextData>
+    : AnyNormalizer<RecordType[Property], OwnerRecordType, ContextData>
 };
+
+export type AnyNormalizer<RecordType, OwnerRecordType, ContextData extends AnyRecord = AnyRecord> =
+  | NormalizerFn<RecordType, OwnerRecordType, ContextData>
+  | NormalizersRecord<RecordType, OwnerRecordType, ContextData>;
 
 /**
  * @example
@@ -39,26 +43,23 @@ export type NormalizersRecord<RecordType, OwnerRecordType = RecordType> = {
  * normalize(true, () => false );
  * ```
  */
-export function normalize<Data>(
-  input: Data,
-  normalizers?: NormalizerFn<Data, Data> | NormalizersRecord<Data, Data>,
+export function normalize<Data, ContextData extends AnyRecord = AnyRecord>(
+  input: Readonly<Data>,
+  normalizers?: AnyNormalizer<Data, Data, ContextData>,
+  initContextData: (data: typeof input, dataNormalizers: typeof normalizers) => ContextData = (): AnyRecord => ({}),
 ): Data {
-  const normalized = cloneDeep(input);
+  const current = cloneDeep(input);
 
-  const context: NormalizeContext<Data> = Object.seal({
+  const context: NormalizeContext<Data, ContextData> = Object.seal({
     original: input,
-    current: normalized,
-    data: {},
+    current,
+    data: initContextData(input, normalizers),
   });
 
   const walk = <CurrentRecord>(
     currentRecord: CurrentRecord,
-    currentNormalizers?: NormalizerFn<CurrentRecord, Data> | NormalizersRecord<CurrentRecord, Data>,
+    currentNormalizers?: NormalizerFn<CurrentRecord, Data, ContextData> | NormalizersRecord<CurrentRecord, Data, ContextData>,
   ): CurrentRecord => {
-    if (typeof currentNormalizers === 'undefined') {
-      return currentRecord;
-    }
-
     if (typeof currentNormalizers === 'function') {
       return currentNormalizers(currentRecord, context);
     }
@@ -66,17 +67,21 @@ export function normalize<Data>(
     if (typeof currentNormalizers === 'object' && currentNormalizers !== null) {
       if (typeof currentRecord === 'object' && currentRecord !== null) {
         return getOwnProperties(currentNormalizers).reduce((data, key) => {
-          data[ key ] = walk(data[ key ], currentNormalizers[ key ]);
+          const normalizers = currentNormalizers[ key ];
+          // If the value is undefined but there is a normalizer record, set value to empty object.
+          const value = typeof data[ key ] === 'undefined' && isObject(normalizers)
+            ? {} as CurrentRecord[keyof CurrentRecord]
+            : data[ key ];
+
+          data[ key ] = walk(value, normalizers);
 
           return data;
         }, currentRecord);
       }
-    } else {
-      throw new TypeError(`normalizers must be function or object. ${getType(currentNormalizers)} was received.`);
     }
 
     return currentRecord;
   };
 
-  return walk(normalized, normalizers);
+  return walk(current, normalizers);
 }
