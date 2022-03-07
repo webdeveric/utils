@@ -2,6 +2,7 @@ import { normalize, type NormalizerFn } from '../src/normalize';
 
 type Person = {
   name: string;
+  age?: number;
   details?: {
     jobTitle: string;
   };
@@ -28,7 +29,7 @@ describe('normalize()', () => {
   });
 
   it('Returns a deeply normalized object', () => {
-    const normalizedPerson = normalize<Person>(person, {
+    const normalizedPerson = normalize(person, {
       details: {
         jobTitle: jobTitle => String(jobTitle).toLocaleUpperCase(),
       },
@@ -38,7 +39,17 @@ describe('normalize()', () => {
     expect(normalizedPerson.details?.jobTitle).toBe('DEVELOPER');
   });
 
-  it('Skips undefined values', () => {
+  it('Allows normalizing undefined values', () => {
+    const normalizedPerson = normalize<Person>({
+      name: 'Test',
+    }, {
+      age: () => 100,
+    });
+
+    expect(normalizedPerson.age).toBe(100);
+  });
+
+  it('Undefined value that has corresponding normalizer gets initialized as an object literal', () => {
     const normalizedPerson = normalize<Person>({
       name: 'Test',
     }, {
@@ -47,22 +58,22 @@ describe('normalize()', () => {
       },
     });
 
-    expect(normalizedPerson.details?.jobTitle).toBeUndefined();
+    expect(normalizedPerson.details?.jobTitle).toBe('UNDEFINED');
   });
 
-  it('Throws when normalizers is invalid', () => {
-    expect(() => {
-      normalize(person, {
-        name: null as unknown as NormalizerFn<string, Person>,
-      });
-    }).toThrow();
+  it('When given invalid normalizers, the input is returned', () => {
+    expect(normalize(person, {
+      name: null as unknown as NormalizerFn<string, Person>,
+    })).toEqual(person);
+
+    expect(normalize(person, null as unknown as NormalizerFn<Person, Person>)).toEqual(person);
   });
 
   describe('context', () => {
     it('Has a reference to the original value', () => {
       expect.assertions(2);
 
-      const normalizedPerson = normalize<Person>(person, {
+      const normalizedPerson = normalize(person, {
         name: (name, context) => {
           expect(context.original).toEqual(person);
 
@@ -76,7 +87,7 @@ describe('normalize()', () => {
     it('Has a reference to the current record', () => {
       expect.assertions(2);
 
-      const normalizedPerson = normalize<Person>(person, {
+      const normalizedPerson = normalize(person, {
         name: name => String(name).toLocaleUpperCase(),
         details: {
           jobTitle: (jobTitle, context) => {
@@ -93,7 +104,7 @@ describe('normalize()', () => {
     it('Can hold arbitrary data', () => {
       expect.assertions(1);
 
-      normalize<Person>(person, {
+      normalize(person, {
         name: (name, context) => {
           context.data.test = true;
 
@@ -107,6 +118,28 @@ describe('normalize()', () => {
           },
         },
       });
+    });
+
+    it('Can be initialized with your data', () => {
+      expect.assertions(2);
+
+      const normalPerson = normalize<Person, Record<'name', string>>(
+        person,
+        {
+          name: (_name, context) => {
+            return String(context.data.name);
+          },
+        },
+        (person, normalizers) => {
+          expect(typeof normalizers === 'object' && 'name' in normalizers).toBeTruthy();
+
+          return {
+            name: person.name.toUpperCase(),
+          };
+        },
+      );
+
+      expect(normalPerson.name).toBe(person.name.toUpperCase());
     });
   });
 });
