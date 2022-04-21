@@ -58,7 +58,7 @@ export function normalize<Data, ContextData extends AnyRecord = AnyRecord>(
 
   const walk = <CurrentRecord>(
     currentRecord: CurrentRecord,
-    currentNormalizers?: NormalizerFn<CurrentRecord, Data, ContextData> | NormalizersRecord<CurrentRecord, Data, ContextData>,
+    currentNormalizers?: AnyNormalizer<CurrentRecord, Data, ContextData>,
   ): CurrentRecord => {
     if (typeof currentNormalizers === 'function') {
       return currentNormalizers(currentRecord, context);
