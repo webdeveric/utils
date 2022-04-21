@@ -1,7 +1,7 @@
 {
   "name": "@webdeveric/utils",
   "description": "Just another collection of utilities.",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "publishConfig": {
     "access": "public"
   },
