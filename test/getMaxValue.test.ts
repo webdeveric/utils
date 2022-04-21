@@ -11,7 +11,11 @@ describe('getMaxValue()', () => {
 
   it('Throws when not given correct input', () => {
     expect(() => {
-      getMaxValue();
+      getMaxValue(null as unknown as Parameters<typeof getMaxValue>[number]);
+    }).toThrow();
+
+    expect(() => {
+      getMaxValue(...[] as unknown as Parameters<typeof getMaxValue>);
     }).toThrow();
   });
 });
