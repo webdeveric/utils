@@ -12,7 +12,7 @@ export function toPascalCase(text: string, customWords?: Record<string, string>)
   words = words.map( word => {
     const fixedWord = word.replace(/'/g, '');
 
-    return fixedWord[ 0 ].toUpperCase() + fixedWord.substring(1);
+    return fixedWord.substring(0, 1).toUpperCase() + fixedWord.substring(1);
   });
 
   if ( customWords && getType(customWords) === 'Object' ) {
@@ -27,7 +27,7 @@ export function toPascalCase(text: string, customWords?: Record<string, string>)
         const lowerWord = word.toLowerCase();
 
         for (const [ key, value ] of replacements) {
-          if (key === lowerWord) {
+          if (key === lowerWord && typeof value === 'string') {
             return value;
           }
         }

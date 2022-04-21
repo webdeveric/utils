@@ -1,4 +1,4 @@
-import { isNumericValueArray } from './type-predicate';
+import { isNumericValueArray } from './type-predicate.js';
 import type { NumericValue } from './types';
 
 export function assertIsInteger(input: unknown): asserts input is number {
