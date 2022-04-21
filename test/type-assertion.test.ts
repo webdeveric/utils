@@ -1,23 +1,33 @@
-import { assertsIsFiniteNumber, assertsIsInteger } from '../src/type-assertion';
+import {
+  assertIsFiniteNumber, assertIsInteger, assertIsNumericValueArray,
+} from '../src/type-assertion';
 
-describe('assertsIsInteger()', () => {
+describe('assertIsInteger()', () => {
   it('Asserts input is an integer', () => {
-    expect(() => assertsIsInteger(1)).not.toThrow();
+    expect(() => assertIsInteger(1)).not.toThrow();
 
     [ Infinity, Number.NaN, Math.PI, 'abc', false, null, undefined, [], {} ].forEach(input => {
-      expect(() => assertsIsInteger(input)).toThrow();
+      expect(() => assertIsInteger(input)).toThrow();
     });
   });
 });
 
-describe('assertsIsFiniteNumber()', () => {
+describe('assertIsFiniteNumber()', () => {
   it('Asserts input is a finite integer', () => {
     [ 1, Math.PI ].forEach(input => {
-      expect(() => assertsIsFiniteNumber(input)).not.toThrow();
+      expect(() => assertIsFiniteNumber(input)).not.toThrow();
     });
 
     [ Infinity, +Infinity, -Infinity, Number.NaN, 'abc', false, null, undefined, [], {} ].forEach(input => {
-      expect(() => assertsIsFiniteNumber(input)).toThrow();
+      expect(() => assertIsFiniteNumber(input)).toThrow();
     });
   });
 });
+
+describe('assertIsNumericValueArray()', () => {
+  it('Asserts input is a NumericValue[]', () => {
+    expect(() => assertIsNumericValueArray([ 1, 1n, '1' ])).not.toThrow();
+    expect(() => assertIsNumericValueArray([ false, {}, null ])).toThrow();
+  });
+});
+

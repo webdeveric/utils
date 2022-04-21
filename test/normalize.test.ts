@@ -39,6 +39,16 @@ describe('normalize()', () => {
     expect(normalizedPerson.details?.jobTitle).toBe('DEVELOPER');
   });
 
+  it('Record contains NormalizerFn', () => {
+    const normalizeAge: NormalizerFn<Person['age'], Person> = age => typeof age === 'number' ? Math.abs(age) : 0;
+
+    const normalizedPerson = normalize(person, {
+      age: normalizeAge,
+    });
+
+    expect(normalizedPerson.age).toBe(0);
+  });
+
   it('Allows normalizing undefined values', () => {
     const normalizedPerson = normalize<Person>({
       name: 'Test',

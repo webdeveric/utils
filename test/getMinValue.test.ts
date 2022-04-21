@@ -11,7 +11,11 @@ describe('getMinValue()', () => {
 
   it('Throws when not given correct input', () => {
     expect(() => {
-      getMinValue();
+      getMinValue(null as unknown as Parameters<typeof getMinValue>[number]);
+    }).toThrow();
+
+    expect(() => {
+      getMinValue(...[] as unknown as Parameters<typeof getMinValue>);
     }).toThrow();
   });
 });
