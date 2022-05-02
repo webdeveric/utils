@@ -13,7 +13,7 @@ export type NormalizeContext<OwnerRecordType, ContextData extends AnyRecord> = {
   data: ContextData;
 };
 
-export type NormalizerFn<PropertyType, OwnerRecordType, ContextData extends AnyRecord = AnyRecord> = (
+export type NormalizerFn<PropertyType, OwnerRecordType = unknown, ContextData extends AnyRecord = AnyRecord> = (
   input: PropertyType,
   context: NormalizeContext<OwnerRecordType, ContextData>,
 ) => PropertyType;
@@ -27,6 +27,8 @@ export type NormalizersRecord<RecordType, OwnerRecordType, ContextData extends A
 export type AnyNormalizer<RecordType, OwnerRecordType, ContextData extends AnyRecord = AnyRecord> =
   | NormalizerFn<RecordType, OwnerRecordType, ContextData>
   | NormalizersRecord<RecordType, OwnerRecordType, ContextData>;
+
+export type ContextInitializer<OwnerRecordType, ContextData extends AnyRecord = AnyRecord> = (data: OwnerRecordType, normalizers: AnyNormalizer<OwnerRecordType, OwnerRecordType, ContextData>) => ContextData;
 
 /**
  * @example
@@ -45,8 +47,19 @@ export type AnyNormalizer<RecordType, OwnerRecordType, ContextData extends AnyRe
  */
 export function normalize<Data, ContextData extends AnyRecord = AnyRecord>(
   input: Readonly<Data>,
-  normalizers?: AnyNormalizer<Data, Data, ContextData>,
-  initContextData: (data: typeof input, dataNormalizers: typeof normalizers) => ContextData = (): AnyRecord => ({}),
+  normalizers: AnyNormalizer<Data, Data, Partial<ContextData>> // No initializer so data must be partial
+): Data;
+
+export function normalize<Data, ContextData extends AnyRecord = AnyRecord>(
+  input: Readonly<Data>,
+  normalizers: AnyNormalizer<Data, Data, ContextData>,
+  initContextData: ContextInitializer<Data, ContextData>,
+): Data
+
+export function normalize<Data, ContextData extends AnyRecord = AnyRecord>(
+  input: Readonly<Data>,
+  normalizers: AnyNormalizer<Data, Data, ContextData>,
+  initContextData: ContextInitializer<Data, ContextData> = (): AnyRecord => ({}),
 ): Data {
   const current = cloneDeep(input);
 
@@ -70,7 +83,7 @@ export function normalize<Data, ContextData extends AnyRecord = AnyRecord>(
           const normalizers = currentNormalizers[ key ];
           // If the value is undefined but there is a normalizer record, set value to empty object.
           const value = typeof data[ key ] === 'undefined' && isObject(normalizers)
-            ? {} as CurrentRecord[keyof CurrentRecord]
+            ? {} as unknown as CurrentRecord[keyof CurrentRecord]
             : data[ key ];
 
           data[ key ] = walk(value, normalizers);
