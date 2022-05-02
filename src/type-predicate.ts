@@ -4,7 +4,7 @@ export const isOptionalString = (input: unknown): input is string | undefined =>
   typeof input === 'string' || typeof input === 'undefined';
 
 export const isOptionalNumber = (input: unknown): input is number | undefined =>
-  (typeof input === 'number' && ! Number.isNaN(input)) || typeof input === 'undefined';
+  (typeof input === 'number' && !Number.isNaN(input)) || typeof input === 'undefined';
 
 export const isStringMatching = (input: unknown, pattern: RegExp): input is string =>
   typeof input === 'string' && pattern.test(input);
@@ -30,3 +30,7 @@ export const isInteger = (input: unknown): input is number => Number.isInteger(i
 export const isPositiveInteger = (input: unknown): input is number => isInteger(input) && input >= 0;
 
 export const isPositiveFiniteNumber = (input: unknown): input is number => isFiniteNumber(input) && input >= 0;
+
+export const isLengthAware = (input: unknown): input is { length: number } =>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  typeof input === 'object' && input !== null && 'length' in input && typeof (input as any).length === 'number';
