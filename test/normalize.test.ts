@@ -6,7 +6,7 @@ type Person = {
   details?: {
     jobTitle: string;
   };
-}
+};
 
 describe('normalize()', () => {
   const person = Object.freeze<Person>({
@@ -36,7 +36,7 @@ describe('normalize()', () => {
   });
 
   it('Record contains NormalizerFn', () => {
-    const normalizeAge: NormalizerFn<Person['age'], Person> = age => typeof age === 'number' ? Math.abs(age) : 0;
+    const normalizeAge: NormalizerFn<Person['age'], Person> = age => (typeof age === 'number' ? Math.abs(age) : 0);
 
     const normalizedPerson = normalize(person, {
       age: normalizeAge,
@@ -46,31 +46,39 @@ describe('normalize()', () => {
   });
 
   it('Allows normalizing undefined values', () => {
-    const normalizedPerson = normalize<Person>({
-      name: 'Test',
-    }, {
-      age: () => 100,
-    });
+    const normalizedPerson = normalize<Person>(
+      {
+        name: 'Test',
+      },
+      {
+        age: () => 100,
+      },
+    );
 
     expect(normalizedPerson.age).toBe(100);
   });
 
   it('Undefined value that has corresponding normalizer gets initialized as an object literal', () => {
-    const normalizedPerson = normalize<Person>({
-      name: 'Test',
-    }, {
-      details: {
-        jobTitle: jobTitle => String(jobTitle).toLocaleUpperCase(),
+    const normalizedPerson = normalize<Person>(
+      {
+        name: 'Test',
       },
-    });
+      {
+        details: {
+          jobTitle: jobTitle => String(jobTitle).toLocaleUpperCase(),
+        },
+      },
+    );
 
     expect(normalizedPerson.details?.jobTitle).toBe('UNDEFINED');
   });
 
   it('When given invalid normalizers, the input is returned', () => {
-    expect(normalize(person, {
-      name: null as unknown as NormalizerFn<Person['name'], Person>,
-    })).toEqual(person);
+    expect(
+      normalize(person, {
+        name: null as unknown as NormalizerFn<Person['name'], Person>,
+      }),
+    ).toEqual(person);
 
     expect(normalize(person, null as unknown as NormalizerFn<Person, Person>)).toEqual(person);
   });
@@ -81,7 +89,7 @@ describe('normalize()', () => {
         name(...args) {
           expect(args).toHaveLength(2);
 
-          return args[ 0 ];
+          return args[0];
         },
       });
     });

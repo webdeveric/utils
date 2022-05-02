@@ -19,9 +19,7 @@ describe('toPascalCase()', () => {
   });
 
   it('Handles complex sentences', () => {
-    expect(toPascalCase('Hello world! How are you today?')).toBe(
-      'HelloWorldHowAreYouToday',
-    );
+    expect(toPascalCase('Hello world! How are you today?')).toBe('HelloWorldHowAreYouToday');
   });
 
   it('Handles numbers', () => {
@@ -30,9 +28,9 @@ describe('toPascalCase()', () => {
 
   it('Handles apostrophe', () => {
     /* cspell:disable-next-line */
-    expect(toPascalCase('Didn\'t can\'t isn\'t would\'ve')).toBe('DidntCantIsntWouldve');
+    expect(toPascalCase("Didn't can't isn't would've")).toBe('DidntCantIsntWouldve');
     // cSpell:ignore TwasntShouldntve
-    expect(toPascalCase('\'twasn\'t shouldn\'t\'ve')).toBe('TwasntShouldntve');
+    expect(toPascalCase("'twasn't shouldn't've")).toBe('TwasntShouldntve');
   });
 
   it('Supports custom word mapping', () => {
@@ -49,22 +47,29 @@ describe('toPascalCase()', () => {
   it('Coerces to String', () => {
     const expectations = new Map();
 
-    expectations.set( null, 'Null' );
-    expectations.set( undefined, 'Undefined' );
-    expectations.set( true, 'True' );
-    expectations.set( false, 'False' );
-    expectations.set( 1, '1' );
-    expectations.set( 3.14, '314' );
-    expectations.set( BigInt(100), '100' );
-    expectations.set( Symbol('test'), 'SymbolTest' );
-    expectations.set( [], '' );
-    expectations.set( [ 'abc', 123 ], 'Abc123' );
-    expectations.set( {}, 'ObjectObject' );
-    expectations.set( { toString() { return 'hello world'; } }, 'HelloWorld' );
-    expectations.set( new Map(), 'ObjectMap' );
-    expectations.set( new Set(), 'ObjectSet' );
+    expectations.set(null, 'Null');
+    expectations.set(undefined, 'Undefined');
+    expectations.set(true, 'True');
+    expectations.set(false, 'False');
+    expectations.set(1, '1');
+    expectations.set(3.14, '314');
+    expectations.set(BigInt(100), '100');
+    expectations.set(Symbol('test'), 'SymbolTest');
+    expectations.set([], '');
+    expectations.set(['abc', 123], 'Abc123');
+    expectations.set({}, 'ObjectObject');
+    expectations.set(
+      {
+        toString() {
+          return 'hello world';
+        },
+      },
+      'HelloWorld',
+    );
+    expectations.set(new Map(), 'ObjectMap');
+    expectations.set(new Set(), 'ObjectSet');
 
-    for ( const [ input, output ] of expectations ) {
+    for (const [input, output] of expectations) {
       expect(toPascalCase(input)).toBe(output);
     }
   });

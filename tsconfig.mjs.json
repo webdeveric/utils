@@ -4,7 +4,5 @@
     "module": "es2015",
     "outDir": "./dist/mjs"
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }

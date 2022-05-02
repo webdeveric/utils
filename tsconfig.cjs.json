@@ -5,7 +5,5 @@
     "target": "ES2018",
     "outDir": "./dist/cjs"
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }

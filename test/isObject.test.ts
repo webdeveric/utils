@@ -6,7 +6,7 @@ describe('isObject()', () => {
   });
 
   it('Returns false if input is not an object', () => {
-    [ null, false, Symbol(), undefined, 'hi', 1, 1n ].forEach(value => {
+    [null, false, Symbol(), undefined, 'hi', 1, 1n].forEach(value => {
       expect(isObject(value)).toBeFalsy();
     });
   });

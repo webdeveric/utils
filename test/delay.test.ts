@@ -1,7 +1,7 @@
 import { delay } from '../src/delay';
 
 describe('delay()', () => {
-  beforeEach( () => {
+  beforeEach(() => {
     jest.useFakeTimers();
   });
 
@@ -10,7 +10,7 @@ describe('delay()', () => {
 
     jest.runOnlyPendingTimers();
 
-    await expect( tenSecondDelay ).resolves.toBeUndefined();
+    await expect(tenSecondDelay).resolves.toBeUndefined();
   });
 
   it('Specifies the return value', async () => {
@@ -18,10 +18,10 @@ describe('delay()', () => {
 
     jest.runOnlyPendingTimers();
 
-    await expect( tenSecondDelay ).resolves.toBe('value');
+    await expect(tenSecondDelay).resolves.toBe('value');
   });
 
   it('Rejects when provided invalid milliseconds', async () => {
-    await expect( delay('wrong milliseconds value' as unknown as number) ).rejects.toThrow();
+    await expect(delay('wrong milliseconds value' as unknown as number)).rejects.toThrow();
   });
 });

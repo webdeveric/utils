@@ -1,21 +1,19 @@
-import {
-  until, UntilCallback, UntilContext, UntilOptions,
-} from '../src/until';
+import { until, UntilCallback, UntilContext, UntilOptions } from '../src/until';
 
 describe('until()', () => {
   it('Waits until the callback resolves or rejects', async () => {
-    const untilTrue = until( resolve => resolve(true) );
+    const untilTrue = until(resolve => resolve(true));
 
-    await expect( untilTrue ).resolves.toBeTruthy();
+    await expect(untilTrue).resolves.toBeTruthy();
   });
 
   it('delay can be a callback that accepts a context', async () => {
-    const mockFn = jest.fn( context => context.callCount );
+    const mockFn = jest.fn(context => context.callCount);
     const callLimit = 2;
 
     const untilTrue = until(
       (resolve, _reject, context) => {
-        if ( context.callCount === callLimit ) {
+        if (context.callCount === callLimit) {
           resolve(true);
         }
       },
@@ -24,38 +22,43 @@ describe('until()', () => {
       },
     );
 
-    await expect( untilTrue ).resolves.toBeTruthy();
+    await expect(untilTrue).resolves.toBeTruthy();
 
-    expect( mockFn.mock.calls[ 0 ] ).toHaveLength(1);
+    expect(mockFn.mock.calls[0]).toHaveLength(1);
 
-    expect( mockFn ).toHaveBeenCalledTimes( callLimit - 1 );
+    expect(mockFn).toHaveBeenCalledTimes(callLimit - 1);
   });
 
   it('timeout can be a callback that accepts a context', async () => {
-    const mockFn = jest.fn( context => context.callCount );
+    const mockFn = jest.fn(context => context.callCount);
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const willTimeout = until( () => {}, { delay: 1, timeout: mockFn } );
+    const willTimeout = until(() => {}, { delay: 1, timeout: mockFn });
 
-    await expect( willTimeout ).rejects.toBeInstanceOf(Error);
+    await expect(willTimeout).rejects.toBeInstanceOf(Error);
 
-    expect( mockFn.mock.calls[ 0 ] ).toHaveLength(1);
+    expect(mockFn.mock.calls[0]).toHaveLength(1);
 
-    expect( mockFn ).toHaveBeenCalledTimes( 1 );
+    expect(mockFn).toHaveBeenCalledTimes(1);
   });
 
   it('Callback checks an external variable', async () => {
     let doSomething = false;
 
-    setTimeout( () => {
+    setTimeout(() => {
       doSomething = true;
-    }, 5 );
+    }, 5);
 
-    await expect( until( resolve => {
-      if ( doSomething ) {
-        resolve( true );
-      }
-    },  { delay: 1, timeout: 100 } ) ).resolves.toBeTruthy();
+    await expect(
+      until(
+        resolve => {
+          if (doSomething) {
+            resolve(true);
+          }
+        },
+        { delay: 1, timeout: 100 },
+      ),
+    ).resolves.toBeTruthy();
   });
 
   it('Waits for some time to pass', async () => {
@@ -65,31 +68,41 @@ describe('until()', () => {
       return () => Date.now() - start >= ms;
     }
 
-    const someTimeHasPassed = msFromNow( 5 );
+    const someTimeHasPassed = msFromNow(5);
 
     const callback = (resolve: (input: number) => void): void => {
-      if ( someTimeHasPassed() ) {
+      if (someTimeHasPassed()) {
         resolve(2);
       }
     };
 
-    await expect( until( callback, { delay: 1 } ) ).resolves.toBe(2);
+    await expect(until(callback, { delay: 1 })).resolves.toBe(2);
   });
 
   it('Can timeout', async () => {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    await expect( until( () => {}, { delay: 1, timeout: 1 } ) ).rejects.toBeInstanceOf(Error);
+    await expect(until(() => {}, { delay: 1, timeout: 1 })).rejects.toBeInstanceOf(Error);
   });
 
   it('fn that throws will cause a rejection', async () => {
-    await expect( until( () => {
-      throw new Error('rejected');
-    }, { delay: 1, timeout: 1 } ) ).rejects.toBeInstanceOf(Error);
+    await expect(
+      until(
+        () => {
+          throw new Error('rejected');
+        },
+        { delay: 1, timeout: 1 },
+      ),
+    ).rejects.toBeInstanceOf(Error);
 
-    await expect( until( () => {
-      // eslint-disable-next-line no-throw-literal
-      throw 'error';
-    }, { delay: 1, timeout: 1 } ) ).rejects.toBeInstanceOf(Error);
+    await expect(
+      until(
+        () => {
+          // eslint-disable-next-line no-throw-literal
+          throw 'error';
+        },
+        { delay: 1, timeout: 1 },
+      ),
+    ).rejects.toBeInstanceOf(Error);
   });
 
   it('Will reject after options.callLimit is reached', async () => {
@@ -99,9 +112,9 @@ describe('until()', () => {
     };
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const results = until( () => {}, options );
+    const results = until(() => {}, options);
 
-    await expect( results ).rejects.toBeInstanceOf(Error);
+    await expect(results).rejects.toBeInstanceOf(Error);
   });
 
   describe('Invalid arguments throw an error', () => {
@@ -113,75 +126,84 @@ describe('until()', () => {
 
     describe('options', () => {
       it('options must be an object or undefined', async () => {
-        await expect( until( cb ) ).resolves.toBeTruthy();
+        await expect(until(cb)).resolves.toBeTruthy();
 
-        await expect( until( cb, { delay: 1 } ) ).resolves.toBeTruthy();
+        await expect(until(cb, { delay: 1 })).resolves.toBeTruthy();
 
-        await expect( until( cb, null as unknown as UntilOptions )).rejects.toThrow();
+        await expect(until(cb, null as unknown as UntilOptions)).rejects.toThrow();
 
-        await expect( until( cb, false as unknown as UntilOptions )).rejects.toThrow();
+        await expect(until(cb, false as unknown as UntilOptions)).rejects.toThrow();
       });
 
       it('options.delay must be a function or a number', async () => {
-        await expect( until( cb, { delay: 1 } ) ).resolves.toBeTruthy();
+        await expect(until(cb, { delay: 1 })).resolves.toBeTruthy();
 
-        await expect( until( cb, { delay: () => 1 } ) ).resolves.toBeTruthy();
+        await expect(until(cb, { delay: () => 1 })).resolves.toBeTruthy();
 
-        await expect( until( cb, { delay: false as unknown as number } )).rejects.toThrow();
+        await expect(until(cb, { delay: false as unknown as number })).rejects.toThrow();
 
-        await expect( until( cb, { delay: 'not a number' as unknown as number } )).rejects.toThrow();
+        await expect(until(cb, { delay: 'not a number' as unknown as number })).rejects.toThrow();
       });
 
       it('options.timeout must be undefined, function, or number', async () => {
-        await expect( until( cb, { delay: 1, timeout: undefined } )).resolves.toBeTruthy();
+        await expect(until(cb, { delay: 1, timeout: undefined })).resolves.toBeTruthy();
 
-        await expect( until( cb, { delay: 1, timeout: 10 } )).resolves.toBeTruthy();
+        await expect(until(cb, { delay: 1, timeout: 10 })).resolves.toBeTruthy();
 
-        await expect( until( cb, { delay: 1, timeout: () => 10  } )).resolves.toBeTruthy();
+        await expect(until(cb, { delay: 1, timeout: () => 10 })).resolves.toBeTruthy();
 
-        await expect(until( cb, { delay: 1, timeout: null as unknown as number } )).rejects.toThrow();
+        await expect(until(cb, { delay: 1, timeout: null as unknown as number })).rejects.toThrow();
 
-        await expect(until( cb, { delay: 1, timeout: false as unknown as number } )).rejects.toThrow();
+        await expect(until(cb, { delay: 1, timeout: false as unknown as number })).rejects.toThrow();
 
-        await expect(until( cb, { delay: 1, timeout: 'not a number' as unknown as number } )).rejects.toThrow();
+        await expect(until(cb, { delay: 1, timeout: 'not a number' as unknown as number })).rejects.toThrow();
       });
 
       it('options.callLimit must be undefined or number', async () => {
-        await expect( until( cb, { delay: 1, callLimit: undefined } )).resolves.toBeTruthy();
+        await expect(until(cb, { delay: 1, callLimit: undefined })).resolves.toBeTruthy();
 
-        await expect( until( cb, { delay: 1, callLimit: 2 } ) ).resolves.toBeTruthy();
+        await expect(until(cb, { delay: 1, callLimit: 2 })).resolves.toBeTruthy();
 
-        await expect( until( cb, { delay: 1, callLimit: 'test' as unknown as number } ) ).rejects.toBeInstanceOf(Error);
+        await expect(until(cb, { delay: 1, callLimit: 'test' as unknown as number })).rejects.toBeInstanceOf(Error);
       });
     });
   });
 
   describe('context', () => {
     it('Keeps track of how many times the callback was called', async () => {
-      const context = await until<UntilContext>( (resolve, _reject, context) => {
-        if ( context.callCount === 2 ) {
-          resolve(context);
-        }
-      }, { delay: 0, timeout: 10 } );
+      const context = await until<UntilContext>(
+        (resolve, _reject, context) => {
+          if (context.callCount === 2) {
+            resolve(context);
+          }
+        },
+        { delay: 0, timeout: 10 },
+      );
 
-      expect( context.callCount ).toBe(2);
+      expect(context.callCount).toBe(2);
     });
 
     it('Keeps track of the last time the callback was called', async () => {
-      const context = await until<UntilContext>( (resolve, _reject, context) => {
-        resolve(context);
-      }, { delay: 0, timeout: 10 } );
+      const context = await until<UntilContext>(
+        (resolve, _reject, context) => {
+          resolve(context);
+        },
+        { delay: 0, timeout: 10 },
+      );
 
-      expect( typeof context.lastCall ).toBe('number');
+      expect(typeof context.lastCall).toBe('number');
     });
 
     it('Keeps track of arbitrary data', async () => {
-      const context = await until<UntilContext>( (resolve, _reject, context) => {
-        context.data.demo = true;
-        resolve(context);
-      }, { delay: 0, timeout: 10 } );
+      const context = await until<UntilContext>(
+        (resolve, _reject, context) => {
+          context.data.demo = true;
+          resolve(context);
+        },
+        { delay: 0, timeout: 10 },
+      );
 
-      expect( context.data.demo ).toBeTruthy();
+      expect(context.data.demo).toBeTruthy();
     });
 
     it('Keeps track of options', async () => {
@@ -190,11 +212,11 @@ describe('until()', () => {
         timeout: 10,
       };
 
-      const contextOptions = await until( (resolve, _reject, context) => {
+      const contextOptions = await until((resolve, _reject, context) => {
         resolve(context.options);
-      }, options );
+      }, options);
 
-      expect( contextOptions ).toBe( options );
+      expect(contextOptions).toBe(options);
     });
   });
 });

@@ -6,5 +6,5 @@ module.exports = {
   coverageDirectory: 'coverage',
   testEnvironment: 'jsdom',
   resolver: 'jest-ts-webcompat-resolver',
-  testMatch: [ '**/test/**/*.test.ts' ],
+  testMatch: ['**/test/**/*.test.ts'],
 };

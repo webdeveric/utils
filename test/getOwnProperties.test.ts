@@ -8,12 +8,12 @@ describe('getOwnProperties()', () => {
     const data = {
       name: 'Test',
       0: 'zero',
-      [ details ]: {},
+      [details]: {},
     };
 
-    expect(getOwnProperties(data)).toEqual(expect.arrayContaining([ 'name', '0', details ]));
+    expect(getOwnProperties(data)).toEqual(expect.arrayContaining(['name', '0', details]));
 
-    expect(getOwnProperties([ 'one', 'two' ])).toEqual(expect.arrayContaining([ '0', '1', 'length' ]));
+    expect(getOwnProperties(['one', 'two'])).toEqual(expect.arrayContaining(['0', '1', 'length']));
   });
 
   it('Throws when not given an object or array', () => {

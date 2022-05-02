@@ -8,11 +8,9 @@ export function getMaxValue(...values: [NumericValue, ...NumericValue[]]): Numer
 
   assertIsNumericValueArray(values);
 
-  return values.reduce(
-    (high, current) => {
-      const value = typeof current === 'string' ? Number(current) : current;
+  return values.reduce((high, current) => {
+    const value = typeof current === 'string' ? Number(current) : current;
 
-      return value > high ? current : high;
-    },
-  );
+    return value > high ? current : high;
+  });
 }

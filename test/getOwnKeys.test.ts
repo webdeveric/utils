@@ -8,9 +8,9 @@ describe('getOwnKeys()', () => {
       0: 'zero',
     };
 
-    expect(getOwnKeys(data)).toEqual(expect.arrayContaining([ 'name', '0' ]));
+    expect(getOwnKeys(data)).toEqual(expect.arrayContaining(['name', '0']));
 
-    expect(getOwnKeys([ 'one', 'two' ])).toEqual(expect.arrayContaining([ '0', '1' ]));
+    expect(getOwnKeys(['one', 'two'])).toEqual(expect.arrayContaining(['0', '1']));
   });
 
   it('Throws when not given an object or array', () => {

@@ -15,7 +15,7 @@ describe('getMinValue()', () => {
     }).toThrow();
 
     expect(() => {
-      getMinValue(...[] as unknown as Parameters<typeof getMinValue>);
+      getMinValue(...([] as unknown as Parameters<typeof getMinValue>));
     }).toThrow();
   });
 });

@@ -2,14 +2,14 @@ import { convert, ConvertFn } from '../src/convert';
 
 describe('convert()', () => {
   it('Converts from one type to another using a function', () => {
-    const result = convert(true, input => ! input);
+    const result = convert(true, input => !input);
 
     expect(result).toBeFalsy();
   });
 
   it('Converts from one type to another using rules', () => {
     const result = convert(false, {
-      testing: input => ! input,
+      testing: input => !input,
     });
 
     expect(result).toEqual(
@@ -68,8 +68,8 @@ describe('convert()', () => {
         const parts = String(person.name).normalize().split(/\s+/);
 
         return {
-          first: parts[ 0 ] ?? '',
-          last: parts[ 1 ] ?? '',
+          first: parts[0] ?? '',
+          last: parts[1] ?? '',
         };
       },
       job: {

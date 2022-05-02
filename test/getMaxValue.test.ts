@@ -15,7 +15,7 @@ describe('getMaxValue()', () => {
     }).toThrow();
 
     expect(() => {
-      getMaxValue(...[] as unknown as Parameters<typeof getMaxValue>);
+      getMaxValue(...([] as unknown as Parameters<typeof getMaxValue>));
     }).toThrow();
   });
 });

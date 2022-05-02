@@ -21,14 +21,17 @@ export type NormalizerFn<PropertyType, OwnerRecordType = unknown, ContextData ex
 export type NormalizersRecord<RecordType, OwnerRecordType, ContextData extends AnyRecord = AnyRecord> = {
   readonly [Property in keyof RecordType]?: RecordType[Property] extends Builtin
     ? NormalizerFn<RecordType[Property], OwnerRecordType, ContextData>
-    : AnyNormalizer<RecordType[Property], OwnerRecordType, ContextData>
+    : AnyNormalizer<RecordType[Property], OwnerRecordType, ContextData>;
 };
 
 export type AnyNormalizer<RecordType, OwnerRecordType, ContextData extends AnyRecord = AnyRecord> =
   | NormalizerFn<RecordType, OwnerRecordType, ContextData>
   | NormalizersRecord<RecordType, OwnerRecordType, ContextData>;
 
-export type ContextInitializer<OwnerRecordType, ContextData extends AnyRecord = AnyRecord> = (data: OwnerRecordType, normalizers: AnyNormalizer<OwnerRecordType, OwnerRecordType, ContextData>) => ContextData;
+export type ContextInitializer<OwnerRecordType, ContextData extends AnyRecord = AnyRecord> = (
+  data: OwnerRecordType,
+  normalizers: AnyNormalizer<OwnerRecordType, OwnerRecordType, ContextData>,
+) => ContextData;
 
 /**
  * @example
@@ -47,14 +50,14 @@ export type ContextInitializer<OwnerRecordType, ContextData extends AnyRecord = 
  */
 export function normalize<Data, ContextData extends AnyRecord = AnyRecord>(
   input: Readonly<Data>,
-  normalizers: AnyNormalizer<Data, Data, Partial<ContextData>> // No initializer so data must be partial
+  normalizers: AnyNormalizer<Data, Data, Partial<ContextData>>, // No initializer so data must be partial
 ): Data;
 
 export function normalize<Data, ContextData extends AnyRecord = AnyRecord>(
   input: Readonly<Data>,
   normalizers: AnyNormalizer<Data, Data, ContextData>,
   initContextData: ContextInitializer<Data, ContextData>,
-): Data
+): Data;
 
 export function normalize<Data, ContextData extends AnyRecord = AnyRecord>(
   input: Readonly<Data>,
@@ -80,13 +83,14 @@ export function normalize<Data, ContextData extends AnyRecord = AnyRecord>(
     if (typeof currentNormalizers === 'object' && currentNormalizers !== null) {
       if (typeof currentRecord === 'object' && currentRecord !== null) {
         return getOwnProperties(currentNormalizers).reduce((data, key) => {
-          const normalizers = currentNormalizers[ key ];
+          const normalizers = currentNormalizers[key];
           // If the value is undefined but there is a normalizer record, set value to empty object.
-          const value = typeof data[ key ] === 'undefined' && isObject(normalizers)
-            ? {} as unknown as CurrentRecord[keyof CurrentRecord]
-            : data[ key ];
+          const value =
+            typeof data[key] === 'undefined' && isObject(normalizers)
+              ? ({} as unknown as CurrentRecord[keyof CurrentRecord])
+              : data[key];
 
-          data[ key ] = walk(value, normalizers);
+          data[key] = walk(value, normalizers);
 
           return data;
         }, currentRecord);

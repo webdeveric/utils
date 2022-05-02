@@ -1,12 +1,6 @@
 {
-  "extends": [
-    "../.eslintrc.json",
-    "plugin:jest/recommended",
-    "plugin:jest/style"
-  ],
-  "plugins": [
-    "jest"
-  ],
+  "extends": ["../.eslintrc.json", "plugin:jest/recommended", "plugin:jest/style"],
+  "plugins": ["jest"],
   "globals": {
     "BigInt": true
   },
