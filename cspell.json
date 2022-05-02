@@ -19,5 +19,6 @@
     "webcompat",
     "webdeveric"
   ],
-  "flagWords": []
+  "flagWords": [],
+  "ignorePaths": [".vscode/"]
 }
