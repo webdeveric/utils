@@ -83,11 +83,16 @@
     "update-keywords": "./bin/update-keywords.mjs",
     "spellcheck": "cspell './{.github,src,test}/**/*.{ts,json}' './*.{md,js}' './package.json' --no-progress",
     "prepublishOnly": "npm run typecheck && npm run spellcheck && npm run lint && npm test && npm run build",
+    "format": "prettier --write ./*.{js,json,md} ./src/ ./test/",
     "prepare": "husky install"
   },
+  "prettier": "@webdeveric/prettier-config",
   "lint-staged": {
-    "*.{js,json,md}": "cspell lint --no-progress --no-summary --no-must-find-files",
-    "*.{js,ts}": "eslint --fix"
+    "*.{js,ts}": "eslint --fix",
+    "*.{ts,js,json,md}": [
+      "cspell lint --no-progress --no-summary --no-must-find-files",
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "lodash.clonedeep": "^4.5.0",
@@ -100,16 +105,20 @@
     "@types/lodash.escaperegexp": "^4.1.6",
     "@types/node": "^17.0.10",
     "@webdeveric/eslint-config-ts": "^0.4.1",
+    "@webdeveric/prettier-config": "^0.2.0",
     "core-js": "^3.11.1",
     "cspell": "^5.3.12",
     "eslint": "^8.10.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jest": "^26.0.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.4",
     "jest": "^27.3.0",
     "jest-ts-webcompat-resolver": "^1.0.0",
     "lint-staged": "^12.4.1",
+    "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
     "ts-jest": "^27.0.7",
     "ts-node": "^10.6.0",

@@ -3,6 +3,7 @@
   "extends": [
     "@webdeveric/eslint-config-ts",
     "plugin:import/recommended",
+    "plugin:prettier/recommended",
     "plugin:import/typescript"
   ],
   "env": {
@@ -11,52 +12,31 @@
     "node": true
   },
   "settings": {
-    "import/extensions": [
-      ".ts",
-      ".mts",
-      ".cts",
-      ".js",
-      ".json"
-    ],
+    "import/extensions": [".ts", ".mts", ".cts", ".js", ".json"],
     "import/resolver": {
       "typescript": {
         "project": "./tsconfig.json"
       },
       "node": {
-        "extensions": [
-          ".js",
-          ".ts",
-          ".mts",
-          ".cts"
-        ]
+        "extensions": [".js", ".ts", ".mts", ".cts"]
       }
     },
     "import/parsers": {
-      "@typescript-eslint/parser": [
-        ".ts",
-        ".mts",
-        ".cts"
-      ]
+      "@typescript-eslint/parser": [".ts", ".mts", ".cts"]
     }
   },
   "rules": {},
   "overrides": [
     {
-      "files": [
-        "./bin/*.cjs"
-      ],
+      "files": ["./bin/*.cjs"],
       "rules": {
         "@typescript-eslint/no-var-requires": "off"
       }
     },
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "parserOptions": {
-        "project": [
-          "./tsconfig.json"
-        ]
+        "project": ["./tsconfig.json"]
       },
       "rules": {
         "@typescript-eslint/explicit-function-return-type": [
