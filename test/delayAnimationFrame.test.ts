@@ -27,9 +27,9 @@ describe('delay animation frames', () => {
     it('delays the specified number of times', async () => {
       const frameCount = 10;
 
-      await expect( delayAnimationFrames(frameCount, 'value') ).resolves.toBe('value');
+      await expect(delayAnimationFrames(frameCount, 'value')).resolves.toBe('value');
 
-      expect( window.requestAnimationFrame ).toHaveBeenCalledTimes(frameCount);
+      expect(window.requestAnimationFrame).toHaveBeenCalledTimes(frameCount);
     });
 
     it('Specifies the return value', async () => {
@@ -41,8 +41,8 @@ describe('delay animation frames', () => {
     it('Rejects when provided invalid frames value', async () => {
       expect.assertions(2);
 
-      await expect( delayAnimationFrames(null as unknown as number) ).rejects.toBeInstanceOf(Error);
-      await expect( delayAnimationFrames(-1) ).rejects.toBeInstanceOf(Error);
+      await expect(delayAnimationFrames(null as unknown as number)).rejects.toBeInstanceOf(Error);
+      await expect(delayAnimationFrames(-1)).rejects.toBeInstanceOf(Error);
     });
   });
 });

@@ -20,7 +20,7 @@ export const convert = <Input, Output>(input: Readonly<Input>, converter: AnyCon
 
   if (typeof converter === 'object' && converter !== null) {
     return getOwnProperties(converter).reduce<Partial<Output>>((data, key) => {
-      data[ key ] = convert(input, converter[ key ]);
+      data[key] = convert(input, converter[key]);
 
       return data;
     }, {}) as Output;

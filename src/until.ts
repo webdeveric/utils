@@ -33,35 +33,35 @@ const defaultOptions: Readonly<UntilOptions> = {
 /**
  * Return a Promise that delegates resolving/rejecting to the passed in function.
  */
-export function until<T>( fn: UntilCallback<T>, options: UntilOptions = defaultOptions ) : Promise<T>
-{
-  if ( typeof fn !== 'function' ) {
+export function until<T>(fn: UntilCallback<T>, options: UntilOptions = defaultOptions): Promise<T> {
+  if (typeof fn !== 'function') {
     return Promise.reject(new Error('fn must be a function'));
   }
 
-  if ( ! options || typeof options !== 'object' ) {
+  if (!options || typeof options !== 'object') {
     return Promise.reject(new Error(`options must be an object. ${getType(options)} provided.`));
   }
 
   const { delay, timeout, callLimit } = Object.assign({}, defaultOptions, options);
 
-  const isDelay = ( input: unknown ) : input is Delay => Number.isInteger( input ) || typeof input === 'function';
+  const isDelay = (input: unknown): input is Delay => Number.isInteger(input) || typeof input === 'function';
 
-  const getDelay = ( delay: Delay, context: UntilContext ) : number => typeof delay === 'function' ? delay( context ) : delay;
+  const getDelay = (delay: Delay, context: UntilContext): number =>
+    typeof delay === 'function' ? delay(context) : delay;
 
-  if ( ! isDelay( delay ) ) {
+  if (!isDelay(delay)) {
     return Promise.reject(new Error('invalid delay value'));
   }
 
-  if ( timeout !== undefined && ! isDelay( timeout ) ) {
+  if (timeout !== undefined && !isDelay(timeout)) {
     return Promise.reject(new Error('invalid timeout value'));
   }
 
-  if ( callLimit !== undefined && ! Number.isInteger( callLimit ) ) {
+  if (callLimit !== undefined && !Number.isInteger(callLimit)) {
     return Promise.reject(new Error('invalid callLimit value'));
   }
 
-  return new Promise<T>( ( resolutionFn: ResolveFn<T>, rejectionFn: RejectFn ) => {
+  return new Promise<T>((resolutionFn: ResolveFn<T>, rejectionFn: RejectFn) => {
     let callCount = 0;
     let lastCall: number | undefined;
     let done = false;
@@ -70,19 +70,19 @@ export function until<T>( fn: UntilCallback<T>, options: UntilOptions = defaultO
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let timeoutTimer: any;
 
-    const finish = () : void => {
+    const finish = (): void => {
       done = true;
-      clearTimeout( timer );
-      clearTimeout( timeoutTimer );
+      clearTimeout(timer);
+      clearTimeout(timeoutTimer);
     };
 
-    const resolve: ResolveFn<T> = (value: ResolverValue<T>) : void => {
-      resolutionFn( value );
+    const resolve: ResolveFn<T> = (value: ResolverValue<T>): void => {
+      resolutionFn(value);
       finish();
     };
 
-    const reject: RejectFn = (error?: Error) : void => {
-      rejectionFn( error );
+    const reject: RejectFn = (error?: Error): void => {
+      rejectionFn(error);
       finish();
     };
 
@@ -99,35 +99,32 @@ export function until<T>( fn: UntilCallback<T>, options: UntilOptions = defaultO
       data: {},
     });
 
-    const callUntilDone = ( fn: UntilCallback<T>, delay: Delay, resolve: ResolveFn<T>, reject: RejectFn ) : void => {
+    const callUntilDone = (fn: UntilCallback<T>, delay: Delay, resolve: ResolveFn<T>, reject: RejectFn): void => {
       try {
-        if ( callLimit && callCount >= callLimit ) {
+        if (callLimit && callCount >= callLimit) {
           throw new Error(`until callLimit reached: ${callLimit}`);
         }
 
         ++callCount;
 
-        fn( resolve, reject, context );
+        fn(resolve, reject, context);
 
         lastCall = Date.now();
 
-        if ( ! done ) {
-          timer = setTimeout( callUntilDone, getDelay( delay, context ), fn, delay, resolve, reject );
+        if (!done) {
+          timer = setTimeout(callUntilDone, getDelay(delay, context), fn, delay, resolve, reject);
         }
-      } catch ( error ) {
-        reject( error instanceof Error ? error : new Error(`${error}`) );
+      } catch (error) {
+        reject(error instanceof Error ? error : new Error(`${error}`));
       }
     };
 
-    callUntilDone( fn, delay, resolve, reject );
+    callUntilDone(fn, delay, resolve, reject);
 
-    if ( ! done && timeout !== undefined ) {
-      timeoutTimer = setTimeout(
-        () => {
-          reject( new Error('until: timed out') );
-        },
-        getDelay( timeout, context ),
-      );
+    if (!done && timeout !== undefined) {
+      timeoutTimer = setTimeout(() => {
+        reject(new Error('until: timed out'));
+      }, getDelay(timeout, context));
     }
   });
 }

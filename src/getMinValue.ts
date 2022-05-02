@@ -8,11 +8,9 @@ export function getMinValue(...values: [NumericValue, ...NumericValue[]]): Numer
 
   assertIsNumericValueArray(values);
 
-  return values.reduce(
-    (low, current) => {
-      const value = typeof current === 'string' ? Number(current) : current;
+  return values.reduce((low, current) => {
+    const value = typeof current === 'string' ? Number(current) : current;
 
-      return value < low ? current : low;
-    },
-  );
+    return value < low ? current : low;
+  });
 }
