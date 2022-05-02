@@ -29,7 +29,7 @@
     "trimEnd",
     "trimStart",
     "type-assertion",
-    "types",
+    "type-predicate",
     "uniqueItems",
     "until"
   ],
@@ -82,7 +82,12 @@
     "validate": "./bin/validate.cjs",
     "update-keywords": "./bin/update-keywords.mjs",
     "spellcheck": "cspell './{.github,src,test}/**/*.{ts,json}' './*.{md,js}' './package.json' --no-progress",
-    "prepublishOnly": "npm run typecheck && npm run spellcheck && npm run lint && npm test && npm run build"
+    "prepublishOnly": "npm run typecheck && npm run spellcheck && npm run lint && npm test && npm run build",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{js,json,md}": "cspell lint --no-progress --no-summary --no-must-find-files",
+    "*.{js,ts}": "eslint --fix"
   },
   "dependencies": {
     "lodash.clonedeep": "^4.5.0",
@@ -101,8 +106,10 @@
     "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jest": "^26.0.0",
+    "husky": "^7.0.4",
     "jest": "^27.3.0",
     "jest-ts-webcompat-resolver": "^1.0.0",
+    "lint-staged": "^12.4.1",
     "rimraf": "^3.0.2",
     "ts-jest": "^27.0.7",
     "ts-node": "^10.6.0",
