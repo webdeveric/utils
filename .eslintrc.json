@@ -28,24 +28,15 @@
   "rules": {},
   "overrides": [
     {
-      "files": ["./bin/*.cjs"],
-      "rules": {
-        "@typescript-eslint/no-var-requires": "off"
-      }
-    },
-    {
       "files": ["*.ts"],
       "parserOptions": {
         "project": ["./tsconfig.json"]
-      },
-      "rules": {
-        "@typescript-eslint/explicit-function-return-type": [
-          "error",
-          {
-            "allowExpressions": true
-          }
-        ],
-        "@typescript-eslint/no-floating-promises": "error"
+      }
+    },
+    {
+      "files": ["./*.js", "./bin/*.{cjs,mjs}"],
+      "parserOptions": {
+        "project": ["./tsconfig.project-files.json"]
       }
     }
   ]
