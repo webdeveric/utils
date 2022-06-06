@@ -1,15 +1,7 @@
 #!/usr/bin/env node
-import {
-  dirname,
-  extname,
-  resolve,
-} from 'path';
-import {
-  readdir,
-  readFile,
-  writeFile,
-} from 'fs/promises';
-import { URL } from 'url';
+import { dirname, extname, resolve } from 'node:path';
+import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { URL } from 'node:url';
 
 const rootDir = resolve(new URL(dirname(import.meta.url)).pathname, '..');
 const srcDir = resolve(rootDir, 'src');
@@ -24,7 +16,7 @@ async function getFileNames(dirPath) {
 
     for (const entry of entries) {
       if (entry.isDirectory()) {
-        filenames.push(...await getFileNames(resolve(dirPath, entry.name)));
+        filenames.push(...(await getFileNames(resolve(dirPath, entry.name))));
       } else if (entry.isFile()) {
         filenames.push(entry.name);
       }
@@ -36,27 +28,21 @@ async function getFileNames(dirPath) {
   return filenames;
 }
 
-const byLocale = (a, b) => a.localeCompare(b);
+const byLocale = (left, right) => left.localeCompare(right);
 
 const files = (await getFileNames(srcDir))
   .map(file => file.replace(new RegExp(`${extname(file)}$`), ''))
   .filter(file => file !== 'index')
   .sort(byLocale);
 
-const packageData = JSON.parse(await readFile(
-  packageFile,
-  { encoding: 'utf8' },
-));
+const packageData = JSON.parse(await readFile(packageFile, { encoding: 'utf8' }));
 
 const uniqueKeywords = new Set(packageData.keywords);
 
 files.forEach(item => uniqueKeywords.delete(item));
 
-const keywords = [ ...uniqueKeywords ].sort(byLocale);
+const keywords = [...uniqueKeywords].sort(byLocale);
 
-packageData.keywords = [
-  ...keywords,
-  ...files,
-];
+packageData.keywords = [...keywords, ...files];
 
 await writeFile(packageFile, JSON.stringify(packageData, null, 2) + '\n');

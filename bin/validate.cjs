@@ -5,21 +5,15 @@ async function validate(name) {
 
   const checks = new Map();
 
-  checks.set(
-    `require('${name}');`,
-    () => {
-      require(name);
-    },
-  );
+  checks.set(`require('${name}');`, () => {
+    require(name);
+  });
 
-  checks.set(
-    `import('${name}');`,
-    async () => {
-      await import(name);
-    },
-  );
+  checks.set(`import('${name}');`, async () => {
+    await import(name);
+  });
 
-  for (const [ name, fn ] of checks) {
+  for (const [name, fn] of checks) {
     try {
       await fn();
 
@@ -36,7 +30,7 @@ async function validate(name) {
 }
 
 if (typeof process.env.npm_package_name === 'string') {
-  validate(process.env.npm_package_name);
+  validate(process.env.npm_package_name).catch(error => console.error(error));
 } else {
   console.error('Cannot find npm package name in your environment.');
   console.info('Run this script from your package.json scripts block.');
