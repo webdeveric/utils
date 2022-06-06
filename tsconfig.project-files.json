@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "noEmit": true,
+    "allowJs": true
+  },
+  "include": ["./*.js", "./bin/*.cjs", "./bin/*.mjs"],
+  "exclude": ["node_modules", "private"]
+}

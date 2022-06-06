@@ -16,7 +16,12 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "noUncheckedIndexedAccess": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    "importsNotUsedAsValues": "error",
+    "noErrorTruncation": true,
+    "exactOptionalPropertyTypes": true
   },
   "include": ["src/**/*", "test/**/*"],
   "exclude": ["node_modules", "private"]
