@@ -146,7 +146,7 @@ describe('until()', () => {
       });
 
       it('options.timeout must be undefined, function, or number', async () => {
-        await expect(until(cb, { delay: 1, timeout: undefined })).resolves.toBeTruthy();
+        await expect(until(cb, { delay: 1 })).resolves.toBeTruthy();
 
         await expect(until(cb, { delay: 1, timeout: 10 })).resolves.toBeTruthy();
 
@@ -160,7 +160,7 @@ describe('until()', () => {
       });
 
       it('options.callLimit must be undefined or number', async () => {
-        await expect(until(cb, { delay: 1, callLimit: undefined })).resolves.toBeTruthy();
+        await expect(until(cb, { delay: 1 })).resolves.toBeTruthy();
 
         await expect(until(cb, { delay: 1, callLimit: 2 })).resolves.toBeTruthy();
 

@@ -3,7 +3,7 @@ import { getType } from './getType.js';
 
 export interface UntilContext {
   callCount: number;
-  lastCall?: number;
+  lastCall: number | undefined;
   data: AnyRecord;
   options: UntilOptions;
 }
@@ -30,6 +30,8 @@ const defaultOptions: Readonly<UntilOptions> = {
   delay: 10,
 };
 
+export const isDelay = (input: unknown): input is Delay => Number.isInteger(input) || typeof input === 'function';
+
 /**
  * Return a Promise that delegates resolving/rejecting to the passed in function.
  */
@@ -39,26 +41,24 @@ export function until<T>(fn: UntilCallback<T>, options: UntilOptions = defaultOp
   }
 
   if (!options || typeof options !== 'object') {
-    return Promise.reject(new Error(`options must be an object. ${getType(options)} provided.`));
+    return Promise.reject(new TypeError(`options must be an object. ${getType(options)} provided.`));
   }
 
   const { delay, timeout, callLimit } = Object.assign({}, defaultOptions, options);
-
-  const isDelay = (input: unknown): input is Delay => Number.isInteger(input) || typeof input === 'function';
 
   const getDelay = (delay: Delay, context: UntilContext): number =>
     typeof delay === 'function' ? delay(context) : delay;
 
   if (!isDelay(delay)) {
-    return Promise.reject(new Error('invalid delay value'));
+    return Promise.reject(new TypeError('invalid delay value'));
   }
 
   if (timeout !== undefined && !isDelay(timeout)) {
-    return Promise.reject(new Error('invalid timeout value'));
+    return Promise.reject(new TypeError('invalid timeout value'));
   }
 
   if (callLimit !== undefined && !Number.isInteger(callLimit)) {
-    return Promise.reject(new Error('invalid callLimit value'));
+    return Promise.reject(new TypeError('invalid callLimit value'));
   }
 
   return new Promise<T>((resolutionFn: ResolveFn<T>, rejectionFn: RejectFn) => {
