@@ -6,10 +6,12 @@ import {
   isNumericString,
   isNumericValue,
   isNumericValueArray,
+  isObject,
   isOptionalNumber,
   isOptionalString,
   isPositiveFiniteNumber,
   isPositiveInteger,
+  isPrimitive,
   isPropertyKey,
   isStringMatching,
 } from '../src/type-predicate';
@@ -173,5 +175,44 @@ describe('isLengthAware()', () => {
   it('Returns false for invalid input', () => {
     expect(isLengthAware(null)).toBeFalsy();
     expect(isLengthAware({})).toBeFalsy();
+  });
+});
+
+describe('isPrimitive()', () => {
+  it('Returns true for valid input', () => {
+    ['a', 1, 1n, true, undefined, Symbol(), null].forEach(input => {
+      expect(isPrimitive(input)).toBeTruthy();
+    });
+  });
+
+  it('Returns false for invalid input', () => {
+    expect(isPrimitive({})).toBeFalsy();
+    expect(isPrimitive(new Date())).toBeFalsy();
+  });
+});
+
+describe('isObject()', () => {
+  it('Returns true for valid input', () => {
+    [new Date(), {}].forEach(input => {
+      expect(isObject(input)).toBeTruthy();
+    });
+  });
+
+  it('Returns false for invalid input', () => {
+    ['a', 1, 1n, true, undefined, Symbol(), null].forEach(input => {
+      expect(isObject(input)).toBeFalsy();
+    });
+  });
+
+  it('Can customize the `is` return type', () => {
+    type Demo = {
+      demo: true;
+    };
+
+    expect(
+      isObject<Demo>({
+        demo: true,
+      }),
+    ).toBeTruthy();
   });
 });

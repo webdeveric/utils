@@ -1,3 +1,5 @@
+export type Primitive = string | number | bigint | boolean | undefined | symbol | null;
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyRecord = Record<PropertyKey, any>;
 

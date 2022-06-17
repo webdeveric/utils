@@ -1,4 +1,4 @@
-import type { NumericString, NumericValue } from './types';
+import type { NumericString, NumericValue, Primitive } from './types';
 
 export const isOptionalString = (input: unknown): input is string | undefined =>
   typeof input === 'string' || typeof input === 'undefined';
@@ -34,3 +34,16 @@ export const isPositiveFiniteNumber = (input: unknown): input is number => isFin
 export const isLengthAware = (input: unknown): input is { length: number } =>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   typeof input === 'object' && input !== null && 'length' in input && typeof (input as any).length === 'number';
+
+export const isPrimitive = (input: unknown): input is Primitive =>
+  typeof input === 'string' ||
+  typeof input === 'number' ||
+  typeof input === 'bigint' ||
+  typeof input === 'boolean' ||
+  typeof input === 'undefined' ||
+  typeof input === 'symbol' ||
+  input === null;
+
+export const isObject = <O extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>>(
+  input: unknown,
+): input is O => input !== null && typeof input === 'object' && !Array.isArray(input);
