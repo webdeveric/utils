@@ -105,7 +105,7 @@
     "@types/jest": "^28.1.1",
     "@types/lodash.clonedeep": "^4.5.6",
     "@types/lodash.escaperegexp": "^4.1.6",
-    "@types/node": "^17.0.10",
+    "@types/node": "^18.0.0",
     "@webdeveric/eslint-config-ts": "^0.5.2",
     "@webdeveric/prettier-config": "^0.2.0",
     "core-js": "^3.11.1",
