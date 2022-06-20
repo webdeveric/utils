@@ -16,6 +16,7 @@ export * from './normalize.js';
 export * from './secToString.js';
 export * from './toPascalCase.js';
 export * from './trimEnd.js';
+export * from './trimIndentation.js';
 export * from './trimStart.js';
 export * from './type-assertion.js';
 export * from './types.js';
