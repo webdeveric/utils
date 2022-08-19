@@ -10,6 +10,7 @@
     "fcrdns",
     "hostnames",
     "keyof",
+    "Newable",
     "postbuild",
     "prebuild",
     "Testerson",
