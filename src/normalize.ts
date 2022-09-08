@@ -48,18 +48,18 @@ export type ContextInitializer<OwnerRecordType, ContextData extends AnyRecord = 
  * normalize(true, () => false );
  * ```
  */
-export function normalize<Data, ContextData extends AnyRecord = AnyRecord>(
+export function normalize<Data extends object, ContextData extends AnyRecord = AnyRecord>(
   input: Readonly<Data>,
   normalizers: AnyNormalizer<Data, Data, Partial<ContextData>>, // No initializer so data must be partial
 ): Data;
 
-export function normalize<Data, ContextData extends AnyRecord = AnyRecord>(
+export function normalize<Data extends object, ContextData extends AnyRecord = AnyRecord>(
   input: Readonly<Data>,
   normalizers: AnyNormalizer<Data, Data, ContextData>,
   initContextData: ContextInitializer<Data, ContextData>,
 ): Data;
 
-export function normalize<Data, ContextData extends AnyRecord = AnyRecord>(
+export function normalize<Data extends object, ContextData extends AnyRecord = AnyRecord>(
   input: Readonly<Data>,
   normalizers: AnyNormalizer<Data, Data, ContextData>,
   initContextData: ContextInitializer<Data, ContextData> = (): AnyRecord => ({}),
@@ -72,7 +72,7 @@ export function normalize<Data, ContextData extends AnyRecord = AnyRecord>(
     data: initContextData(input, normalizers),
   });
 
-  const walk = <CurrentRecord>(
+  const walk = <CurrentRecord extends AnyRecord>(
     currentRecord: CurrentRecord,
     currentNormalizers?: AnyNormalizer<CurrentRecord, Data, ContextData>,
   ): CurrentRecord => {
