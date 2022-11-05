@@ -1,4 +1,4 @@
-import type { NumericString, NumericValue, Primitive } from './types';
+import type { NumericString, NumericValue, Primitive } from './types.js';
 
 export const isOptionalString = (input: unknown): input is string | undefined =>
   typeof input === 'string' || typeof input === 'undefined';
