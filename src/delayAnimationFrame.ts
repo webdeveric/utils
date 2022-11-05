@@ -1,8 +1,16 @@
+export function delayAnimationFrame(): Promise<undefined>;
+
+export function delayAnimationFrame<T>(value: T): Promise<T>;
+
 export function delayAnimationFrame<T>(value?: T): Promise<typeof value> {
   return new Promise(resolve => {
     window.requestAnimationFrame(() => resolve(value));
   });
 }
+
+export function delayAnimationFrames(frames: number): Promise<undefined>;
+
+export function delayAnimationFrames<T>(frames: number, value: T): Promise<T>;
 
 export function delayAnimationFrames<T>(frames: number, value?: T): Promise<typeof value> {
   return new Promise((resolve, reject) => {

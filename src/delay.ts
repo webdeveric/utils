@@ -6,7 +6,11 @@ import { getType } from './getType.js';
  *
  * {@link https://developer.mozilla.org/en-US/docs/Web/API/setTimeout#maximum_delay_value}
  */
-export function delay<T>(milliseconds: number, value?: T): Promise<T> {
+export function delay(milliseconds: number): Promise<undefined>;
+
+export function delay<T>(milliseconds: number, value: T): Promise<T>;
+
+export function delay<T>(milliseconds: number, value?: T): Promise<typeof value> {
   return new Promise((resolve, reject) => {
     if (typeof milliseconds !== 'number') {
       reject(new TypeError(`milliseconds must be a number. ${getType(milliseconds)} was provided.`));
