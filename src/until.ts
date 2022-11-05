@@ -1,4 +1,4 @@
-import type { AnyRecord } from './types';
+import type { AnyRecord } from './types.js';
 import { getType } from './getType.js';
 
 export interface UntilContext {

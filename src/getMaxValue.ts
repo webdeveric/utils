@@ -1,5 +1,5 @@
 import { assertIsNumericValueArray } from './type-assertion.js';
-import type { NumericValue } from './types';
+import type { NumericValue } from './types.js';
 
 export function getMaxValue(...values: [NumericValue, ...NumericValue[]]): NumericValue {
   if (values.length === 0) {
