@@ -1,4 +1,5 @@
 export * from './asArray.js';
+export * from './capitalize.js';
 export * from './clamp.js';
 export * from './compose.js';
 export * from './convert.js';

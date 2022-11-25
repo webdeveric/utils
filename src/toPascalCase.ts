@@ -1,39 +1,29 @@
+import { capitalize } from './capitalize.js';
 import { getType } from './getType.js';
 
-export function toPascalCase(text: string, customWords?: Record<string, string>): string {
-  let words = String(text).match(/[A-Z][a-z']+|\d+|[a-z']+/g);
+import type { KeyValueTuple, StringRecord } from './types.js';
 
-  if (!words) {
+export function toPascalCase(text: string, customWords?: StringRecord): string {
+  const words = String(text).match(/[A-Z][a-z']+|\d+|[a-z']+/g);
+
+  if (words === null) {
     return '';
   }
 
-  // Remove apostrophes then uppercase the first letter of each word.
-  words = words.map(word => {
-    const fixedWord = word.replace(/'/g, '');
-
-    return fixedWord.substring(0, 1).toUpperCase() + fixedWord.substring(1);
-  });
+  let fixedWords = words.map(word => capitalize(word.replace(/'/g, '')));
 
   if (customWords && getType(customWords) === 'Object') {
-    const replacements = Object.entries(customWords).map(([key, value]) => [key.toLowerCase(), value]);
+    const replacements = new Map(
+      Object.entries(customWords).map<KeyValueTuple<string, string>>(([key, value]) => [key.toLowerCase(), value]),
+    );
 
-    if (replacements.length) {
+    if (replacements.size) {
       // This takes a single word and returns the first matching replacement, if any.
-      const replaceCustomWords = (word: string): string => {
-        const lowerWord = word.toLowerCase();
+      const replaceCustomWords = (word: string): string => replacements.get(word.toLowerCase()) ?? word;
 
-        for (const [key, value] of replacements) {
-          if (key === lowerWord && typeof value === 'string') {
-            return value;
-          }
-        }
-
-        return word;
-      };
-
-      words = words.map(replaceCustomWords);
+      fixedWords = fixedWords.map(replaceCustomWords);
     }
   }
 
-  return words.join('');
+  return fixedWords.join('');
 }
