@@ -1,4 +1,7 @@
-export type Primitive = string | number | bigint | boolean | undefined | symbol | null;
+export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type Builtin = Date | Error | Function | Primitive | RegExp;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyRecord = Record<PropertyKey, any>;
