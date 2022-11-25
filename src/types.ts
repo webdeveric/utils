@@ -27,3 +27,14 @@ export type AnyNewable = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   new (...args: any[]): any;
 };
+
+export type JoinTuples<A extends unknown[], B extends unknown[]> = [...A, ...B];
+
+export type RangeTuple<T> = [min: T, max: T];
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type RangeTupleDistributive<T> = T extends any ? [min: T, max: T] : never;
+
+export type NumberRangeTuple = RangeTuple<number>;
+
+export type KeyValueTuple<K extends PropertyKey = PropertyKey, V = unknown> = [key: K, value: V];
