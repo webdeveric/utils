@@ -1,7 +1,12 @@
-export type Primitive = string | number | bigint | boolean | undefined | symbol | null;
+export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type Builtin = Date | Error | Function | Primitive | RegExp;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyRecord = Record<PropertyKey, any>;
+
+export type StringRecord = Record<string, string>;
 
 export type UnknownRecord = Record<PropertyKey, unknown>;
 
@@ -24,3 +29,14 @@ export type AnyNewable = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   new (...args: any[]): any;
 };
+
+export type JoinTuples<A extends unknown[], B extends unknown[]> = [...A, ...B];
+
+export type RangeTuple<T> = [min: T, max: T];
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type RangeTupleDistributive<T> = T extends any ? [min: T, max: T] : never;
+
+export type NumberRangeTuple = RangeTuple<number>;
+
+export type KeyValueTuple<K extends PropertyKey = PropertyKey, V = unknown> = [key: K, value: V];

@@ -34,7 +34,7 @@
       }
     },
     {
-      "files": ["./*.js", "./bin/*.{cjs,mjs}"],
+      "files": ["./*.{js,cjs,mjs}", "./bin/*.{js,cjs,mjs}"],
       "parserOptions": {
         "project": ["./tsconfig.project-files.json"]
       }

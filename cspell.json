@@ -21,5 +21,11 @@
     "webdeveric"
   ],
   "flagWords": [],
-  "ignorePaths": [".vscode/"]
+  "ignorePaths": ["package-lock.json", "node_modules", ".vscode"],
+  "languageSettings": [
+    {
+      "languageId": "commit-msg",
+      "ignoreRegExpList": ["/^#.*/gm"]
+    }
+  ]
 }

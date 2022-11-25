@@ -1,11 +1,9 @@
 import cloneDeep from 'lodash.clonedeep';
 
-import type { Builtin } from 'ts-essentials';
-
 import { getOwnProperties } from './getOwnProperties.js';
 import { isObject } from './isObject.js';
 
-import type { AnyRecord } from './types.js';
+import type { AnyRecord, Builtin } from './types.js';
 
 export type NormalizeContext<OwnerRecordType, ContextData extends AnyRecord> = {
   original: Readonly<OwnerRecordType>;

@@ -1,4 +1,4 @@
-import type { NumericString, NumericValue, Primitive } from './types.js';
+import type { NumericString, NumericValue, Primitive, UnknownRecord } from './types.js';
 
 export const isOptionalString = (input: unknown): input is string | undefined =>
   typeof input === 'string' || typeof input === 'undefined';
@@ -44,6 +44,5 @@ export const isPrimitive = (input: unknown): input is Primitive =>
   typeof input === 'symbol' ||
   input === null;
 
-export const isObject = <O extends Record<PropertyKey, unknown> = Record<PropertyKey, unknown>>(
-  input: unknown,
-): input is O => input !== null && typeof input === 'object' && !Array.isArray(input);
+export const isObject = <T extends UnknownRecord = UnknownRecord>(input: unknown): input is T =>
+  input !== null && typeof input === 'object' && !Array.isArray(input);
