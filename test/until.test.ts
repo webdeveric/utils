@@ -1,4 +1,11 @@
-import { until, UntilCallback, UntilContext, UntilOptions } from '../src/until';
+import { isDelay, until, UntilCallback, UntilContext, UntilOptions } from '../src/until';
+
+describe('isDelay()', () => {
+  it('Returns true when given a Delay', () => {
+    expect(isDelay(1)).toBeTruthy();
+    expect(isDelay(() => 1)).toBeTruthy();
+  });
+});
 
 describe('until()', () => {
   it('Waits until the callback resolves or rejects', async () => {
