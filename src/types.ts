@@ -40,3 +40,9 @@ export type RangeTupleDistributive<T> = T extends any ? [min: T, max: T] : never
 export type NumberRangeTuple = RangeTuple<number>;
 
 export type KeyValueTuple<K extends PropertyKey = PropertyKey, V = unknown> = [key: K, value: V];
+
+export type Predicate<A, T extends A = A> =
+  | ((value: T, index: number, array: readonly A[]) => value is T)
+  | ((value: T, index: number, array: readonly A[]) => unknown);
+
+export type TypePredicateFn<T> = (input: unknown) => input is T;
