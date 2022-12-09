@@ -1,5 +1,4 @@
 import {
-  createIsEnumPredicate,
   isBigInt,
   isBoolean,
   isFiniteNumber,
@@ -30,34 +29,7 @@ import {
   isStringWithLength,
   isSymbol,
   isUndefined,
-  maybeUndefined,
 } from '../src/type-predicate.js';
-
-describe('createIsEnumPredicate()', () => {
-  enum Demo {
-    Demo = 'Demo',
-  }
-
-  it('Returns a type predicate function', () => {
-    expect(createIsEnumPredicate(Demo)).toBeInstanceOf(Function);
-  });
-
-  it('Predicate function checks if input is a member of the enum', () => {
-    const fn = createIsEnumPredicate(Demo);
-
-    expect(fn(Demo.Demo)).toBeTruthy();
-    expect(fn('Fail')).toBeFalsy();
-  });
-});
-
-describe('maybeUndefined()', () => {
-  it('Calls a type predicate function', () => {
-    const fn = jest.fn(isBoolean);
-
-    expect(maybeUndefined(fn as unknown as typeof isBoolean, true)).toBeTruthy();
-    expect(fn).toHaveBeenCalledTimes(1);
-  });
-});
 
 describe('isString()', () => {
   it('Returns true for valid input', () => {
