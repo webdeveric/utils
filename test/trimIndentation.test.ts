@@ -13,6 +13,7 @@ describe('trimIndentation()', () => {
   });
 
   it('Returns input when no indentation detected', () => {
+    expect(trimIndentation('')).toBe('');
     expect(trimIndentation('test')).toBe('test');
   });
 });
