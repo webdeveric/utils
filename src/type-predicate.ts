@@ -1,16 +1,6 @@
-import type { NumericString, NumericValue, Primitive, StringRecord, TypePredicateFn, UnknownRecord } from './types.js';
+import { maybeUndefined } from './type-predicate-factory.js';
 
-export const createIsEnumPredicate = <E extends Record<string, unknown>, T = E>(enumObject: E): TypePredicateFn<T> => {
-  const values = Object.values(enumObject);
-
-  return (input: unknown): input is T => {
-    return values.includes(input);
-  };
-};
-
-export const maybeUndefined = <T>(predicate: TypePredicateFn<T>, input: unknown): input is T | undefined => {
-  return typeof input === 'undefined' || predicate(input);
-};
+import type { NumericString, NumericValue, Primitive, StringRecord, UnknownRecord } from './types.js';
 
 // Primitives
 
@@ -39,17 +29,17 @@ export const isPrimitive = (input: unknown): input is Primitive =>
 
 // Optional primitives
 
-export const isOptionalString = (input: unknown): input is string | undefined => maybeUndefined(isString, input);
+export const isOptionalString = maybeUndefined(isString);
 
-export const isOptionalNumber = (input: unknown): input is number | undefined => maybeUndefined(isNumber, input);
+export const isOptionalNumber = maybeUndefined(isNumber);
 
-export const isOptionalBigInt = (input: unknown): input is bigint | undefined => maybeUndefined(isBigInt, input);
+export const isOptionalBigInt = maybeUndefined(isBigInt);
 
-export const isOptionalBoolean = (input: unknown): input is boolean | undefined => maybeUndefined(isBoolean, input);
+export const isOptionalBoolean = maybeUndefined(isBoolean);
 
-export const isOptionalSymbol = (input: unknown): input is symbol | undefined => maybeUndefined(isSymbol, input);
+export const isOptionalSymbol = maybeUndefined(isSymbol);
 
-export const isOptionalNull = (input: unknown): input is null | undefined => maybeUndefined(isNull, input);
+export const isOptionalNull = maybeUndefined(isNull);
 
 // Primitives with extra checks
 
