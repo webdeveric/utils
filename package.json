@@ -9,6 +9,7 @@
   "keywords": [
     "utilities",
     "asArray",
+    "capitalize",
     "clamp",
     "compose",
     "convert",
@@ -27,6 +28,7 @@
     "secToString",
     "toPascalCase",
     "trimEnd",
+    "trimIndentation",
     "trimStart",
     "type-assertion",
     "type-predicate",
@@ -58,8 +60,7 @@
     "./package.json": "./package.json"
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "repository": {
     "type": "git",
@@ -101,29 +102,29 @@
     "lodash.escaperegexp": "^4.1.2"
   },
   "devDependencies": {
-    "@swc/core": "^1.2.219",
-    "@swc/jest": "^0.2.22",
-    "@types/jest": "^29.0.0",
-    "@types/lodash.clonedeep": "^4.5.6",
-    "@types/lodash.escaperegexp": "^4.1.6",
-    "@types/node": "^18.0.0",
+    "@swc/core": "^1.3.22",
+    "@swc/jest": "^0.2.23",
+    "@types/jest": "^29.2.4",
+    "@types/lodash.clonedeep": "^4.5.7",
+    "@types/lodash.escaperegexp": "^4.1.7",
+    "@types/node": "^18.11.12",
     "@webdeveric/eslint-config-ts": "^0.5.2",
     "@webdeveric/prettier-config": "^0.2.0",
-    "core-js": "^3.11.1",
-    "cspell": "^6.1.0",
-    "eslint": "^8.10.0",
+    "core-js": "^3.26.1",
+    "cspell": "^6.17.0",
+    "eslint": "^8.29.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-import-resolver-typescript": "^3.3.0",
-    "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-jest": "^27.0.1",
-    "eslint-plugin-prettier": "^4.0.0",
-    "husky": "^8.0.1",
-    "jest": "^29.0.2",
-    "jest-environment-jsdom": "^29.0.2",
+    "eslint-import-resolver-typescript": "^3.5.2",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^27.1.6",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.2",
+    "jest": "^29.3.1",
+    "jest-environment-jsdom": "^29.3.1",
     "jest-ts-webcompat-resolver": "^1.0.0",
     "lint-staged": "^13.1.0",
-    "prettier": "^2.6.2",
+    "prettier": "^2.8.1",
     "rimraf": "^3.0.2",
-    "typescript": "^4.9.3"
+    "typescript": "^4.9.4"
   }
 }
