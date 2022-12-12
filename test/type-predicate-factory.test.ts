@@ -1,5 +1,6 @@
 import {
   createIsEnumPredicate,
+  createStringMatchingPredicate,
   everyItem,
   maybeArray,
   maybeNull,
@@ -21,6 +22,22 @@ describe('createIsEnumPredicate()', () => {
 
     expect(fn(Demo.Demo)).toBeTruthy();
     expect(fn('Fail')).toBeFalsy();
+  });
+});
+
+describe('createStringMatchingPredicate()', () => {
+  const pattern = /.+/;
+
+  it('Returns a type predicate function', () => {
+    expect(createStringMatchingPredicate(pattern)).toBeInstanceOf(Function);
+  });
+
+  it('Predicate function checks if input is a member of the enum', () => {
+    const fn = createStringMatchingPredicate(pattern);
+
+    expect(fn('Test')).toBeTruthy();
+    expect(fn('')).toBeFalsy();
+    expect(fn(false)).toBeFalsy();
   });
 });
 
