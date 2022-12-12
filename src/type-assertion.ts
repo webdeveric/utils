@@ -1,12 +1,17 @@
 import {
   isBigInt,
+  isBigIntArray,
   isBoolean,
+  isBooleanArray,
+  isDigitsString,
   isFiniteNumber,
   isInteger,
   isIntString,
   isLengthAware,
   isNull,
+  isNullArray,
   isNumber,
+  isNumberArray,
   isNumericString,
   isNumericValue,
   isNumericValueArray,
@@ -23,13 +28,17 @@ import {
   isPromiseFulfilledResult,
   isPromiseRejectedResult,
   isPropertyKey,
+  isSizeAware,
   isString,
-  isStringMatching,
+  isStringArray,
   isStringRecord,
   isStringWithLength,
   isSymbol,
+  isSymbolArray,
   isUndefined,
+  isUndefinedArray,
 } from './type-predicate.js';
+import { createStringMatchingPredicate } from './type-predicate-factory.js';
 
 import type { NumericString, NumericValue, Primitive, StringRecord, UnknownRecord } from './types.js';
 
@@ -82,11 +91,29 @@ export function assertIsIntString(
   }
 }
 
+export function assertIsDigitsString(
+  input: unknown,
+  error: string | Error = 'input is not a string of integers only',
+): asserts input is NumericString {
+  if (!isDigitsString(input)) {
+    throw getError(error);
+  }
+}
+
 export function assertIsLengthAware(
   input: unknown,
   error: string | Error = 'input is not length aware',
 ): asserts input is { length: number } {
   if (!isLengthAware(input)) {
+    throw getError(error);
+  }
+}
+
+export function assertIsSizeAware(
+  input: unknown,
+  error: string | Error = 'input is not size aware',
+): asserts input is { size: number } {
+  if (!isSizeAware(input)) {
     throw getError(error);
   }
 }
@@ -196,6 +223,69 @@ export function assertIsOptionalSymbol(
   }
 }
 
+export function assertIsStringArray(
+  input: unknown,
+  error: string | Error = 'input is not an array of X',
+): asserts input is string[] {
+  if (!isStringArray(input)) {
+    throw getError(error);
+  }
+}
+
+export function assertIsNumberArray(
+  input: unknown,
+  error: string | Error = 'input is not an array of X',
+): asserts input is number[] {
+  if (!isNumberArray(input)) {
+    throw getError(error);
+  }
+}
+
+export function assertIsBigIntArray(
+  input: unknown,
+  error: string | Error = 'input is not an array of X',
+): asserts input is bigint[] {
+  if (!isBigIntArray(input)) {
+    throw getError(error);
+  }
+}
+
+export function assertIsBooleanArray(
+  input: unknown,
+  error: string | Error = 'input is not an array of X',
+): asserts input is boolean[] {
+  if (!isBooleanArray(input)) {
+    throw getError(error);
+  }
+}
+
+export function assertIsUndefinedArray(
+  input: unknown,
+  error: string | Error = 'input is not an array of X',
+): asserts input is undefined[] {
+  if (!isUndefinedArray(input)) {
+    throw getError(error);
+  }
+}
+
+export function assertIsSymbolArray(
+  input: unknown,
+  error: string | Error = 'input is not an array of X',
+): asserts input is symbol[] {
+  if (!isSymbolArray(input)) {
+    throw getError(error);
+  }
+}
+
+export function assertIsNullArray(
+  input: unknown,
+  error: string | Error = 'input is not an array of X',
+): asserts input is null[] {
+  if (!isNullArray(input)) {
+    throw getError(error);
+  }
+}
+
 export function assertIsPositiveFiniteNumber(
   input: unknown,
   error: string | Error = 'input is not a positive finite number',
@@ -273,7 +363,7 @@ export function assertIsStringMatching(
   pattern: RegExp,
   error: string | Error = 'input is not a string that matches the pattern',
 ): asserts input is string {
-  if (!isStringMatching(input, pattern)) {
+  if (!createStringMatchingPredicate(pattern)(input)) {
     throw getError(error);
   }
 }
