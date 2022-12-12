@@ -1,4 +1,4 @@
-import { maybeUndefined } from './type-predicate-factory.js';
+import { createStringMatchingPredicate, everyItem, maybeUndefined } from './type-predicate-factory.js';
 
 import type { NumericString, NumericValue, Primitive, StringRecord, UnknownRecord } from './types.js';
 
@@ -41,23 +41,36 @@ export const isOptionalSymbol = maybeUndefined(isSymbol);
 
 export const isOptionalNull = maybeUndefined(isNull);
 
+// Arrays of primitives
+
+export const isStringArray = everyItem(isString);
+
+export const isNumberArray = everyItem(isNumber);
+
+export const isBigIntArray = everyItem(isBigInt);
+
+export const isBooleanArray = everyItem(isBoolean);
+
+export const isUndefinedArray = everyItem(isUndefined);
+
+export const isSymbolArray = everyItem(isSymbol);
+
+export const isNullArray = everyItem(isNull);
+
 // Primitives with extra checks
 
 export const isStringWithLength = (input: unknown): input is string => typeof input === 'string' && input.length > 0;
 
-export const isStringMatching = (input: unknown, pattern: RegExp): input is string =>
-  typeof input === 'string' && pattern.test(input);
-
-export const isNumericString = (input: unknown): input is NumericString =>
-  isStringMatching(input, /^[-+]?\d+(\.\d+)?$/);
+export const isNumericString = createStringMatchingPredicate<NumericString>(/^[-+]?\d+(\.\d+)?$/);
 
 export const isNumericValue = (input: unknown): input is NumericValue =>
   typeof input === 'number' || typeof input === 'bigint' || isNumericString(input);
 
-export const isNumericValueArray = (input: unknown): input is NumericValue[] =>
-  Array.isArray(input) && input.every(isNumericValue);
+export const isNumericValueArray = everyItem(isNumericValue);
 
-export const isIntString = (input: unknown): input is NumericString => isStringMatching(input, /^[-+]?\d+$/);
+export const isIntString = createStringMatchingPredicate<NumericString>(/^[-+]?\d+$/);
+
+export const isDigitsString = createStringMatchingPredicate<NumericString>(/^\d+$/);
 
 export const isFiniteNumber = (input: unknown): input is number => Number.isFinite(input);
 
@@ -72,14 +85,17 @@ export const isPositiveFiniteNumber = (input: unknown): input is number => isFin
 export const isPropertyKey = (input: unknown): input is PropertyKey =>
   typeof input === 'string' || typeof input === 'number' || typeof input === 'symbol';
 
-export const isObject = <T extends UnknownRecord = UnknownRecord>(input: unknown): input is T =>
+export const isObject = <T extends object = UnknownRecord>(input: unknown): input is T =>
   input !== null && typeof input === 'object' && !Array.isArray(input);
 
 export const isLengthAware = (input: unknown): input is { length: number } =>
   input !== null && typeof input === 'object' && 'length' in input && typeof input.length === 'number';
 
+export const isSizeAware = (input: unknown): input is { size: number } =>
+  input !== null && typeof input === 'object' && 'size' in input && typeof input.size === 'number';
+
 export const isStringRecord = (input: unknown): input is StringRecord => {
-  return isObject(input) && Object.entries(input).every(entry => entry.every(isString));
+  return isObject(input) && Object.entries(input).every(isStringArray);
 };
 
 export const isPromiseFulfilledResult = <T>(input: unknown): input is PromiseFulfilledResult<T> => {

@@ -1,12 +1,17 @@
 import {
   isBigInt,
+  isBigIntArray,
   isBoolean,
+  isBooleanArray,
+  isDigitsString,
   isFiniteNumber,
   isInteger,
   isIntString,
   isLengthAware,
   isNull,
+  isNullArray,
   isNumber,
+  isNumberArray,
   isNumericString,
   isNumericValue,
   isNumericValueArray,
@@ -23,12 +28,15 @@ import {
   isPromiseFulfilledResult,
   isPromiseRejectedResult,
   isPropertyKey,
+  isSizeAware,
   isString,
-  isStringMatching,
+  isStringArray,
   isStringRecord,
   isStringWithLength,
   isSymbol,
+  isSymbolArray,
   isUndefined,
+  isUndefinedArray,
 } from '../src/type-predicate.js';
 
 describe('isString()', () => {
@@ -166,24 +174,88 @@ describe('isOptionalNull()', () => {
   });
 });
 
-//
+describe('isStringArray()', () => {
+  it('Returns true for valid input', () => {
+    expect(isStringArray([])).toBeTruthy();
+    expect(isStringArray(['test'])).toBeTruthy();
+  });
+
+  it('Returns false for invalid input', () => {
+    expect(isStringArray([1])).toBeFalsy();
+  });
+});
+
+describe('isNumberArray()', () => {
+  it('Returns true for valid input', () => {
+    expect(isNumberArray([])).toBeTruthy();
+    expect(isNumberArray([Math.PI])).toBeTruthy();
+  });
+
+  it('Returns false for invalid input', () => {
+    expect(isNumberArray(['test'])).toBeFalsy();
+  });
+});
+
+describe('isBigIntArray()', () => {
+  it('Returns true for valid input', () => {
+    expect(isBigIntArray([])).toBeTruthy();
+    expect(isBigIntArray([BigInt(1)])).toBeTruthy();
+  });
+
+  it('Returns false for invalid input', () => {
+    expect(isBigIntArray(['test'])).toBeFalsy();
+  });
+});
+
+describe('isBooleanArray()', () => {
+  it('Returns true for valid input', () => {
+    expect(isBooleanArray([])).toBeTruthy();
+    expect(isBooleanArray([true, false])).toBeTruthy();
+  });
+
+  it('Returns true false invalid input', () => {
+    expect(isBooleanArray(['test'])).toBeFalsy();
+  });
+});
+
+describe('isUndefinedArray()', () => {
+  it('Returns true for valid input', () => {
+    expect(isUndefinedArray([])).toBeTruthy();
+    expect(isUndefinedArray([undefined])).toBeTruthy();
+  });
+
+  it('Returns true false invalid input', () => {
+    expect(isUndefinedArray(['test'])).toBeFalsy();
+  });
+});
+
+describe('isSymbolArray()', () => {
+  it('Returns true for valid input', () => {
+    expect(isSymbolArray([])).toBeTruthy();
+    expect(isSymbolArray([Symbol('test')])).toBeTruthy();
+  });
+
+  it('Returns false for invalid input', () => {
+    expect(isSymbolArray(['test'])).toBeFalsy();
+  });
+});
+
+describe('isNullArray()', () => {
+  it('Returns true for valid input', () => {
+    expect(isNullArray([])).toBeTruthy();
+    expect(isNullArray([null])).toBeTruthy();
+  });
+
+  it('Returns false for invalid input', () => {
+    expect(isNullArray(['test'])).toBeFalsy();
+  });
+});
 
 describe('isStringWithLength()', () => {
   it('Returns true for valid input', () => {
     expect(isStringWithLength('test')).toBeTruthy();
     expect(isStringWithLength('')).toBeFalsy();
     expect(isStringWithLength(null)).toBeFalsy();
-  });
-});
-
-describe('isStringMatching()', () => {
-  it('Returns true for valid input', () => {
-    expect(isStringMatching('', /^$/)).toBeTruthy();
-    expect(isStringMatching('99', /^\d\d$/)).toBeTruthy();
-  });
-
-  it('Returns false for invalid input', () => {
-    expect(isStringMatching(null, /^null$/)).toBeFalsy();
   });
 });
 
@@ -231,6 +303,19 @@ describe('isIntString()', () => {
   it('Returns false for invalid input', () => {
     expect(isIntString('3.14')).toBeFalsy();
     expect(isIntString(['xyz'])).toBeFalsy();
+  });
+});
+
+describe('isDigitsString()', () => {
+  it('Returns true for valid input', () => {
+    expect(isDigitsString('12345')).toBeTruthy();
+  });
+
+  it('Returns false for invalid input', () => {
+    expect(isDigitsString('3.14')).toBeFalsy();
+    expect(isDigitsString('-12345')).toBeFalsy();
+    expect(isDigitsString('+12345')).toBeFalsy();
+    expect(isDigitsString(['xyz'])).toBeFalsy();
   });
 });
 
@@ -322,6 +407,19 @@ describe('isLengthAware()', () => {
   it('Returns false for invalid inputs', () => {
     [-123, Infinity, Number.NaN, 'bad input', false, null, { pi: Math.PI }].forEach(input => {
       expect(isLengthAware(input)).toBeFalsy();
+    });
+  });
+});
+
+describe('isSizeAware()', () => {
+  it('Returns true for valid inputs', () => {
+    expect(isSizeAware(new Set())).toBeTruthy();
+    expect(isSizeAware({ size: 1 })).toBeTruthy();
+  });
+
+  it('Returns false for invalid inputs', () => {
+    [-123, Infinity, Number.NaN, 'bad input', false, null, { pi: Math.PI }].forEach(input => {
+      expect(isSizeAware(input)).toBeFalsy();
     });
   });
 });

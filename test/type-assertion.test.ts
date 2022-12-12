@@ -1,13 +1,18 @@
 import {
   assertExhaustive,
   assertIsBigInt,
+  assertIsBigIntArray,
   assertIsBoolean,
+  assertIsBooleanArray,
+  assertIsDigitsString,
   assertIsFiniteNumber,
   assertIsInteger,
   assertIsIntString,
   assertIsLengthAware,
   assertIsNull,
+  assertIsNullArray,
   assertIsNumber,
+  assertIsNumberArray,
   assertIsNumberGTEOne,
   assertIsNumericString,
   assertIsNumericValue,
@@ -25,12 +30,16 @@ import {
   assertIsPromiseFulfilledResult,
   assertIsPromiseRejectedResult,
   assertIsPropertyKey,
+  assertIsSizeAware,
   assertIsString,
+  assertIsStringArray,
   assertIsStringMatching,
   assertIsStringRecord,
   assertIsStringWithLength,
   assertIsSymbol,
+  assertIsSymbolArray,
   assertIsUndefined,
+  assertIsUndefinedArray,
 } from '../src/type-assertion.js';
 
 describe('assertIsBigInt()', () => {
@@ -109,6 +118,20 @@ describe('assertIsIntString()', () => {
   });
 });
 
+describe('assertIsDigitsString()', () => {
+  it('Throws when input is invalid', () => {
+    expect(() => {
+      assertIsDigitsString('123456');
+    }).not.toThrow();
+
+    [123, '-123', '+123', '123.456'].forEach(input => {
+      expect(() => {
+        assertIsDigitsString(input);
+      }).toThrow();
+    });
+  });
+});
+
 describe('assertIsLengthAware()', () => {
   it('Throws when input is invalid', () => {
     expect(() => {
@@ -117,6 +140,18 @@ describe('assertIsLengthAware()', () => {
 
     expect(() => {
       assertIsLengthAware([]);
+    }).not.toThrow();
+  });
+});
+
+describe('assertIsSizeAware()', () => {
+  it('Throws when input is invalid', () => {
+    expect(() => {
+      assertIsSizeAware(false);
+    }).toThrow();
+
+    expect(() => {
+      assertIsSizeAware(new Set());
     }).not.toThrow();
   });
 });
@@ -274,6 +309,118 @@ describe('assertIsOptionalSymbol()', () => {
       assertIsOptionalSymbol(Symbol());
       assertIsOptionalSymbol(undefined);
     }).not.toThrow();
+  });
+});
+
+describe('assertIsStringArray()', () => {
+  it('Throws when input is invalid', () => {
+    expect(() => {
+      assertIsStringArray([]);
+    }).not.toThrow();
+
+    expect(() => {
+      assertIsStringArray(['test']);
+    }).not.toThrow();
+
+    expect(() => {
+      assertIsStringArray([123]);
+    }).toThrow();
+  });
+});
+
+describe('assertIsNumberArray()', () => {
+  it('Throws when input is invalid', () => {
+    expect(() => {
+      assertIsNumberArray([]);
+    }).not.toThrow();
+
+    expect(() => {
+      assertIsNumberArray([123]);
+    }).not.toThrow();
+
+    expect(() => {
+      assertIsNumberArray(['test']);
+    }).toThrow();
+  });
+});
+
+describe('assertIsBigIntArray()', () => {
+  it('Throws when input is invalid', () => {
+    expect(() => {
+      assertIsBigIntArray([]);
+    }).not.toThrow();
+
+    expect(() => {
+      assertIsBigIntArray([BigInt(1)]);
+    }).not.toThrow();
+
+    expect(() => {
+      assertIsBigIntArray(['test']);
+    }).toThrow();
+  });
+});
+
+describe('assertIsBooleanArray()', () => {
+  it('Throws when input is invalid', () => {
+    expect(() => {
+      assertIsBooleanArray([]);
+    }).not.toThrow();
+
+    expect(() => {
+      assertIsBooleanArray([true, false]);
+    }).not.toThrow();
+
+    expect(() => {
+      assertIsBooleanArray(['test']);
+    }).toThrow();
+  });
+});
+
+describe('assertIsUndefinedArray()', () => {
+  it('Throws when input is invalid', () => {
+    expect(() => {
+      assertIsUndefinedArray([]);
+    }).not.toThrow();
+
+    expect(() => {
+      assertIsUndefinedArray([undefined]);
+    }).not.toThrow();
+
+    expect(() => {
+      assertIsUndefinedArray(['test']);
+    }).toThrow();
+  });
+});
+
+describe('assertIsSymbolArray()', () => {
+  it('Throws when input is invalid', () => {
+    expect(() => {
+      assertIsSymbolArray([]);
+    }).not.toThrow();
+
+    expect(() => {
+      assertIsSymbolArray([Symbol('test')]);
+    }).not.toThrow();
+
+    expect(() => {
+      assertIsSymbolArray(['test']);
+    }).toThrow();
+  });
+});
+
+describe('assertIsNullArray()', () => {
+  it('Throws when input is invalid', () => {
+    expect(() => {
+      assertIsNullArray([]);
+    }).not.toThrow();
+
+    expect(() => {
+      assertIsNullArray([null]);
+    }).not.toThrow();
+
+    expect(() => {
+      assertIsNullArray(['test']);
+    }).toThrow();
   });
 });
 
