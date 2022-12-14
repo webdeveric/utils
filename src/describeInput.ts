@@ -12,12 +12,8 @@ export const describeInput = (input: unknown): string => {
 
         const tokenMatch = input.match(/^(Basic|Bearer)\s.+/i);
 
-        if (tokenMatch) {
-          const tokenType = tokenMatch.at(1);
-
-          if (tokenType) {
-            return tokenType;
-          }
+        if (Array.isArray(tokenMatch) && tokenMatch[1]) {
+          return tokenMatch[1];
         }
 
         if (looksLikeURL(input)) {
