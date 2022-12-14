@@ -41,6 +41,7 @@
     "url": "http://webdeveric.com/"
   },
   "type": "commonjs",
+  "sideEffects": false,
   "main": "./dist/cjs/index.js",
   "types": "./dist/types/index.d.ts",
   "engines": {
