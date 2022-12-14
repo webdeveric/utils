@@ -1,11 +1,9 @@
 import type { TypePredicateFn, UnknownRecord } from './types.js';
 
 export const createIsEnumPredicate = <T extends UnknownRecord>(enumObject: T): TypePredicateFn<T[keyof T]> => {
-  const values = Object.values(enumObject);
+  const values = new Set(Object.values(enumObject));
 
-  return (input: unknown): input is T[keyof T] => {
-    return values.includes(input);
-  };
+  return (input: unknown): input is T[keyof T] => values.has(input);
 };
 
 export const createStringMatchingPredicate =
