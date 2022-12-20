@@ -16,6 +16,7 @@ describe('isEmpty()', () => {
     expect(isEmpty('test')).toBeFalsy();
     expect(isEmpty(['test'])).toBeFalsy();
     expect(isEmpty({ test: true })).toBeFalsy();
+    expect(isEmpty({ [Symbol('test')]: true })).toBeFalsy();
     expect(isEmpty(0)).toBeFalsy();
     expect(isEmpty(Math.PI)).toBeFalsy();
     expect(isEmpty(new Set(['test']))).toBeFalsy();

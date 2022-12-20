@@ -5,16 +5,16 @@ export function isEmpty(input: unknown): boolean {
     return true;
   }
 
-  if (Array.isArray(input)) {
-    return input.length === 0;
-  }
-
   if (input instanceof Set || input instanceof Map) {
     return input.size === 0;
   }
 
+  if (isLengthAware(input)) {
+    return input.length === 0;
+  }
+
   if (typeof input === 'object') {
-    return isLengthAware(input) ? input.length === 0 : Object.keys(input).length === 0;
+    return Object.getOwnPropertyNames(input).length === 0 && Object.getOwnPropertySymbols(input).length === 0;
   }
 
   return false;
