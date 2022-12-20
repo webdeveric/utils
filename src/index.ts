@@ -16,6 +16,7 @@ export * from './isObject.js';
 export * from './joinStrings.js';
 export * from './looksLikeURL.js';
 export * from './normalize.js';
+export * from './redactCredentialsInURL.js';
 export * from './secToString.js';
 export * from './toPascalCase.js';
 export * from './trimEnd.js';
