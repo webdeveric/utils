@@ -1,5 +1,5 @@
-import { cwd } from 'node:process';
 import { relative } from 'node:path';
+import { cwd } from 'node:process';
 
 /**
  * @type {(filenames: string[]) => string[]>}

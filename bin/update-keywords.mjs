@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import { dirname, extname, resolve } from 'node:path';
 import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { dirname, extname, resolve } from 'node:path';
 import { URL } from 'node:url';
 
 const rootDir = resolve(new URL(dirname(import.meta.url)).pathname, '..');

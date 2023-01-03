@@ -1,4 +1,5 @@
 import { assertIsNumericValueArray } from './type-assertion.js';
+
 import type { NumericValue } from './types.js';
 
 export function getMinValue(...values: [NumericValue, ...NumericValue[]]): NumericValue {
