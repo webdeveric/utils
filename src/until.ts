@@ -1,5 +1,6 @@
-import type { AnyRecord } from './types.js';
 import { getType } from './getType.js';
+
+import type { AnyRecord } from './types.js';
 
 export interface UntilContext {
   callCount: number;

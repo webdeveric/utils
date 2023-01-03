@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { convert, ConvertFn } from '../src/convert';
 
 describe('convert()', () => {

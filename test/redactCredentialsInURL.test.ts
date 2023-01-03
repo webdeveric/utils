@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { redactCredentialsInURL } from '../src/redactCredentialsInURL.js';
 
 describe('redactCredentialsInURL()', () => {

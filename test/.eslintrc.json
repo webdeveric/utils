@@ -1,11 +1,7 @@
 {
-  "extends": ["../.eslintrc.json", "plugin:jest/recommended", "plugin:jest/style"],
-  "plugins": ["jest"],
+  "extends": ["../.eslintrc.json"],
   "globals": {
     "BigInt": true
-  },
-  "env": {
-    "jest/globals": true
   },
   "parserOptions": {
     "sourceType": "module",

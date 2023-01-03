@@ -17,6 +17,7 @@
     "tslib",
     "twasn't",
     "typecheck",
+    "vitest",
     "webcompat",
     "webdeveric"
   ],

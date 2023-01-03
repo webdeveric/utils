@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "noEmit": true,
+    "allowJs": true,
     "target": "ES2020",
     "module": "es2015",
     "declaration": true,
@@ -23,6 +25,6 @@
     "noErrorTruncation": true,
     "exactOptionalPropertyTypes": true
   },
-  "include": ["src/**/*", "test/**/*"],
+  "include": ["./*.mts", "./*.mjs", "./bin/**/*", "src/**/*", "test/**/*"],
   "exclude": ["node_modules", "private"]
 }

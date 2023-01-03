@@ -1,14 +1,16 @@
+import { beforeEach, describe, it, expect, vi } from 'vitest';
+
 import { delay } from '../src/delay';
 
 describe('delay()', () => {
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
 
   it('Delays by some number of milliseconds', async () => {
     const tenSecondDelay = delay(10_000);
 
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
 
     await expect(tenSecondDelay).resolves.toBeUndefined();
   });
@@ -16,7 +18,7 @@ describe('delay()', () => {
   it('Specifies the return value', async () => {
     const tenSecondDelay = delay(10_000, 'value');
 
-    jest.runOnlyPendingTimers();
+    vi.runOnlyPendingTimers();
 
     await expect(tenSecondDelay).resolves.toBe('value');
   });

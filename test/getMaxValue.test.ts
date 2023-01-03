@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { getMaxValue } from '../src/getMaxValue';
 
 describe('getMaxValue()', () => {

@@ -1,3 +1,5 @@
+import { describe, it, expect, vi } from 'vitest';
+
 import {
   createIsEnumPredicate,
   createStringMatchingPredicate,
@@ -47,7 +49,7 @@ describe('everyItem()', () => {
   });
 
   it('Calls a type predicate function', () => {
-    const predicate = jest.fn(isBoolean) as unknown as typeof isBoolean;
+    const predicate = vi.fn(isBoolean) as unknown as typeof isBoolean;
 
     const fn = everyItem(predicate);
 
@@ -65,7 +67,7 @@ describe('maybeArray()', () => {
   });
 
   it('Calls a type predicate function', () => {
-    const predicate = jest.fn(isBoolean) as unknown as typeof isBoolean;
+    const predicate = vi.fn(isBoolean) as unknown as typeof isBoolean;
 
     const fn = maybeArray(predicate);
 
@@ -82,7 +84,7 @@ describe('maybeNull()', () => {
   });
 
   it('Calls a type predicate function', () => {
-    const predicate = jest.fn(isBoolean) as unknown as typeof isBoolean;
+    const predicate = vi.fn(isBoolean) as unknown as typeof isBoolean;
 
     const fn = maybeNull(predicate);
 
@@ -99,7 +101,7 @@ describe('maybeUndefined()', () => {
   });
 
   it('Calls a type predicate function', () => {
-    const predicate = jest.fn(isBoolean) as unknown as typeof isBoolean;
+    const predicate = vi.fn(isBoolean) as unknown as typeof isBoolean;
 
     const fn = maybeUndefined(predicate);
 

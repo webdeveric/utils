@@ -1,3 +1,4 @@
+import { createStringMatchingPredicate } from './type-predicate-factory.js';
 import {
   isBigInt,
   isBigIntArray,
@@ -38,7 +39,6 @@ import {
   isUndefined,
   isUndefinedArray,
 } from './type-predicate.js';
-import { createStringMatchingPredicate } from './type-predicate-factory.js';
 
 import type { NumericString, NumericValue, Primitive, StringRecord, UnknownRecord } from './types.js';
 
