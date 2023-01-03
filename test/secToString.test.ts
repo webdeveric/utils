@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { Seconds, secToString } from '../src/secToString';
 
 describe('secToString()', () => {

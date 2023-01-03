@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { uniqueItems } from '../src/uniqueItems';
 
 describe('uniqueItems()', () => {

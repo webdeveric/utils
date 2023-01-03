@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { asArray } from '../src/asArray';
 
 describe('asArray()', () => {

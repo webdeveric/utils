@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { getMinValue } from '../src/getMinValue';
 
 describe('getMinValue()', () => {

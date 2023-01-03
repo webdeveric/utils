@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { trimEnd } from '../src/trimEnd';
 
 describe('trimEnd', () => {

@@ -1,12 +1,14 @@
+import { afterEach, beforeEach, describe, it, expect, vi } from 'vitest';
+
 import { delayAnimationFrame, delayAnimationFrames } from '../src/delayAnimationFrame';
 
 describe('delay animation frames', () => {
   beforeEach(() => {
-    jest.spyOn(window, 'requestAnimationFrame').mockImplementation(cb => setTimeout(cb, 0));
+    vi.spyOn(window, 'requestAnimationFrame').mockImplementation(cb => setTimeout(cb, 0));
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   describe('delayAnimationFrame()', () => {

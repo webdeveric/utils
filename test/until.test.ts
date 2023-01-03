@@ -1,3 +1,5 @@
+import { describe, it, expect, vi } from 'vitest';
+
 import { isDelay, until, UntilCallback, UntilContext, UntilOptions } from '../src/until';
 
 describe('isDelay()', () => {
@@ -15,7 +17,7 @@ describe('until()', () => {
   });
 
   it('delay can be a callback that accepts a context', async () => {
-    const mockFn = jest.fn(context => context.callCount);
+    const mockFn = vi.fn(context => context.callCount);
     const callLimit = 2;
 
     const untilTrue = until(
@@ -37,7 +39,7 @@ describe('until()', () => {
   });
 
   it('timeout can be a callback that accepts a context', async () => {
-    const mockFn = jest.fn(context => context.callCount);
+    const mockFn = vi.fn(context => context.callCount);
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     const willTimeout = until(() => {}, { delay: 1, timeout: mockFn });

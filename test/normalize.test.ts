@@ -1,3 +1,5 @@
+import { describe, it, expect } from 'vitest';
+
 import { normalize, type NormalizerFn } from '../src/normalize';
 
 type Person = {
