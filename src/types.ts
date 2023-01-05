@@ -1,5 +1,7 @@
 export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
 
+export type TypeOf = 'undefined' | 'object' | 'boolean' | 'number' | 'bigint' | 'string' | 'symbol' | 'function';
+
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type Builtin = Date | Error | Function | Primitive | RegExp;
 
@@ -48,3 +50,5 @@ export type Predicate<A, T extends A = A> =
 export type TypePredicateFn<T> = (input: unknown) => input is T;
 
 export type TypeAssertionFn<T> = (input: unknown) => asserts input is T;
+
+export type CompareFn<T> = (a: T, b: T) => number;

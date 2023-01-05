@@ -18,6 +18,8 @@ export * from './looksLikeURL.js';
 export * from './normalize.js';
 export * from './redactCredentialsInURL.js';
 export * from './secToString.js';
+export * from './sort-factory.js';
+export * from './sort.js';
 export * from './toPascalCase.js';
 export * from './trimEnd.js';
 export * from './trimIndentation.js';
