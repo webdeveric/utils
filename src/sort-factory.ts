@@ -1,7 +1,7 @@
 import type { CompareFn } from './types.js';
 
 export const byProperty =
-  <T extends object>(compareFn: CompareFn<T[keyof T]>, property: keyof T): CompareFn<T> =>
+  <T extends object, K extends keyof T = keyof T>(compareFn: CompareFn<T[K]>, property: K): CompareFn<T> =>
   (left, right) =>
     compareFn(left[property], right[property]);
 

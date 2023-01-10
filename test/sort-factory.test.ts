@@ -5,7 +5,7 @@ import { byLocaleCompare } from '../src/sort.js';
 
 describe('byProperty()', () => {
   it('returns a CompareFn', () => {
-    expect(byProperty(() => 0, 'name')).instanceOf(Function);
+    expect(byProperty<{ name: string }>(() => 0, 'name')).instanceOf(Function);
   });
 
   it('Sorts using the returned CompareFn', () => {
