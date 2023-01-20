@@ -1,7 +1,7 @@
 import cloneDeep from 'lodash.clonedeep';
 
 import { getOwnProperties } from './getOwnProperties.js';
-import { isObject } from './isObject.js';
+import { isObject } from './type-predicate.js';
 
 import type { AnyRecord, Builtin } from './types.js';
 
@@ -84,7 +84,8 @@ export function normalize<Data extends object, ContextData extends AnyRecord = A
           const normalizers = currentNormalizers[key];
           // If the value is undefined but there is a normalizer record, set value to empty object.
           const value =
-            typeof data[key] === 'undefined' && isObject(normalizers)
+            typeof data[key] === 'undefined' &&
+            isObject<NormalizersRecord<CurrentRecord[keyof CurrentRecord], Data, ContextData>>(normalizers)
               ? ({} as unknown as CurrentRecord[keyof CurrentRecord])
               : data[key];
 

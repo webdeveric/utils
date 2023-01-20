@@ -43,6 +43,9 @@ export type NumberRangeTuple = RangeTuple<number>;
 
 export type KeyValueTuple<K extends PropertyKey = PropertyKey, V = unknown> = [key: K, value: V];
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type TupleToArray<T extends any[]> = T[number][];
+
 export type Predicate<A, T extends A = A> =
   | ((value: T, index: number, array: readonly A[]) => value is T)
   | ((value: T, index: number, array: readonly A[]) => unknown);
@@ -52,3 +55,17 @@ export type TypePredicateFn<T> = (input: unknown) => input is T;
 export type TypeAssertionFn<T> = (input: unknown) => asserts input is T;
 
 export type CompareFn<T> = (a: T, b: T) => number;
+
+export type DeepNonNullable<T> = T extends Record<PropertyKey, unknown>
+  ? {
+      [P in keyof T]: DeepNonNullable<T[P]>;
+    }
+  : NonNullable<T>;
+
+export type Entries<T extends object> = {
+  [P in keyof T]: KeyValueTuple<P, T[P]>;
+}[keyof T];
+
+export type NonNullableEntries<T extends object> = {
+  [P in keyof T]: KeyValueTuple<P, NonNullable<T[P]>>;
+}[keyof T];

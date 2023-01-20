@@ -82,6 +82,9 @@ export const isPositiveFiniteNumber = (input: unknown): input is number => isFin
 
 // Common types
 
+export const isNonNullable = <T>(input: unknown): input is NonNullable<T> =>
+  typeof input !== 'undefined' && input !== null;
+
 export const isPropertyKey = (input: unknown): input is PropertyKey =>
   typeof input === 'string' || typeof input === 'number' || typeof input === 'symbol';
 
