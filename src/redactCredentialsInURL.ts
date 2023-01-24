@@ -5,9 +5,12 @@ export type URLMaskOptions =
       password: string;
     };
 
-export const redactCredentialsInURL = (input: URL | string, mask: URLMaskOptions = 'REDACTED'): string => {
+export const redactCredentialsInURL = (
+  input: ConstructorParameters<typeof URL>[0],
+  mask: URLMaskOptions = 'REDACTED',
+): string => {
   try {
-    const url = new URL(input);
+    const url = new URL(String(input));
 
     if (url.username) {
       url.username = typeof mask === 'string' ? mask : mask.username;

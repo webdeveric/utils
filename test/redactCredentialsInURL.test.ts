@@ -24,4 +24,10 @@ describe('redactCredentialsInURL()', () => {
   it('Invalid URLs get returned as a string', () => {
     expect(redactCredentialsInURL('fake URL')).toBe('fake URL');
   });
+
+  it('Input can be whatever URL accepts', () => {
+    expect(redactCredentialsInURL(new URL('http://user:pass@example.com/'))).toBe(
+      'http://REDACTED:REDACTED@example.com/',
+    );
+  });
 });
