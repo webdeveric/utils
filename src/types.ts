@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
 
 export type TypeOf = 'undefined' | 'object' | 'boolean' | 'number' | 'bigint' | 'string' | 'symbol' | 'function';
@@ -5,12 +6,13 @@ export type TypeOf = 'undefined' | 'object' | 'boolean' | 'number' | 'bigint' | 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type Builtin = Date | Error | Function | Primitive | RegExp;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyRecord = Record<PropertyKey, any>;
 
 export type StringRecord = Record<string, string>;
 
 export type UnknownRecord = Record<PropertyKey, unknown>;
+
+export type NeverRecord = Record<PropertyKey, never>;
 
 export type NumericString<T extends string | number = number> = `${T}` extends `${number}` ? `${T}` : never;
 
@@ -20,15 +22,17 @@ export type MaybePlural<T extends string> = T | `${T}s`;
 
 export type StringKeys<T> = keyof T & string;
 
+export type Assign<Target, Source> = IfNever<Target, Source, Omit<Target, keyof Source> & Source>;
+
 export type IfDefined<T, D, U> = undefined extends T ? U : D;
 
 export type IfNever<T, N, O> = [T] extends [never] ? N : O;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ReturnTypeDefault<F, D = undefined> = F extends (...args: any) => infer R ? R : D;
 
+export type AnyFunction = (...args: any[]) => any;
+
 export type AnyNewable = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   new (...args: any[]): any;
 };
 
@@ -36,14 +40,12 @@ export type JoinTuples<A extends unknown[], B extends unknown[]> = [...A, ...B];
 
 export type RangeTuple<T> = [min: T, max: T];
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type RangeTupleDistributive<T> = T extends any ? [min: T, max: T] : never;
 
 export type NumberRangeTuple = RangeTuple<number>;
 
 export type KeyValueTuple<K extends PropertyKey = PropertyKey, V = unknown> = [key: K, value: V];
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TupleToArray<T extends any[]> = T[number][];
 
 export type Predicate<A, T extends A = A> =
@@ -69,3 +71,51 @@ export type Entries<T extends object> = {
 export type NonNullableEntries<T extends object> = {
   [P in keyof T]: KeyValueTuple<P, NonNullable<T[P]>>;
 }[keyof T];
+
+export type Writable<T> = {
+  -readonly [P in keyof T]: T[P];
+};
+
+export type Unwritable<T> = T extends Writable<infer Inner> ? Readonly<Inner> : Readonly<T>;
+
+export type RemoveIndex<T> = {
+  [K in keyof T as symbol extends K ? never : string extends K ? never : number extends K ? never : K]: T[K];
+};
+
+export type StringPropertyKeys<Data extends Record<PropertyKey, unknown>> = Extract<keyof RemoveIndex<Data>, string>;
+
+export type LowercaseProperties<Type extends Record<PropertyKey, unknown>> = {
+  [Property in keyof Type as Lowercase<Extract<Property, string>>]: Type[Property];
+} & Omit<Type, StringPropertyKeys<Type>>;
+
+export type AllOrNone<T> = T | { [K in keyof T]?: never };
+
+export type OptionalExcept<T, K extends keyof T> = T extends any ? Partial<Omit<T, K>> & Pick<T, K> : never;
+
+export type First<T extends any[]> = T extends [infer Data, ...any[]] ? Data : never;
+
+export type Last<T extends any[]> = T extends [...any[], infer L] ? L : never;
+
+export type Head<T extends any[]> = T extends [...infer Data, any] ? Data : any[];
+
+export type Tail<T extends any[]> = T extends [any, ...infer Data] ? Data : any[];
+
+export type NonVoid<T> = T extends void ? never : T;
+
+export type GetLength<A extends any[]> = A extends { length: infer L } ? L : never;
+
+export type IfLength<A extends any[], L extends number, T, F> = GetLength<A> extends L ? T : F;
+
+export type IfEmpty<A extends any[], T, F> = GetLength<A> extends 0 ? T : F;
+
+export type JsonObject = { [key: string]: JsonValue };
+
+export type JsonArray = JsonValue[];
+
+export type JsonValue = string | number | boolean | null | object | JsonObject | JsonArray;
+
+export type PartialKeys<T, K extends keyof T> = T extends any ? Omit<T, K> & Partial<Pick<T, K>> : never;
+
+export type OnlyOne<Type extends Record<PropertyKey, unknown>> = {
+  [Property in keyof Type]: Omit<Type, Property> & Partial<Record<Property, never>>;
+}[keyof Type];
