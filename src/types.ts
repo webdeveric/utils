@@ -20,9 +20,15 @@ export type NumericValue = number | bigint | NumericString;
 
 export type MaybePlural<T extends string> = T | `${T}s`;
 
+export type MaybePromise<T> = T | Promise<T>;
+
 export type StringKeys<T> = keyof T & string;
 
-export type Assign<Target, Source> = IfNever<Target, Source, Omit<Target, keyof Source> & Source>;
+export type Assign<Target, Source> = IfNever<Target, Source, Omit<Target, keyof (Target | Source)> & Source>;
+
+export type AwaitedReturnType<F extends AnyFunction> = Awaited<ReturnType<F>>;
+
+export type IfCommonKeys<Target, Source, T, F> = IfNever<keyof (Target | Source), F, T>;
 
 export type IfDefined<T, D, U> = undefined extends T ? U : D;
 
@@ -78,6 +84,10 @@ export type Writable<T> = {
 
 export type Unwritable<T> = T extends Writable<infer Inner> ? Readonly<Inner> : Readonly<T>;
 
+export type GetIndex<T> = {
+  [K in keyof T as symbol extends K ? K : string extends K ? K : number extends K ? K : never]: T[K];
+};
+
 export type RemoveIndex<T> = {
   [K in keyof T as symbol extends K ? never : string extends K ? never : number extends K ? never : K]: T[K];
 };
@@ -119,3 +129,8 @@ export type PartialKeys<T, K extends keyof T> = T extends any ? Omit<T, K> & Par
 export type OnlyOne<Type extends Record<PropertyKey, unknown>> = {
   [Property in keyof Type]: Omit<Type, Property> & Partial<Record<Property, never>>;
 }[keyof Type];
+
+export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclude<keyof T, Keys>> &
+  {
+    [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>;
+  }[Keys];
