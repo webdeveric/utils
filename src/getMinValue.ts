@@ -10,8 +10,9 @@ export function getMinValue(...values: [NumericValue, ...NumericValue[]]): Numer
   assertIsNumericValueArray(values);
 
   return values.reduce((low, current) => {
-    const value = typeof current === 'string' ? Number(current) : current;
+    const lowValue = typeof low === 'string' ? Number(low) : low;
+    const currentValue = typeof current === 'string' ? Number(current) : current;
 
-    return value < low ? current : low;
+    return currentValue < lowValue ? current : low;
   });
 }

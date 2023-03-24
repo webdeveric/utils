@@ -8,7 +8,7 @@ describe('getMinValue()', () => {
   });
 
   it('Values can be mixed numeric types', () => {
-    expect(getMinValue(100, 20n, '3.14')).toBe('3.14');
+    expect(getMinValue(100, 20n, '3.14', '10', 30, '4')).toBe('3.14');
   });
 
   it('Throws when not given correct input', () => {
