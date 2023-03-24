@@ -9,7 +9,6 @@
     "declarationDir": "./dist/types",
     "sourceMap": true,
     "outDir": "./dist/",
-    "isolatedModules": true,
     "strict": true,
     "alwaysStrict": true,
     "noUnusedLocals": true,
@@ -21,7 +20,7 @@
     "forceConsistentCasingInFileNames": true,
     "allowUnusedLabels": false,
     "allowUnreachableCode": false,
-    "importsNotUsedAsValues": "error",
+    "verbatimModuleSyntax": true,
     "noErrorTruncation": true,
     "exactOptionalPropertyTypes": true
   },
