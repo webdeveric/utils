@@ -8,7 +8,7 @@ describe('getMaxValue()', () => {
   });
 
   it('Values can be mixed numeric types', () => {
-    expect(getMaxValue(1, 2n, '3.14')).toBe('3.14');
+    expect(getMaxValue(1, 2n, '1', '3.14', '2', 0n, 0)).toBe('3.14');
   });
 
   it('Throws when not given correct input', () => {
