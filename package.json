@@ -47,7 +47,7 @@
   "main": "./dist/cjs/index.js",
   "types": "./dist/types/index.d.ts",
   "engines": {
-    "node": ">=14.19.0"
+    "node": ">=18.0.0"
   },
   "exports": {
     ".": {
@@ -73,7 +73,7 @@
     "url": "https://github.com/webdeveric/utils/issues"
   },
   "homepage": "https://github.com/webdeveric/utils/#readme",
-  "packageManager": "npm@9.2.0",
+  "packageManager": "npm@9.5.1",
   "scripts": {
     "clean": "rimraf ./dist/",
     "prebuild": "npm run clean",
@@ -103,7 +103,7 @@
     "@types/lodash.clonedeep": "^4.5.7",
     "@types/lodash.escaperegexp": "^4.1.7",
     "@types/node": "^18.11.12",
-    "@vitest/coverage-c8": "^0.29.1",
+    "@vitest/coverage-v8": "^0.32.4",
     "@webdeveric/eslint-config-ts": "^0.6.0",
     "@webdeveric/prettier-config": "^0.2.0",
     "cspell": "^6.19.2",
@@ -112,11 +112,11 @@
     "eslint-import-resolver-typescript": "^3.5.3",
     "eslint-plugin-import": "^2.27.5",
     "husky": "^8.0.3",
-    "jsdom": "^21.0.0",
+    "jsdom": "^22.1.0",
     "lint-staged": "^13.1.0",
-    "prettier": "^2.8.3",
-    "rimraf": "^4.1.1",
+    "prettier": "^3.0.0",
+    "rimraf": "^5.0.1",
     "typescript": "^5.0.2",
-    "vitest": "^0.29.1"
+    "vitest": "^0.32.4"
   }
 }
