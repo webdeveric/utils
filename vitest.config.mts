@@ -5,7 +5,7 @@ export default defineConfig({
     environment: 'jsdom',
     include: ['./test/*.test.ts'],
     coverage: {
-      provider: 'c8',
+      provider: 'v8',
     },
   },
 });
