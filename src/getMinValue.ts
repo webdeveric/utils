@@ -2,7 +2,7 @@ import { assertIsNumericValueArray } from './type-assertion.js';
 
 import type { NumericValue } from './types.js';
 
-export function getMinValue(...values: [NumericValue, ...NumericValue[]]): NumericValue {
+export function getMinValue<T extends NumericValue>(...values: [T, ...T[]]): T {
   if (values.length === 0) {
     throw new Error('Expected at least one numeric value');
   }
