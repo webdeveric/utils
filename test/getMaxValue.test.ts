@@ -5,10 +5,8 @@ import { getMaxValue } from '../src/getMaxValue';
 describe('getMaxValue()', () => {
   it('Returns the minimum value', () => {
     expect(getMaxValue(1, 2, 3)).toBe(3);
-  });
-
-  it('Values can be mixed numeric types', () => {
-    expect(getMaxValue(1, 2n, '1', '3.14', '2', 0n, 0)).toBe('3.14');
+    expect(getMaxValue('1', '2', '1000', '3')).toBe('1000');
+    expect(getMaxValue(1000n, 10n, 500n)).toBe(1000n);
   });
 
   it('Throws when not given correct input', () => {

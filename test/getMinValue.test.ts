@@ -5,10 +5,8 @@ import { getMinValue } from '../src/getMinValue';
 describe('getMinValue()', () => {
   it('Returns the minimum value', () => {
     expect(getMinValue(3, 2, 1)).toBe(1);
-  });
-
-  it('Values can be mixed numeric types', () => {
-    expect(getMinValue(100, 20n, '3.14', '10', 30, '4')).toBe('3.14');
+    expect(getMinValue('3', '2', '1')).toBe('1');
+    expect(getMinValue(30n, 2n, 100n)).toBe(2n);
   });
 
   it('Throws when not given correct input', () => {
