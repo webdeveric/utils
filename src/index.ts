@@ -1,6 +1,7 @@
 export * from './asArray.js';
 export * from './capitalize.js';
 export * from './clamp.js';
+export * from './comment.js';
 export * from './compose.js';
 export * from './convert.js';
 export * from './delay.js';
