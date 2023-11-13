@@ -7,6 +7,7 @@ export * from './convert.js';
 export * from './delay.js';
 export * from './delayAnimationFrame.js';
 export * from './describeInput.js';
+export * from './getISODateString.js';
 export * from './getMaxValue.js';
 export * from './getMinValue.js';
 export * from './getOwnKeys.js';
