@@ -134,3 +134,25 @@ export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclu
   {
     [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>;
   }[Keys];
+
+/**
+ * Return a list of keys where the property value match the `DataType`.
+ */
+export type KeysWhere<Type, DataType, Key extends keyof Type = keyof Type> = Key extends PropertyKey
+  ? DataType extends Type[Key]
+    ? Key
+    : never
+  : never;
+
+/**
+ * Construct a type where all the property values match the `DataType`.
+ */
+export type PickByType<Type, DataType> = {
+  [Property in KeysWhere<Type, DataType>]: Type[Property];
+};
+
+export type DateString = `${number}-${number}-${number}`;
+
+export type TimeString = `${number}:${number}:${number}`;
+
+export type ISODateString = `${DateString}T${TimeString}.${number}Z`;
