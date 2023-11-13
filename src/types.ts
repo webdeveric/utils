@@ -150,9 +150,3 @@ export type KeysWhere<Type, DataType, Key extends keyof Type = keyof Type> = Key
 export type PickByType<Type, DataType> = {
   [Property in KeysWhere<Type, DataType>]: Type[Property];
 };
-
-export type DateString = `${number}-${number}-${number}`;
-
-export type TimeString = `${number}:${number}:${number}`;
-
-export type ISODateString = `${DateString}T${TimeString}.${number}Z`;
