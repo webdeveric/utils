@@ -1,18 +1,16 @@
 import { capitalize } from './capitalize.js';
 import { getType } from './getType.js';
 
-import type { KeyValueTuple, StringRecord } from './types.js';
+import type { StringRecord } from './types/records.js';
+import type { PascalCase } from './types/strings.js';
+import type { KeyValueTuple } from './types/tuples.js';
 
-export function toPascalCase(text: string, customWords?: StringRecord): string {
+export function toPascalCase<Type extends string>(text: Type, customWords?: StringRecord): PascalCase<Type> {
   const words = String(text).match(/[A-Z][a-z']+|\d+|[a-z']+/g);
 
-  if (words === null) {
-    return '';
-  }
+  let fixedWords = words?.map<string>(word => capitalize(word.replace(/'/g, '')));
 
-  let fixedWords = words.map(word => capitalize(word.replace(/'/g, '')));
-
-  if (customWords && getType(customWords) === 'Object') {
+  if (fixedWords && customWords && getType(customWords) === 'Object') {
     const replacements = new Map(
       Object.entries(customWords).map<KeyValueTuple<string, string>>(([key, value]) => [key.toLowerCase(), value]),
     );
@@ -25,5 +23,5 @@ export function toPascalCase(text: string, customWords?: StringRecord): string {
     }
   }
 
-  return fixedWords.join('');
+  return (fixedWords ? fixedWords.join('') : '') as PascalCase<Type>;
 }

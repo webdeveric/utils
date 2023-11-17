@@ -40,7 +40,8 @@ import {
   isUndefinedArray,
 } from './type-predicate.js';
 
-import type { NumericString, NumericValue, Primitive, StringRecord, UnknownRecord } from './types.js';
+import type { NumericString, NumericValue, Primitive } from './types/common.js';
+import type { UnknownRecord, StringRecord } from './types/records.js';
 
 function getError(error: string | Error): Error {
   return error instanceof Error ? error : new TypeError(error);

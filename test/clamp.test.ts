@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { clamp } from '../src/clamp';
+import { clamp } from '../src/clamp.js';
 
 describe('clamp()', () => {
   it('Clamps a value between an upper and lower bound', () => {

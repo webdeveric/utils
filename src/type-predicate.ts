@@ -1,6 +1,7 @@
 import { createStringMatchingPredicate, everyItem, maybeUndefined } from './type-predicate-factory.js';
 
-import type { NumericString, NumericValue, Primitive, StringRecord, UnknownRecord } from './types.js';
+import type { Primitive, NumericString, NumericValue } from './types/common.js';
+import type { UnknownRecord, StringRecord } from './types/records.js';
 
 // Primitives
 

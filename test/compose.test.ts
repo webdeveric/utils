@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 
-import { compose } from '../src/compose';
+import { compose } from '../src/compose.js';
 
 describe('compose()', () => {
   it('composes functions into one', async () => {

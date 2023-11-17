@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { trimEnd } from '../src/trimEnd';
+import { trimEnd } from '../src/trimEnd.js';
 
 describe('trimEnd', () => {
   it('removes char from end of string', () => {

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { Seconds, secToString } from '../src/secToString';
+import { Seconds, secToString } from '../src/secToString.js';
 
 describe('secToString()', () => {
   it('Returns string representation of the number of seconds', async () => {

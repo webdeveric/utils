@@ -1,3 +1,7 @@
+// Folders
+export * from './types/index.js';
+
+// Files
 export * from './asArray.js';
 export * from './capitalize.js';
 export * from './clamp.js';
@@ -6,9 +10,11 @@ export * from './compose.js';
 export * from './convert.js';
 export * from './delay.js';
 export * from './delayAnimationFrame.js';
+export * from './delayAnimationFrames.js';
 export * from './describeInput.js';
 export * from './getISODateString.js';
 export * from './getMaxValue.js';
+export * from './getMilliseconds.js';
 export * from './getMinValue.js';
 export * from './getOwnKeys.js';
 export * from './getOwnProperties.js';
@@ -29,6 +35,5 @@ export * from './trimStart.js';
 export * from './type-assertion.js';
 export * from './type-predicate-factory.js';
 export * from './type-predicate.js';
-export * from './types.js';
 export * from './uniqueItems.js';
 export * from './until.js';

@@ -1,6 +1,6 @@
 import { getType } from './getType.js';
 
-import type { AnyRecord } from './types.js';
+import type { AnyRecord } from './types/records.js';
 
 export interface UntilContext {
   callCount: number;
@@ -123,9 +123,12 @@ export function until<T>(fn: UntilCallback<T>, options: UntilOptions = defaultOp
     callUntilDone(fn, delay, resolve, reject);
 
     if (!done && timeout !== undefined) {
-      timeoutTimer = setTimeout(() => {
-        reject(new Error('until: timed out'));
-      }, getDelay(timeout, context));
+      timeoutTimer = setTimeout(
+        () => {
+          reject(new Error('until: timed out'));
+        },
+        getDelay(timeout, context),
+      );
     }
   });
 }

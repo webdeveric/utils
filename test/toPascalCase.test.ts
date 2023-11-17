@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { toPascalCase } from '../src/toPascalCase';
+import { toPascalCase } from '../src/toPascalCase.js';
 
 describe('toPascalCase()', () => {
   it('Removes non alphanumeric', () => {

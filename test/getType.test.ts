@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { getType } from '../src/getType';
+import { getType } from '../src/getType.js';
 
 describe('getType()', function () {
   it('returns var data type', function () {
