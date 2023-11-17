@@ -20,7 +20,7 @@ export type LowercaseProperties<Type extends UnknownRecord> = {
 export type PartialKeys<T, K extends keyof T> = T extends any ? Omit<T, K> & Partial<Pick<T, K>> : never;
 
 export type OnlyOne<Type extends UnknownRecord> = {
-  [Property in keyof Type]: Omit<Type, Property> & Partial<NeverRecord>;
+  [Property in keyof Type]: Omit<Type, Property> & Partial<Record<Property, never>>;
 }[keyof Type];
 
 export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclude<keyof T, Keys>> &
