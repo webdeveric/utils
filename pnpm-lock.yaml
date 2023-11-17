@@ -46,6 +46,9 @@ devDependencies:
   eslint-plugin-import:
     specifier: ^2.29.0
     version: 2.29.0(@typescript-eslint/parser@6.11.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.53.0)
+  glob:
+    specifier: ^10.3.10
+    version: 10.3.10
   husky:
     specifier: ^8.0.3
     version: 8.0.3
