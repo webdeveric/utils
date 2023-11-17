@@ -46,7 +46,7 @@
     "url": "https://github.com/webdeveric/utils/issues"
   },
   "homepage": "https://github.com/webdeveric/utils/#readme",
-  "packageManager": "pnpm@8.10.3",
+  "packageManager": "pnpm@8.10.5",
   "scripts": {
     "clean": "rimraf ./dist/",
     "prebuild": "npm run clean",
