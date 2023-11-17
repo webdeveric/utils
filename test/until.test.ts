@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 
-import { isDelay, until, type UntilCallback, type UntilContext, type UntilOptions } from '../src/until';
+import { isDelay, until, type UntilCallback, type UntilContext, type UntilOptions } from '../src/until.js';
 
 describe('isDelay()', () => {
   it('Returns true when given a Delay', () => {

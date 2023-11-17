@@ -1,4 +1,5 @@
-import type { TypePredicateFn, UnknownRecord } from './types.js';
+import type { TypePredicateFn } from './types/functions.js';
+import type { UnknownRecord } from './types/records.js';
 
 export const createIsEnumPredicate = <T extends UnknownRecord>(enumObject: T): TypePredicateFn<T[keyof T]> => {
   const values = new Set(Object.values(enumObject));

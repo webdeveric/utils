@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { trimIndentation } from '../src/trimIndentation';
+import { trimIndentation } from '../src/trimIndentation.js';
 
 describe('trimIndentation()', () => {
   it('Trims indentation from a string', () => {

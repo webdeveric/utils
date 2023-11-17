@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, it, expect, vi } from 'vitest';
 
-import { delayAnimationFrame, delayAnimationFrames } from '../src/delayAnimationFrame';
+import { delayAnimationFrame } from '../src/delayAnimationFrame.js';
 
-describe('delay animation frames', () => {
+describe('delayAnimationFrame()', () => {
   beforeEach(() => {
     vi.spyOn(window, 'requestAnimationFrame').mockImplementation(cb => setTimeout(cb, 0));
   });
@@ -11,40 +11,15 @@ describe('delay animation frames', () => {
     vi.restoreAllMocks();
   });
 
-  describe('delayAnimationFrame()', () => {
-    it('Delays one animation frame', async () => {
-      const delay = delayAnimationFrame();
+  it('Delays one animation frame', async () => {
+    const delay = delayAnimationFrame();
 
-      await expect(delay).resolves.toBeUndefined();
-    });
-
-    it('Specifies the return value', async () => {
-      const delay = delayAnimationFrame('value');
-
-      await expect(delay).resolves.toBe('value');
-    });
+    await expect(delay).resolves.toBeUndefined();
   });
 
-  describe('delayAnimationFrames()', () => {
-    it('delays the specified number of times', async () => {
-      const frameCount = 10;
+  it('Specifies the return value', async () => {
+    const delay = delayAnimationFrame('value');
 
-      await expect(delayAnimationFrames(frameCount, 'value')).resolves.toBe('value');
-
-      expect(window.requestAnimationFrame).toHaveBeenCalledTimes(frameCount);
-    });
-
-    it('Specifies the return value', async () => {
-      const delay = delayAnimationFrames(1, true);
-
-      await expect(delay).resolves.toBe(true);
-    });
-
-    it('Rejects when provided invalid frames value', async () => {
-      expect.assertions(2);
-
-      await expect(delayAnimationFrames(null as unknown as number)).rejects.toBeInstanceOf(Error);
-      await expect(delayAnimationFrames(-1)).rejects.toBeInstanceOf(Error);
-    });
+    await expect(delay).resolves.toBe('value');
   });
 });

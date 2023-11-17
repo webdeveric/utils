@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { uniqueItems } from '../src/uniqueItems';
+import { uniqueItems } from '../src/uniqueItems.js';
 
 describe('uniqueItems()', () => {
   it('Returns unique items from an array', () => {

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { trimStart } from '../src/trimStart';
+import { trimStart } from '../src/trimStart.js';
 
 describe('trimStart', () => {
   it('removes char from start of string', () => {

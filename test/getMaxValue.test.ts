@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { getMaxValue } from '../src/getMaxValue';
+import { getMaxValue } from '../src/getMaxValue.js';
 
 describe('getMaxValue()', () => {
   it('Returns the minimum value', () => {

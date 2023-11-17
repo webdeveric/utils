@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { normalize, type NormalizerFn } from '../src/normalize';
+import { normalize, type NormalizerFn } from '../src/normalize.js';
 
 type Person = {
   name: string;

@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest';
 
-import { getOwnProperties } from '../src/getOwnProperties';
+import { getOwnProperties } from '../src/getOwnProperties.js';
 
-import type { AnyRecord } from '../src/types';
+import type { AnyRecord } from '../src/types/records.js';
 
 describe('getOwnProperties()', () => {
   it('Returns an array of object keys', () => {

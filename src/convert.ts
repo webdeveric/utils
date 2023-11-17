@@ -1,7 +1,7 @@
 import { getOwnProperties } from './getOwnProperties.js';
 import { getType } from './getType.js';
 
-import type { Builtin } from './types.js';
+import type { Builtin } from './types/common.js';
 
 export type ConvertFn<SourceType, ReturnType> = (source: Readonly<SourceType>) => ReturnType;
 
