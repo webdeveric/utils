@@ -48,5 +48,5 @@ if (typeof process.env.npm_package_name === 'string') {
 } else {
   console.error('Cannot find npm package name in your environment.');
   console.info('Run this script from your package.json scripts block.');
-  console.info('Example: npm run validate');
+  console.info('Example: pnpm validate');
 }
