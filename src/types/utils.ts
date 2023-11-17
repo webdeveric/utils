@@ -5,6 +5,8 @@ export type IfDefined<T, D, U> = undefined extends T ? U : D;
 
 export type IfNever<T, N, O> = [T] extends [never] ? N : O;
 
+export type CanBeUndefined<Type, T, F> = Type | undefined extends Type ? T : F;
+
 export type ReturnTypeDefault<F, D = undefined> = F extends (...args: any) => infer R ? R : D;
 
 export type DeepNonNullable<T> = T extends Record<PropertyKey, unknown>
@@ -46,3 +48,5 @@ export type PickByType<Type, DataType> = {
 };
 
 export type StringKeys<T> = keyof T & string;
+
+export type Values<Type> = Type[keyof Type];
