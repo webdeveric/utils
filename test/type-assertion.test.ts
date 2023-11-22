@@ -2,14 +2,17 @@ import { describe, it, expect } from 'vitest';
 
 import {
   assertExhaustive,
+  assertIsAsyncIterable,
   assertIsBigInt,
   assertIsBigIntArray,
   assertIsBoolean,
   assertIsBooleanArray,
   assertIsDigitsString,
   assertIsFiniteNumber,
+  assertIsFunction,
   assertIsInteger,
   assertIsIntString,
+  assertIsIterable,
   assertIsLengthAware,
   assertIsNull,
   assertIsNullArray,
@@ -220,6 +223,52 @@ describe('assertIsNumericValueArray()', () => {
 
     expect(() => {
       assertIsNumericValueArray([1, '2', BigInt(3)]);
+    }).not.toThrow();
+  });
+});
+
+describe('assertIsFunction()', () => {
+  it('Throws when input is invalid', () => {
+    expect(() => {
+      assertIsFunction(null);
+    }).toThrow();
+
+    expect(() => {
+      assertIsFunction(() => {});
+      assertIsFunction(function () {});
+    }).not.toThrow();
+  });
+});
+
+describe('assertIsIterable()', () => {
+  it('Throws when input is invalid', () => {
+    expect(() => {
+      assertIsIterable(null);
+    }).toThrow();
+
+    expect(() => {
+      assertIsIterable({
+        *[Symbol.iterator]() {
+          yield 1;
+        },
+      });
+    }).not.toThrow();
+  });
+});
+
+describe('assertIsAsyncIterable()', () => {
+  it('Throws when input is invalid', () => {
+    expect(() => {
+      assertIsAsyncIterable(null);
+    }).toThrow();
+
+    expect(() => {
+      assertIsAsyncIterable({
+        async *[Symbol.asyncIterator]() {
+          await 1;
+          yield 1;
+        },
+      });
     }).not.toThrow();
   });
 });

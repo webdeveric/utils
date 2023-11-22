@@ -1,6 +1,6 @@
 import { createStringMatchingPredicate, everyItem, maybeUndefined } from './type-predicate-factory.js';
 
-import type { Primitive, NumericString, NumericValue } from './types/common.js';
+import type { Primitive, NumericString, NumericValue, AnyFunction } from './types/common.js';
 import type { UnknownRecord, StringRecord } from './types/records.js';
 
 // Primitives
@@ -89,6 +89,9 @@ export const isNonNullable = <T>(input: unknown): input is NonNullable<T> =>
 export const isPropertyKey = (input: unknown): input is PropertyKey =>
   typeof input === 'string' || typeof input === 'number' || typeof input === 'symbol';
 
+export const isFunction = <Func extends AnyFunction = AnyFunction>(input: unknown): input is Func =>
+  typeof input === 'function';
+
 export const isObject = <T extends object = UnknownRecord>(input: unknown): input is T =>
   input !== null && typeof input === 'object' && !Array.isArray(input);
 
@@ -108,4 +111,12 @@ export const isPromiseFulfilledResult = <T>(input: unknown): input is PromiseFul
 
 export const isPromiseRejectedResult = (input: unknown): input is PromiseRejectedResult => {
   return isObject(input) && input.status === 'rejected' && 'reason' in input;
+};
+
+export const isIterable = <T>(input: unknown): input is Iterable<T> => {
+  return isObject(input) && typeof input[Symbol.iterator] === 'function';
+};
+
+export const isAsyncIterable = <T>(input: unknown): input is AsyncIterable<T> => {
+  return isObject(input) && typeof input[Symbol.asyncIterator] === 'function';
 };
