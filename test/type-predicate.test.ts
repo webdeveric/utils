@@ -1,14 +1,17 @@
 import { describe, it, expect } from 'vitest';
 
 import {
+  isAsyncIterable,
   isBigInt,
   isBigIntArray,
   isBoolean,
   isBooleanArray,
   isDigitsString,
   isFiniteNumber,
+  isFunction,
   isInteger,
   isIntString,
+  isIterable,
   isLengthAware,
   isNonNullable,
   isNull,
@@ -404,6 +407,40 @@ describe('isPropertyKey()', () => {
     expect(isPropertyKey(null)).toBeFalsy();
     expect(isPropertyKey(undefined)).toBeFalsy();
     expect(isPropertyKey({})).toBeFalsy();
+  });
+});
+
+describe('isFunction()', () => {
+  it('Returns true for valid input', () => {
+    expect(isFunction(() => {})).toBeTruthy();
+    expect(isFunction(function () {})).toBeTruthy();
+    expect(isFunction(Object.values)).toBeTruthy();
+    expect(isFunction(null)).toBeFalsy();
+  });
+});
+
+describe('isIterable()', () => {
+  it('Returns true for valid input', () => {
+    expect(
+      isIterable({
+        *[Symbol.iterator]() {
+          yield 1;
+        },
+      }),
+    ).toBeTruthy();
+  });
+});
+
+describe('isAsyncIterable()', () => {
+  it('Returns true for valid input', () => {
+    expect(
+      isAsyncIterable({
+        async *[Symbol.asyncIterator]() {
+          await 1;
+          yield 1;
+        },
+      }),
+    ).toBeTruthy();
   });
 });
 
