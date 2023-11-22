@@ -1,13 +1,16 @@
 import { createStringMatchingPredicate } from './type-predicate-factory.js';
 import {
+  isAsyncIterable,
   isBigInt,
   isBigIntArray,
   isBoolean,
   isBooleanArray,
   isDigitsString,
   isFiniteNumber,
+  isFunction,
   isInteger,
   isIntString,
+  isIterable,
   isLengthAware,
   isNull,
   isNullArray,
@@ -40,7 +43,7 @@ import {
   isUndefinedArray,
 } from './type-predicate.js';
 
-import type { NumericString, NumericValue, Primitive } from './types/common.js';
+import type { AnyFunction, NumericString, NumericValue, Primitive } from './types/common.js';
 import type { UnknownRecord, StringRecord } from './types/records.js';
 
 function getError(error: string | Error): Error {
@@ -157,6 +160,33 @@ export function assertIsNumericValueArray(
   error: string | Error = 'input is not a numerical value array',
 ): asserts input is NumericValue[] {
   if (!isNumericValueArray(input)) {
+    throw getError(error);
+  }
+}
+
+export function assertIsFunction<Func extends AnyFunction = AnyFunction>(
+  input: unknown,
+  error: string | Error = 'input is not a function',
+): asserts input is Func {
+  if (!isFunction<Func>(input)) {
+    throw getError(error);
+  }
+}
+
+export function assertIsIterable<Type>(
+  input: unknown,
+  error: string | Error = 'input is not an Iterable',
+): asserts input is Iterable<Type> {
+  if (!isIterable<Type>(input)) {
+    throw getError(error);
+  }
+}
+
+export function assertIsAsyncIterable<Type>(
+  input: unknown,
+  error: string | Error = 'input is not an AsyncIterable',
+): asserts input is AsyncIterable<Type> {
+  if (!isAsyncIterable<Type>(input)) {
     throw getError(error);
   }
 }
