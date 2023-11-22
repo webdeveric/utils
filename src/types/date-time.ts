@@ -1,5 +1,5 @@
-import type { Branded } from './branded';
-import type { NumericString } from './common';
+import type { Branded } from './branded.js';
+import type { NumericString } from './common.js';
 
 export type DateInput = ConstructorParameters<typeof Date>[0];
 
