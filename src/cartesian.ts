@@ -1,3 +1,6 @@
+/**
+ * @see https://en.wikipedia.org/wiki/Cartesian_product
+ */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function* cartesian(...input: any[][]): Generator<any[]> {
   const [head, ...tail] = input;
