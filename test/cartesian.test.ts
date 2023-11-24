@@ -17,4 +17,12 @@ describe('cartesian()', () => {
       ['b', 2],
     ]);
   });
+
+  it('Deck of cards example', () => {
+    expect(
+      Array.from(
+        cartesian(['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'], ['♠', '♥', '♦', '♣']),
+      ),
+    ).toHaveLength(52);
+  });
 });
