@@ -4,15 +4,15 @@ import { getDateString } from '../src/getDateString.js';
 
 describe('getDateString()', () => {
   it('Returns a DateString', () => {
-    const now = new Date();
+    const pastDate = new Date('2020-01-25T00:00:00.589Z');
 
-    const today = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+    const yyyymmdd = '2020-01-25';
 
-    expect(getDateString(now)).toEqual(today);
-    expect(getDateString(now.getTime())).toEqual(today);
-    expect(getDateString(now.toISOString())).toEqual(today);
-    expect(getDateString()).toEqual(today);
-    expect(getDateString(undefined)).toEqual(today);
+    expect(getDateString(pastDate)).toEqual(yyyymmdd);
+    expect(getDateString(pastDate.getTime())).toEqual(yyyymmdd);
+    expect(getDateString(pastDate.toISOString())).toEqual(yyyymmdd);
+    expect(getDateString()).toEqual(new Date().toISOString().split('T').at(0));
+    expect(getDateString(undefined)).toEqual(new Date().toISOString().split('T').at(0));
   });
 
   it('Throws when given bad input', () => {
