@@ -4,7 +4,9 @@ export * from './types/index.js';
 // Files
 export * from './asArray.js';
 export * from './capitalize.js';
+export * from './cartesian.js';
 export * from './clamp.js';
+export * from './combinations.js';
 export * from './comment.js';
 export * from './compose.js';
 export * from './convert.js';
