@@ -3,28 +3,23 @@ import { describe, it, expect } from 'vitest';
 import { getType } from '../src/getType.js';
 
 describe('getType()', function () {
-  it('returns var data type', function () {
-    const types = new Map();
-
-    types.set({}, 'Object');
-    types.set(Object.create(null), 'Object');
-    types.set(new (class {})(), 'Object');
-    types.set([], 'Array');
-    types.set(new Int8Array(), 'Int8Array');
-    types.set(Buffer.from(''), 'Uint8Array');
-    types.set(void 0, 'Undefined');
-    types.set(null, 'Null');
-    types.set(true, 'Boolean');
-    types.set('a', 'String');
-    types.set(1, 'Number');
-    types.set(3.14, 'Number');
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    types.set(() => {}, 'Function');
-    types.set(class {}, 'Function');
-    types.set(Symbol(), 'Symbol');
-
-    for (const [obj, type] of types) {
-      expect(getType(obj)).toEqual(type);
-    }
+  it.each([
+    { input: {}, output: 'Object' },
+    { input: Object.create(null), output: 'Object' },
+    { input: new (class {})(), output: 'Object' },
+    { input: [], output: 'Array' },
+    { input: new Int8Array(), output: 'Int8Array' },
+    { input: Buffer.from(''), output: 'Uint8Array' },
+    { input: void 0, output: 'Undefined' },
+    { input: null, output: 'Null' },
+    { input: true, output: 'Boolean' },
+    { input: 'a', output: 'String' },
+    { input: 1, output: 'Number' },
+    { input: 3.14, output: 'Number' },
+    { input: () => {}, output: 'Function' },
+    { input: class {}, output: 'Function' },
+    { input: Symbol(), output: 'Symbol' },
+  ])('`$input` returns $output', function ({ input, output }) {
+    expect(getType(input)).toEqual(output);
   });
 });
