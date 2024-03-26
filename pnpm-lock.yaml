@@ -67,6 +67,9 @@ devDependencies:
   typescript:
     specifier: ^5.4.3
     version: 5.4.3
+  validate-package-exports:
+    specifier: ^0.1.0
+    version: 0.1.0
   vitest:
     specifier: ^1.4.0
     version: 1.4.0(@types/node@20.11.30)(jsdom@24.0.0)
@@ -3859,6 +3862,12 @@ packages:
       '@jridgewell/trace-mapping': 0.3.25
       '@types/istanbul-lib-coverage': 2.0.6
       convert-source-map: 2.0.0
+    dev: true
+
+  /validate-package-exports@0.1.0:
+    resolution: {integrity: sha512-SOWSk+a34fOav35DzZHGWtQJ9zIrfSQyJUlKyet7HtPsLKTbqRNDy6yAmelwgY5l+2/fIZNlR2mGQ6hG+C1e8Q==}
+    engines: {node: '>=18.11.0'}
+    hasBin: true
     dev: true
 
   /vite-node@1.4.0(@types/node@20.11.30):
