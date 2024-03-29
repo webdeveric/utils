@@ -60,7 +60,7 @@
     "lint": "eslint ./*.{js,cjs,mjs,ts,cts,mts} ./src/ ./test/ --ext .ts,.mjs,.cjs",
     "test": "vitest",
     "coverage": "vitest run  -c vitest.config.mts --coverage",
-    "validate": "validate-package-exports --check --verify",
+    "validate": "validate-package-exports --check --verify --info",
     "spellcheck": "cspell './{.github,src,test}/**/*.{ts,json}' './*.{md,js}' './package.json' --no-progress",
     "prepublishOnly": "pnpm typecheck && pnpm spellcheck && pnpm lint && pnpm coverage && pnpm build",
     "format": "prettier --write ./*.{js,json,md} ./src/ ./test/",
@@ -83,14 +83,13 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.29.1",
-    "glob": "^10.3.10",
     "husky": "^9.0.11",
     "jsdom": "^24.0.0",
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
     "rimraf": "^5.0.5",
     "typescript": "^5.4.3",
-    "validate-package-exports": "^0.1.0",
+    "validate-package-exports": "^0.2.0",
     "vitest": "^1.4.0"
   }
 }
