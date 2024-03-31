@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 
+import { isBoolean } from '../src/predicate/isBoolean.js';
 import {
   createIsEnumPredicate,
   createStringMatchingPredicate,
@@ -7,8 +8,7 @@ import {
   maybeArray,
   maybeNull,
   maybeUndefined,
-} from '../src/type-predicate-factory.js';
-import { isBoolean } from '../src/type-predicate.js';
+} from '../src/predicate-factory/index.js';
 
 describe('createIsEnumPredicate()', () => {
   enum Demo {

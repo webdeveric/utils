@@ -1,6 +1,6 @@
 import { getType } from './getType.js';
 import { looksLikeURL } from './looksLikeURL.js';
-import { isNumericString } from './type-predicate.js';
+import { isNumericString } from './predicate/isNumericString.js';
 
 export const describeInput = (input: unknown): string => {
   switch (typeof input) {

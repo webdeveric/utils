@@ -1,7 +1,7 @@
 import cloneDeep from 'lodash.clonedeep';
 
 import { getOwnProperties } from './getOwnProperties.js';
-import { isObject } from './type-predicate.js';
+import { isObject } from './predicate/isObject.js';
 
 import type { Builtin } from './types/common.js';
 import type { AnyRecord } from './types/records.js';

@@ -45,7 +45,7 @@ import {
   assertIsSymbolArray,
   assertIsUndefined,
   assertIsUndefinedArray,
-} from '../src/type-assertion.js';
+} from '../src/assertion/index.js';
 
 describe('assertIsBigInt()', () => {
   it('Throws when input is invalid', () => {

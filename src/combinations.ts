@@ -1,6 +1,6 @@
 import { asArray } from './asArray.js';
 import { cartesian } from './cartesian.js';
-import { isObject } from './type-predicate.js';
+import { isObject } from './predicate/isObject.js';
 
 import type { UnknownRecord } from './types/records.js';
 
@@ -10,9 +10,8 @@ export type CombinationsInput<Type> = {
     : Type[Property] | Type[Property][];
 };
 
-export type CombinationsOutput<Input extends CombinationsInput<unknown>> = Input extends CombinationsInput<infer Type>
-  ? Type
-  : never;
+export type CombinationsOutput<Input extends CombinationsInput<unknown>> =
+  Input extends CombinationsInput<infer Type> ? Type : never;
 
 export function* combinations<
   Type extends UnknownRecord = UnknownRecord,

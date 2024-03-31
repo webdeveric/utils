@@ -1,4 +1,4 @@
-import { assertIsNumericValueArray } from './type-assertion.js';
+import { assertIsNumericValueArray } from './assertion/assertIsNumericValueArray.js';
 
 import type { NumericValue } from './types/common.js';
 

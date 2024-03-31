@@ -28,6 +28,26 @@
       "require": "./dist/cjs/index.js",
       "import": "./dist/mjs/index.js"
     },
+    "./predicate-factory": {
+      "types": "./dist/types/predicate-factory/index.d.ts",
+      "require": "./dist/cjs/predicate-factory/index.js",
+      "import": "./dist/mjs/predicate-factory/index.js"
+    },
+    "./predicate": {
+      "types": "./dist/types/predicate/index.d.ts",
+      "require": "./dist/cjs/predicate/index.js",
+      "import": "./dist/mjs/predicate/index.js"
+    },
+    "./assertion": {
+      "types": "./dist/types/assertion/index.d.ts",
+      "require": "./dist/cjs/assertion/index.js",
+      "import": "./dist/mjs/assertion/index.js"
+    },
+    "./types": {
+      "types": "./dist/types/types/index.d.ts",
+      "require": "./dist/cjs/types/index.js",
+      "import": "./dist/mjs/types/index.js"
+    },
     "./*": {
       "types": "./dist/types/*.d.ts",
       "require": "./dist/cjs/*.js",
@@ -60,7 +80,7 @@
     "lint": "eslint ./*.{js,cjs,mjs,ts,cts,mts} ./src/ ./test/ --ext .ts,.mjs,.cjs",
     "test": "vitest",
     "coverage": "vitest run  -c vitest.config.mts --coverage",
-    "validate": "validate-package-exports --check --verify --info",
+    "validate": "validate-package-exports --check --verify",
     "spellcheck": "cspell './{.github,src,test}/**/*.{ts,json}' './*.{md,js}' './package.json' --no-progress",
     "prepublishOnly": "pnpm typecheck && pnpm spellcheck && pnpm lint && pnpm coverage && pnpm build",
     "format": "prettier --write ./*.{js,json,md} ./src/ ./test/",
@@ -74,7 +94,7 @@
   "devDependencies": {
     "@types/lodash.clonedeep": "^4.5.9",
     "@types/lodash.escaperegexp": "^4.1.9",
-    "@types/node": "^20.11.30",
+    "@types/node": "^20.12.2",
     "@vitest/coverage-v8": "^1.4.0",
     "@webdeveric/eslint-config-ts": "^0.7.1",
     "@webdeveric/prettier-config": "^0.2.0",
@@ -89,7 +109,7 @@
     "prettier": "^3.2.5",
     "rimraf": "^5.0.5",
     "typescript": "^5.4.3",
-    "validate-package-exports": "^0.2.0",
+    "validate-package-exports": "^0.2.1",
     "vitest": "^1.4.0"
   }
 }

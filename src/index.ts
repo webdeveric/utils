@@ -1,4 +1,7 @@
 // Folders
+export * from './assertion/index.js';
+export * from './predicate-factory/index.js';
+export * from './predicate/index.js';
 export * from './types/index.js';
 
 // Files
@@ -37,8 +40,5 @@ export * from './toPascalCase.js';
 export * from './trimEnd.js';
 export * from './trimIndentation.js';
 export * from './trimStart.js';
-export * from './type-assertion.js';
-export * from './type-predicate-factory.js';
-export * from './type-predicate.js';
 export * from './uniqueItems.js';
 export * from './until.js';

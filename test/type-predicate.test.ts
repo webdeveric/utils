@@ -43,7 +43,7 @@ import {
   isSymbolArray,
   isUndefined,
   isUndefinedArray,
-} from '../src/type-predicate.js';
+} from '../src/predicate/index.js';
 
 describe('isString()', () => {
   it('Returns true for valid input', () => {
