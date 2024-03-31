@@ -55,11 +55,12 @@ export type ValidKeys<Type> = Type extends unknown[]
  * type ExampleNotation = "job" | "job.title";
  * ```
  */
-export type PathDotNotation<Type, Key extends keyof Type = keyof Type> = Key extends ValidKeys<Type>
-  ? Type[Key] extends Primitive
-    ? Key
-    : Key | `${Key}.${PathDotNotation<NonNullable<Type[Key]>>}`
-  : never;
+export type PathDotNotation<Type, Key extends keyof Type = keyof Type> =
+  Key extends ValidKeys<Type>
+    ? Type[Key] extends Primitive
+      ? Key
+      : Key | `${Key}.${PathDotNotation<NonNullable<Type[Key]>>}`
+    : never;
 
 /**
  * Get the valid keys and dot notations for a given `Type`.

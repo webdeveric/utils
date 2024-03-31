@@ -9,11 +9,12 @@ export type CanBeUndefined<Type, T, F> = Type | undefined extends Type ? T : F;
 
 export type ReturnTypeDefault<F, D = undefined> = F extends (...args: any) => infer R ? R : D;
 
-export type DeepNonNullable<T> = T extends Record<PropertyKey, unknown>
-  ? {
-      [P in keyof T]: DeepNonNullable<T[P]>;
-    }
-  : NonNullable<T>;
+export type DeepNonNullable<T> =
+  T extends Record<PropertyKey, unknown>
+    ? {
+        [P in keyof T]: DeepNonNullable<T[P]>;
+      }
+    : NonNullable<T>;
 
 export type Writable<T> = {
   -readonly [P in keyof T]: T[P];
