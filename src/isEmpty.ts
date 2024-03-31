@@ -1,4 +1,4 @@
-import { isLengthAware } from './type-predicate.js';
+import { isLengthAware } from './predicate/isLengthAware.js';
 
 export function isEmpty(input: unknown): boolean {
   if (typeof input === 'undefined' || input === null || (typeof input === 'string' && !input.length)) {

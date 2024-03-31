@@ -17,5 +17,9 @@ describe('getISODateString()', () => {
     expect(() => {
       getISODateString('bad input');
     }).toThrow();
+
+    expect(() => {
+      getISODateString(Number.NaN);
+    }).toThrow();
   });
 });
