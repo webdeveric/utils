@@ -3,6 +3,7 @@ import { isGeneratorFunction, isGeneratorObject } from 'node:util/types';
 import { describe, expect, it } from 'vitest';
 
 import { counter } from '../src/counter.js';
+
 describe('counter()', () => {
   it('Is a GeneratorFunction', () => {
     expect(isGeneratorFunction(counter)).toBeTruthy();
