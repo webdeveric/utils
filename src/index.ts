@@ -40,5 +40,6 @@ export * from './toPascalCase.js';
 export * from './trimEnd.js';
 export * from './trimIndentation.js';
 export * from './trimStart.js';
+export * from './unique.js';
 export * from './uniqueItems.js';
 export * from './until.js';
