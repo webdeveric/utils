@@ -94,6 +94,7 @@
   "devDependencies": {
     "@types/lodash.clonedeep": "^4.5.9",
     "@types/lodash.escaperegexp": "^4.1.9",
+    "@types/node": "^20.14.9",
     "@vitest/coverage-v8": "^1.6.0",
     "@webdeveric/eslint-config-ts": "^0.8.0",
     "@webdeveric/prettier-config": "^0.2.1",

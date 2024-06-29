@@ -21,6 +21,9 @@ importers:
       '@types/lodash.escaperegexp':
         specifier: ^4.1.9
         version: 4.1.9
+      '@types/node':
+        specifier: ^20.14.9
+        version: 20.14.9
       '@vitest/coverage-v8':
         specifier: ^1.6.0
         version: 1.6.0(vitest@1.6.0(@types/node@20.14.9)(jsdom@24.1.0))
@@ -3294,7 +3297,6 @@ snapshots:
   '@types/node@20.14.9':
     dependencies:
       undici-types: 5.26.5
-    optional: true
 
   '@typescript-eslint/eslint-plugin@7.14.1(@typescript-eslint/parser@7.14.1(eslint@8.57.0)(typescript@5.5.2))(eslint@8.57.0)(typescript@5.5.2)':
     dependencies:
@@ -5396,8 +5398,7 @@ snapshots:
       has-symbols: 1.0.3
       which-boxed-primitive: 1.0.2
 
-  undici-types@5.26.5:
-    optional: true
+  undici-types@5.26.5: {}
 
   unique-filename@3.0.0:
     dependencies:
