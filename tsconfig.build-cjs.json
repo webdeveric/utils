@@ -5,7 +5,6 @@
     "noEmit": false,
     "module": "commonjs",
     "verbatimModuleSyntax": false,
-    "target": "ES2018",
     "outDir": "./dist/cjs"
   },
   "include": ["src/**/*"]
