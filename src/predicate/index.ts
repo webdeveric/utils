@@ -8,6 +8,7 @@ export * from './isFiniteNumber.js';
 export * from './isFunction.js';
 export * from './isInteger.js';
 export * from './isIntString.js';
+export * from './isISODateString.js';
 export * from './isIterable.js';
 export * from './isLengthAware.js';
 export * from './isNonNullable.js';

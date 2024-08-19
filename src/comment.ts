@@ -63,7 +63,7 @@ export function comment(text: string, options?: CommentOptions): string {
   const lines = text
     .trim()
     .split(/\r\n|\n/)
-    .map(line => `${lineStart}${line.normalize().trim()}${lineEnd}`.trimEnd());
+    .map((line) => `${lineStart}${line.normalize().trim()}${lineEnd}`.trimEnd());
 
   return `${commentStart}${lines.join('\n')}${commentEnd}`;
 }

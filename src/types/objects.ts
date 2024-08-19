@@ -113,5 +113,5 @@ export type PathValue<
     : never;
 
 export type PathValues<Type, TargetPaths extends Path<Type>> = {
-  [Path in TargetPaths as CamelCase<`${Path}`, '.'>]: PathValue<Type, Path>;
+  [TargetPath in TargetPaths as CamelCase<`${TargetPath}`, '.'>]: PathValue<Type, TargetPath>;
 };
