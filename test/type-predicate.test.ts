@@ -11,6 +11,7 @@ import {
   isFunction,
   isInteger,
   isIntString,
+  isISODateString,
   isIterable,
   isLengthAware,
   isNonNullable,
@@ -96,13 +97,13 @@ describe('isNull()', () => {
 
 describe('isPrimitive()', () => {
   it('Returns true for valid input', () => {
-    ['string', 1, BigInt(1), true, undefined, Symbol(), null].forEach(input => {
+    ['string', 1, BigInt(1), true, undefined, Symbol(), null].forEach((input) => {
       expect(isPrimitive(input)).toBeTruthy();
     });
   });
 
   it('Returns false for invalid input', () => {
-    [['test'], {}, Promise.resolve()].forEach(input => {
+    [['test'], {}, Promise.resolve()].forEach((input) => {
       expect(isPrimitive(input)).toBeFalsy();
     });
   });
@@ -312,6 +313,15 @@ describe('isIntString()', () => {
   });
 });
 
+describe('isISODateString()', () => {
+  it('Returns boolean indicating input is an ISODateString', () => {
+    expect(isISODateString(new Date(0).toISOString())).toBeTruthy();
+    expect(isISODateString(new Date('+9999-12-31').toISOString())).toBeTruthy();
+    expect(isISODateString(false)).toBeFalsy();
+    expect(isISODateString(null)).toBeFalsy();
+  });
+});
+
 describe('isDigitsString()', () => {
   it('Returns true for valid input', () => {
     expect(isDigitsString('12345')).toBeTruthy();
@@ -339,13 +349,13 @@ describe('isFiniteNumber()', () => {
 
 describe('isInteger()', () => {
   it('Returns true for valid inputs', () => {
-    [0, 1, -1].forEach(input => {
+    [0, 1, -1].forEach((input) => {
       expect(isInteger(input)).toBeTruthy();
     });
   });
 
   it('Returns false for invalid inputs', () => {
-    [Infinity, Number.NaN, 'bad input', false, null, {}, Math.PI].forEach(input => {
+    [Infinity, Number.NaN, 'bad input', false, null, {}, Math.PI].forEach((input) => {
       expect(isInteger(input)).toBeFalsy();
     });
   });
@@ -353,13 +363,13 @@ describe('isInteger()', () => {
 
 describe('isPositiveInteger()', () => {
   it('Returns true for valid inputs', () => {
-    [0, -0, 1, 1000].forEach(input => {
+    [0, -0, 1, 1000].forEach((input) => {
       expect(isPositiveInteger(input)).toBeTruthy();
     });
   });
 
   it('Returns false for invalid inputs', () => {
-    [-1000, -Infinity, Number.NaN, 'bad input', false, null, {}].forEach(input => {
+    [-1000, -Infinity, Number.NaN, 'bad input', false, null, {}].forEach((input) => {
       expect(isPositiveInteger(input)).toBeFalsy();
     });
   });
@@ -372,7 +382,7 @@ describe('isPositiveFiniteNumber()', () => {
   });
 
   it('Returns false for invalid inputs', () => {
-    [-123, Infinity, Number.NaN, 'bad input', false, null, {}].forEach(input => {
+    [-123, Infinity, Number.NaN, 'bad input', false, null, {}].forEach((input) => {
       expect(isPositiveFiniteNumber(input)).toBeFalsy();
     });
   });
@@ -462,7 +472,7 @@ describe('isLengthAware()', () => {
   });
 
   it('Returns false for invalid inputs', () => {
-    [-123, Infinity, Number.NaN, 'bad input', false, null, { pi: Math.PI }].forEach(input => {
+    [-123, Infinity, Number.NaN, 'bad input', false, null, { pi: Math.PI }].forEach((input) => {
       expect(isLengthAware(input)).toBeFalsy();
     });
   });
@@ -475,7 +485,7 @@ describe('isSizeAware()', () => {
   });
 
   it('Returns false for invalid inputs', () => {
-    [-123, Infinity, Number.NaN, 'bad input', false, null, { pi: Math.PI }].forEach(input => {
+    [-123, Infinity, Number.NaN, 'bad input', false, null, { pi: Math.PI }].forEach((input) => {
       expect(isSizeAware(input)).toBeFalsy();
     });
   });
@@ -492,7 +502,7 @@ describe('isStringRecord()', () => {
   });
 
   it('Returns false for invalid inputs', () => {
-    [-123, Infinity, Number.NaN, 'bad input', false, null, { pi: Math.PI }].forEach(input => {
+    [-123, Infinity, Number.NaN, 'bad input', false, null, { pi: Math.PI }].forEach((input) => {
       expect(isStringRecord(input)).toBeFalsy();
     });
   });
