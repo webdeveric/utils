@@ -66,7 +66,7 @@
     "url": "https://github.com/webdeveric/utils/issues"
   },
   "homepage": "https://github.com/webdeveric/utils/#readme",
-  "packageManager": "pnpm@9.4.0+sha256.b6fd0bfda555e7e584ad7e56b30c68b01d5a04f9ee93989f4b93ca8473c49c74",
+  "packageManager": "pnpm@9.7.1+sha512.faf344af2d6ca65c4c5c8c2224ea77a81a5e8859cbc4e06b1511ddce2f0151512431dd19e6aff31f2c6a8f5f2aced9bd2273e1fed7dd4de1868984059d2c4247",
   "scripts": {
     "clean": "rimraf ./dist/",
     "prebuild": "pnpm clean",
@@ -94,22 +94,22 @@
   "devDependencies": {
     "@types/lodash.clonedeep": "^4.5.9",
     "@types/lodash.escaperegexp": "^4.1.9",
-    "@types/node": "^20.14.9",
-    "@vitest/coverage-v8": "^1.6.0",
-    "@webdeveric/eslint-config-ts": "^0.8.0",
-    "@webdeveric/prettier-config": "^0.2.1",
-    "cspell": "^8.9.1",
+    "@types/node": "^20.16.1",
+    "@vitest/coverage-v8": "^2.0.5",
+    "@webdeveric/eslint-config-ts": "^0.11.0",
+    "@webdeveric/prettier-config": "^0.3.0",
+    "cspell": "^8.14.1",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.29.1",
-    "husky": "^9.0.11",
-    "jsdom": "^24.1.0",
-    "lint-staged": "^15.2.7",
-    "prettier": "^3.3.2",
-    "rimraf": "^5.0.7",
-    "typescript": "^5.5.2",
-    "validate-package-exports": "^0.5.0",
-    "vitest": "^1.6.0"
+    "husky": "^9.1.4",
+    "jsdom": "^24.1.1",
+    "lint-staged": "^15.2.9",
+    "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.5.4",
+    "validate-package-exports": "^0.6.1",
+    "vitest": "^2.0.5"
   }
 }
