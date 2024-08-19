@@ -4,7 +4,7 @@ import { delayAnimationFrame } from '../src/delayAnimationFrame.js';
 
 describe('delayAnimationFrame()', () => {
   beforeEach(() => {
-    vi.spyOn(window, 'requestAnimationFrame').mockImplementation(cb => setTimeout(cb, 0));
+    vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => setTimeout(cb, 0));
   });
 
   afterEach(() => {

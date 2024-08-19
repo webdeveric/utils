@@ -8,7 +8,7 @@ import type { KeyValueTuple } from './types/tuples.js';
 export function toPascalCase<Type extends string>(text: Type, customWords?: StringRecord): PascalCase<Type> {
   const words = String(text).match(/[A-Z][a-z']+|\d+|[a-z']+/g);
 
-  let fixedWords = words?.map<string>(word => capitalize(word.replace(/'/g, '')));
+  let fixedWords = words?.map<string>((word) => capitalize(word.replace(/'/g, '')));
 
   if (fixedWords && customWords && getType(customWords) === 'Object') {
     const replacements = new Map(

@@ -81,13 +81,13 @@ describe('assertIsBoolean()', () => {
 
 describe('assertIsFiniteNumber()', () => {
   it('Throws when input is invalid', () => {
-    ['not a number', Number.NaN, Infinity, -Infinity].forEach(input => {
+    ['not a number', Number.NaN, Infinity, -Infinity].forEach((input) => {
       expect(() => {
         assertIsFiniteNumber(input);
       }).toThrow();
     });
 
-    [0, -1, 2, 3.14].forEach(input => {
+    [0, -1, 2, 3.14].forEach((input) => {
       expect(() => {
         assertIsFiniteNumber(input);
       }).not.toThrow();
@@ -97,13 +97,13 @@ describe('assertIsFiniteNumber()', () => {
 
 describe('assertIsInteger()', () => {
   it('Throws when input is invalid', () => {
-    ['not a number', Number.NaN, Infinity, Math.PI].forEach(input => {
+    ['not a number', Number.NaN, Infinity, Math.PI].forEach((input) => {
       expect(() => {
         assertIsInteger(input);
       }).toThrow();
     });
 
-    [0, -1, 2].forEach(input => {
+    [0, -1, 2].forEach((input) => {
       expect(() => {
         assertIsInteger(input);
       }).not.toThrow();
@@ -129,7 +129,7 @@ describe('assertIsDigitsString()', () => {
       assertIsDigitsString('123456');
     }).not.toThrow();
 
-    [123, '-123', '+123', '123.456'].forEach(input => {
+    [123, '-123', '+123', '123.456'].forEach((input) => {
       expect(() => {
         assertIsDigitsString(input);
       }).toThrow();
@@ -195,7 +195,7 @@ describe('assertIsNumericString()', () => {
       assertIsNumericString('abc123');
     }).toThrow();
 
-    ['1234', '-123', '+123', '123.456'].forEach(input => {
+    ['1234', '-123', '+123', '123.456'].forEach((input) => {
       expect(() => {
         assertIsNumericString(input);
       }).not.toThrow();
@@ -501,13 +501,13 @@ describe('assertIsNumberGTEOne()', () => {
 
 describe('assertIsPositiveInteger()', () => {
   it('Throws when input is invalid', () => {
-    [-1, 'not a number', Number.NaN, Infinity, Math.PI].forEach(input => {
+    [-1, 'not a number', Number.NaN, Infinity, Math.PI].forEach((input) => {
       expect(() => {
         assertIsPositiveInteger(input);
       }).toThrow();
     });
 
-    [0, -0, 1].forEach(input => {
+    [0, -0, 1].forEach((input) => {
       expect(() => {
         assertIsPositiveInteger(input);
       }).not.toThrow();

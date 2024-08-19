@@ -4,14 +4,14 @@ import { convert, type ConvertFn } from '../src/convert.js';
 
 describe('convert()', () => {
   it('Converts from one type to another using a function', () => {
-    const result = convert(true, input => !input);
+    const result = convert(true, (input) => !input);
 
     expect(result).toBeFalsy();
   });
 
   it('Converts from one type to another using rules', () => {
     const result = convert(false, {
-      testing: input => !input,
+      testing: (input) => !input,
     });
 
     expect(result).toEqual(
@@ -75,7 +75,7 @@ describe('convert()', () => {
         };
       },
       job: {
-        title: person => person.jobTitle,
+        title: (person) => person.jobTitle,
       },
     });
 

@@ -25,12 +25,12 @@ describe('unique()', () => {
           ['one', 'test'],
           ['two', 'test'],
         ]),
-        item => item[1],
+        (item) => item[1],
       ),
     ]).toEqual([['one', 'test']]);
   });
 
   it('Can use a function to identify uniqueness', () => {
-    expect([...unique('AaBbCc', item => item.toLowerCase())]).toEqual(['A', 'B', 'C']);
+    expect([...unique('AaBbCc', (item) => item.toLowerCase())]).toEqual(['A', 'B', 'C']);
   });
 });

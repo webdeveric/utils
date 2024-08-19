@@ -1,6 +1,6 @@
 export function* unique<T>(
   items: Iterable<T>,
-  getIdentity: (item: T) => unknown = item => item,
+  getIdentity: (item: T) => unknown = (item) => item,
 ): Generator<T, undefined, undefined> {
   if (items instanceof Set) {
     yield* items;

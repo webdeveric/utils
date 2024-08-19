@@ -18,7 +18,7 @@ export function* combinations<
   Input extends CombinationsInput<Type> = CombinationsInput<Type>,
 >(input: Input): Generator<CombinationsOutput<Input>> {
   const propertyNames = Object.keys(input);
-  const propertyValues = Object.values(input).map(value =>
+  const propertyValues = Object.values(input).map((value) =>
     isObject(value) ? [...combinations(value)] : asArray(value),
   );
 

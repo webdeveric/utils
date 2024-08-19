@@ -4,10 +4,10 @@ import { compose } from '../src/compose.js';
 
 describe('compose()', () => {
   it('composes functions into one', async () => {
-    const fn1 = vi.fn(data => data);
+    const fn1 = vi.fn((data) => data);
     const fn2 = vi.fn(() => undefined);
     const fn3 = vi.fn(() => null);
-    const fn4 = vi.fn(data => data.toUpperCase());
+    const fn4 = vi.fn((data) => data.toUpperCase());
 
     const composed = compose(fn1, fn2, fn3, fn4);
 

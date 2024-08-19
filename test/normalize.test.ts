@@ -20,7 +20,7 @@ describe('normalize()', () => {
 
   it('Returns a normalized object', () => {
     const normalizedPerson = normalize(person, {
-      name: name => String(name).toLowerCase(),
+      name: (name) => String(name).toLowerCase(),
     });
 
     expect(normalizedPerson.name).toBe('test');
@@ -29,7 +29,7 @@ describe('normalize()', () => {
   it('Returns a deeply normalized object', () => {
     const normalizedPerson = normalize(person, {
       details: {
-        jobTitle: jobTitle => String(jobTitle).toLocaleUpperCase(),
+        jobTitle: (jobTitle) => String(jobTitle).toLocaleUpperCase(),
       },
     });
 
@@ -38,7 +38,7 @@ describe('normalize()', () => {
   });
 
   it('Record contains NormalizerFn', () => {
-    const normalizeAge: NormalizerFn<Person['age'], Person> = age => (typeof age === 'number' ? Math.abs(age) : 0);
+    const normalizeAge: NormalizerFn<Person['age'], Person> = (age) => (typeof age === 'number' ? Math.abs(age) : 0);
 
     const normalizedPerson = normalize(person, {
       age: normalizeAge,
@@ -67,7 +67,7 @@ describe('normalize()', () => {
       },
       {
         details: {
-          jobTitle: jobTitle => String(jobTitle).toLocaleUpperCase(),
+          jobTitle: (jobTitle) => String(jobTitle).toLocaleUpperCase(),
         },
       },
     );
@@ -98,7 +98,7 @@ describe('normalize()', () => {
 
     describe('Property value', () => {
       it('Receives the property value', () => {
-        const normalizeName: NormalizerFn<Person['name']> = name => {
+        const normalizeName: NormalizerFn<Person['name']> = (name) => {
           expect(typeof name).toBe('string');
 
           return name;
@@ -125,7 +125,7 @@ describe('normalize()', () => {
 
       it('Has a reference to the current record', () => {
         const normalizedPerson = normalize(person, {
-          name: name => name.toLocaleUpperCase(),
+          name: (name) => name.toLocaleUpperCase(),
           details: {
             jobTitle(jobTitle, context) {
               expect(context.current).not.toBe(context.original);
