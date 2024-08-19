@@ -11,13 +11,13 @@ describe('isDelay()', () => {
 
 describe('until()', () => {
   it('Waits until the callback resolves or rejects', async () => {
-    const untilTrue = until(resolve => resolve(true));
+    const untilTrue = until((resolve) => resolve(true));
 
     await expect(untilTrue).resolves.toBeTruthy();
   });
 
   it('delay can be a callback that accepts a context', async () => {
-    const mockFn = vi.fn(context => context.callCount);
+    const mockFn = vi.fn((context) => context.callCount);
     const callLimit = 2;
 
     const untilTrue = until(
@@ -39,7 +39,7 @@ describe('until()', () => {
   });
 
   it('timeout can be a callback that accepts a context', async () => {
-    const mockFn = vi.fn(context => context.callCount);
+    const mockFn = vi.fn((context) => context.callCount);
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     const willTimeout = until(() => {}, { delay: 1, timeout: mockFn });
@@ -60,7 +60,7 @@ describe('until()', () => {
 
     await expect(
       until(
-        resolve => {
+        (resolve) => {
           if (doSomething) {
             resolve(true);
           }
@@ -180,7 +180,7 @@ describe('until()', () => {
 
   describe('context', () => {
     it('Keeps track of how many times the callback was called', async () => {
-      const context = await until<UntilContext>(
+      const result = await until<UntilContext>(
         (resolve, _reject, context) => {
           if (context.callCount === 2) {
             resolve(context);
@@ -189,22 +189,22 @@ describe('until()', () => {
         { delay: 0, timeout: 10 },
       );
 
-      expect(context.callCount).toBe(2);
+      expect(result.callCount).toBe(2);
     });
 
     it('Keeps track of the last time the callback was called', async () => {
-      const context = await until<UntilContext>(
+      const result = await until<UntilContext>(
         (resolve, _reject, context) => {
           resolve(context);
         },
         { delay: 0, timeout: 10 },
       );
 
-      expect(typeof context.lastCall).toBe('number');
+      expect(typeof result.lastCall).toBe('number');
     });
 
     it('Keeps track of arbitrary data', async () => {
-      const context = await until<UntilContext>(
+      const result = await until<UntilContext>(
         (resolve, _reject, context) => {
           context.data.demo = true;
           resolve(context);
@@ -212,7 +212,7 @@ describe('until()', () => {
         { delay: 0, timeout: 10 },
       );
 
-      expect(context.data.demo).toBeTruthy();
+      expect(result.data.demo).toBeTruthy();
     });
 
     it('Keeps track of options', async () => {

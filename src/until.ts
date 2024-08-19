@@ -33,6 +33,9 @@ const defaultOptions: Readonly<UntilOptions> = {
 
 export const isDelay = (input: unknown): input is Delay => Number.isInteger(input) || typeof input === 'function';
 
+export const getDelay = (delay: Delay, context: UntilContext): number =>
+  typeof delay === 'function' ? delay(context) : delay;
+
 /**
  * Return a Promise that delegates resolving/rejecting to the passed in function.
  */
@@ -46,9 +49,6 @@ export function until<T>(fn: UntilCallback<T>, options: UntilOptions = defaultOp
   }
 
   const { delay, timeout, callLimit } = Object.assign({}, defaultOptions, options);
-
-  const getDelay = (delay: Delay, context: UntilContext): number =>
-    typeof delay === 'function' ? delay(context) : delay;
 
   if (!isDelay(delay)) {
     return Promise.reject(new TypeError('invalid delay value'));
@@ -100,7 +100,12 @@ export function until<T>(fn: UntilCallback<T>, options: UntilOptions = defaultOp
       data: {},
     });
 
-    const callUntilDone = (fn: UntilCallback<T>, delay: Delay, resolve: ResolveFn<T>, reject: RejectFn): void => {
+    const callUntilDone = (
+      callback: UntilCallback<T>,
+      delayValue: Delay,
+      resolveFn: ResolveFn<T>,
+      rejectFn: RejectFn,
+    ): void => {
       try {
         if (callLimit && callCount >= callLimit) {
           throw new Error(`until callLimit reached: ${callLimit}`);
@@ -108,15 +113,15 @@ export function until<T>(fn: UntilCallback<T>, options: UntilOptions = defaultOp
 
         ++callCount;
 
-        fn(resolve, reject, context);
+        callback(resolveFn, rejectFn, context);
 
         lastCall = Date.now();
 
         if (!done) {
-          timer = setTimeout(callUntilDone, getDelay(delay, context), fn, delay, resolve, reject);
+          timer = setTimeout(callUntilDone, getDelay(delayValue, context), callback, delayValue, resolveFn, rejectFn);
         }
       } catch (error) {
-        reject(error instanceof Error ? error : new Error(`${error}`));
+        rejectFn(error instanceof Error ? error : new Error(`${error}`));
       }
     };
 
