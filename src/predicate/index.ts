@@ -22,6 +22,7 @@ export * from './isNumericValueArray.js';
 export * from './isObject.js';
 export * from './isOptionalBigInt.js';
 export * from './isOptionalBoolean.js';
+export * from './isOptionalISODateString.js';
 export * from './isOptionalNull.js';
 export * from './isOptionalNumber.js';
 export * from './isOptionalString.js';

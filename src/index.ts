@@ -14,6 +14,7 @@ export * from './comment.js';
 export * from './compose.js';
 export * from './convert.js';
 export * from './counter.js';
+export * from './deepDecodeURI.js';
 export * from './delay.js';
 export * from './delayAnimationFrame.js';
 export * from './delayAnimationFrames.js';
