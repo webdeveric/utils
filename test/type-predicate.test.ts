@@ -25,6 +25,7 @@ import {
   isObject,
   isOptionalBigInt,
   isOptionalBoolean,
+  isOptionalISODateString,
   isOptionalNull,
   isOptionalNumber,
   isOptionalString,
@@ -154,6 +155,17 @@ describe('isOptionalBoolean()', () => {
   it('Returns false for invalid input', () => {
     expect(isOptionalBoolean(null)).toBeFalsy();
     expect(isOptionalBoolean('test')).toBeFalsy();
+  });
+});
+
+describe('isOptionalISODateString()', () => {
+  it('Returns true for valid input', () => {
+    expect(isOptionalISODateString(new Date().toISOString())).toBeTruthy();
+    expect(isOptionalISODateString(undefined)).toBeTruthy();
+  });
+
+  it('Returns false for invalid input', () => {
+    expect(isOptionalISODateString(123)).toBeFalsy();
   });
 });
 
