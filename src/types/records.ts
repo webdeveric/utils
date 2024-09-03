@@ -7,23 +7,27 @@ export type NeverRecord = Record<PropertyKey, never>;
 
 export type StringRecord = Record<string, string>;
 
-export type RemoveIndex<T> = {
-  [K in keyof T as symbol extends K ? never : string extends K ? never : number extends K ? never : K]: T[K];
+export type RemoveIndex<Type> = {
+  [Key in keyof Type as symbol extends Key
+    ? never
+    : string extends Key
+      ? never
+      : number extends Key
+        ? never
+        : Key]: Type[Key];
 };
 
-export type StringPropertyKeys<Data extends UnknownRecord> = Extract<keyof RemoveIndex<Data>, string>;
+export type StringPropertyKeys<Type extends UnknownRecord> = Extract<keyof RemoveIndex<Type>, string>;
 
 export type LowercaseProperties<Type extends UnknownRecord> = {
   [Property in keyof Type as Lowercase<Extract<Property, string>>]: Type[Property];
 } & Omit<Type, StringPropertyKeys<Type>>;
 
-export type PartialKeys<T, K extends keyof T> = T extends any ? Omit<T, K> & Partial<Pick<T, K>> : never;
-
 export type OnlyOne<Type extends UnknownRecord> = {
   [Property in keyof Type]: Omit<Type, Property> & Partial<Record<Property, never>>;
 }[keyof Type];
 
-export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclude<keyof T, Keys>> &
+export type RequireAtLeastOne<Type, Keys extends keyof Type = keyof Type> = Pick<Type, Exclude<keyof Type, Keys>> &
   {
-    [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>;
+    [Key in Keys]-?: Required<Pick<Type, Key>> & Partial<Pick<Type, Exclude<Keys, Key>>>;
   }[Keys];
