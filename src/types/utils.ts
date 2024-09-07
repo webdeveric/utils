@@ -3,6 +3,10 @@ export type IfCommonKeys<Target, Source, T, F> = IfNever<keyof (Target | Source)
 
 export type IfDefined<Type, D, U> = undefined extends Type ? U : D;
 
+export type IfPromise<Type, T, F> = Type extends Promise<any> ? T : F;
+
+export type NotPromise<T> = T extends Promise<any> ? never : T;
+
 export type IfNever<Type, N, O> = [Type] extends [never] ? N : O;
 
 export type CanBeUndefined<Type, T, F> = Type | undefined extends Type ? T : F;
