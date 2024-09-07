@@ -6,6 +6,7 @@ export * from './types/index.js';
 
 // Files
 export * from './asArray.js';
+export * from './asError.js';
 export * from './capitalize.js';
 export * from './cartesian.js';
 export * from './clamp.js';
@@ -34,6 +35,7 @@ export * from './looksLikeURL.js';
 export * from './normalize.js';
 export * from './parseNumber.js';
 export * from './redactCredentialsInURL.js';
+export * from './resultify.js';
 export * from './secToString.js';
 export * from './sort-factory.js';
 export * from './sort.js';
@@ -41,6 +43,8 @@ export * from './toPascalCase.js';
 export * from './trimEnd.js';
 export * from './trimIndentation.js';
 export * from './trimStart.js';
+export * from './tryFn.js';
+export * from './tryIt.js';
 export * from './unique.js';
 export * from './uniqueItems.js';
 export * from './until.js';

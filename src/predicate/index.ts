@@ -31,6 +31,7 @@ export * from './isPositiveFiniteNumber.js';
 export * from './isPositiveInteger.js';
 export * from './isPrimitive.js';
 export * from './isPromiseFulfilledResult.js';
+export * from './isPromiseLike.js';
 export * from './isPromiseRejectedResult.js';
 export * from './isPropertyKey.js';
 export * from './isSizeAware.js';

@@ -1,3 +1,5 @@
+import type { NotPromise } from './utils.js';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
 
@@ -17,6 +19,10 @@ export type TypeOf = 'undefined' | 'object' | 'boolean' | 'number' | 'bigint' | 
 export type Builtin = Date | Error | Function | Primitive | RegExp;
 
 export type AnyFunction = (...args: any[]) => any;
+
+export type AnySyncFunction = (...args: any[]) => NotPromise<any>;
+
+export type AnyAsyncFunction = (...args: any[]) => Promise<any>;
 
 export type AnyNewable = {
   new (...args: any[]): any;
