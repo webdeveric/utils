@@ -81,7 +81,7 @@
     "test": "vitest",
     "coverage": "vitest run  -c vitest.config.mts --coverage",
     "validate": "validate-package-exports --check --verify",
-    "spellcheck": "cspell './{.github,src,test}/**/*.{ts,json}' './*.{md,js}' './package.json' --no-progress",
+    "spellcheck": "cspell './{.github,src,test}/**/*.{ts,json}' './*.{md,mjs,mts}' './package.json' --no-progress",
     "prepublishOnly": "pnpm typecheck && pnpm spellcheck && pnpm lint && pnpm coverage && pnpm build",
     "format": "prettier --write ./*.{js,json,md} ./src/ ./test/",
     "prepare": "husky"
