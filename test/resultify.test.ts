@@ -10,6 +10,8 @@ describe('resultify()', () => {
   it('Result can have ok property', () => {
     expect(resultify(() => true)()).toEqual({
       ok: true,
+      isOk: true,
+      isError: false,
     });
   });
 
@@ -21,6 +23,8 @@ describe('resultify()', () => {
     ).toEqual(
       expect.objectContaining({
         error: expect.any(Error),
+        isOk: false,
+        isError: true,
       }),
     );
   });
@@ -34,6 +38,8 @@ describe('resultifyAsync()', () => {
   it('Result can have ok property', async () => {
     await expect(resultifyAsync(async () => true)()).resolves.toEqual({
       ok: true,
+      isOk: true,
+      isError: false,
     });
   });
 
@@ -45,6 +51,8 @@ describe('resultifyAsync()', () => {
     ).resolves.toEqual(
       expect.objectContaining({
         error: expect.any(Error),
+        isOk: false,
+        isError: true,
       }),
     );
   });
