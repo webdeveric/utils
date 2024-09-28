@@ -104,3 +104,9 @@ export type DeepPartial<Type> = Type extends object
       [Property in keyof Type]?: DeepPartial<Type[Property]>;
     }
   : Type;
+
+export type UnionToIntersection<Union> = (Union extends any ? (union: Union) => void : never) extends (
+  union: infer Type extends Union,
+) => void
+  ? Type
+  : never;
