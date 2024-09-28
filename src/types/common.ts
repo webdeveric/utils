@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import type { NotPromise } from './utils.js';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
 
 export type NumericString<T extends string | number = number> = `${T}` extends `${number}` ? `${T}` : never;
