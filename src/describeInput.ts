@@ -4,16 +4,24 @@ import { isNumericString } from './predicate/isNumericString.js';
 
 export const describeInput = (input: unknown): string => {
   switch (typeof input) {
+    case 'boolean':
+    case 'symbol':
+      return input.toString();
+    case 'function': {
+      const args = input.toString().match(/^(function\s*\w*)?(?<args>\([^)]*\))/)?.groups?.args;
+
+      return `${input.name || 'anonymous'}${args}`;
+    }
     case 'string':
       {
         if (isNumericString(input)) {
           return 'Numeric String';
         }
 
-        const tokenMatch = input.match(/^(Basic|Bearer)\s.+/i);
+        const authType = input.match(/^(?<authType>Basic|Bearer)\s.+/i)?.groups?.authType;
 
-        if (Array.isArray(tokenMatch) && tokenMatch[1]) {
-          return tokenMatch[1];
+        if (authType) {
+          return `${authType} Authorization`;
         }
 
         if (looksLikeURL(input)) {
@@ -27,13 +35,17 @@ export const describeInput = (input: unknown): string => {
         }
       }
       break;
-    case 'number':
-      if (input === Infinity) {
-        return 'Infinity';
+    case 'number': {
+      if (input === Number.POSITIVE_INFINITY) {
+        return 'Positive Infinity';
       }
 
-      if (input === -Infinity) {
+      if (input === Number.NEGATIVE_INFINITY) {
         return 'Negative Infinity';
+      }
+
+      if (Number.isSafeInteger(input)) {
+        return 'Safe Integer';
       }
 
       if (Number.isInteger(input)) {
@@ -41,12 +53,13 @@ export const describeInput = (input: unknown): string => {
       }
 
       if (Number.isFinite(input)) {
-        return 'Number';
+        return 'Finite Number';
       }
 
       if (Number.isNaN(input)) {
         return 'NaN';
       }
+    }
   }
 
   return getType(input);
