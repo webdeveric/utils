@@ -1,5 +1,3 @@
-import cloneDeep from 'lodash.clonedeep';
-
 import { getOwnProperties } from './getOwnProperties.js';
 import { isObject } from './predicate/isObject.js';
 
@@ -63,7 +61,7 @@ export function normalize<Data extends object, ContextData extends AnyRecord = A
   normalizers: AnyNormalizer<Data, Data, ContextData>,
   initContextData: ContextInitializer<Data, ContextData> = (): AnyRecord => ({}),
 ): Data {
-  const current = cloneDeep(input);
+  const current = structuredClone(input);
 
   const context: NormalizeContext<Data, ContextData> = Object.seal({
     original: input,
