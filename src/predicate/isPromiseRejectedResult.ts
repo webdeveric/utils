@@ -1,5 +1,5 @@
-import { isObject } from './isObject.js';
+import { isObjectWith } from './isObjectWith.js';
 
 export const isPromiseRejectedResult = (input: unknown): input is PromiseRejectedResult => {
-  return isObject(input) && input.status === 'rejected' && 'reason' in input;
+  return isObjectWith(input, ['status', 'reason']) && input.status === 'rejected';
 };
