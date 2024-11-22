@@ -1,5 +1,5 @@
-import { isObject } from './isObject.js';
+import { isObjectWith } from './isObjectWith.js';
 
 export const isAsyncIterable = <T>(input: unknown): input is AsyncIterable<T> => {
-  return isObject(input) && typeof input[Symbol.asyncIterator] === 'function';
+  return isObjectWith(input, Symbol.asyncIterator) && typeof input[Symbol.asyncIterator] === 'function';
 };

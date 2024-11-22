@@ -1,5 +1,5 @@
-import { isObject } from './isObject.js';
+import { isObjectWith } from './isObjectWith.js';
 
 export const isPromiseFulfilledResult = <T>(input: unknown): input is PromiseFulfilledResult<T> => {
-  return isObject(input) && input.status === 'fulfilled';
+  return isObjectWith(input, 'status') && input.status === 'fulfilled';
 };
