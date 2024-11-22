@@ -20,6 +20,7 @@ export * from './isNumericString.js';
 export * from './isNumericValue.js';
 export * from './isNumericValueArray.js';
 export * from './isObject.js';
+export * from './isObjectWith.js';
 export * from './isOptionalBigInt.js';
 export * from './isOptionalBoolean.js';
 export * from './isOptionalISODateString.js';
