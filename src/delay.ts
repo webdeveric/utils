@@ -1,8 +1,7 @@
-import { getType } from './getType.js';
-
 /**
  * Delay a specified number of milliseconds before resolving.
- * The `ms` value can be between zero and the max delay value for `setTimeout`.
+ *
+ * The `ms` value can be between zero and the max delay value for `setTimeout()`, which is `2 ** 31 - 1`.
  *
  * {@link https://developer.mozilla.org/en-US/docs/Web/API/setTimeout#maximum_delay_value}
  */
@@ -10,14 +9,16 @@ export function delay(milliseconds: number): Promise<undefined>;
 
 export function delay<T>(milliseconds: number, value: T): Promise<T>;
 
-export function delay<T>(milliseconds: number, value?: T): Promise<typeof value> {
+export function delay<T>(milliseconds: number, value?: T): Promise<T | undefined> {
   return new Promise((resolve, reject) => {
-    if (typeof milliseconds !== 'number') {
-      reject(new TypeError(`milliseconds must be a number. ${getType(milliseconds)} was provided.`));
+    const maxDelayMs = 2 ** 31 - 1;
+
+    if (typeof milliseconds !== 'number' || milliseconds < 0 || milliseconds > maxDelayMs) {
+      reject(new TypeError(`milliseconds must be a number between 0 and ${maxDelayMs}`));
 
       return;
     }
 
-    setTimeout(resolve, Math.max(0, Math.min(milliseconds, 2_147_483_647)), value);
+    setTimeout(resolve, milliseconds, value);
   });
 }
