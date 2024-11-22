@@ -77,22 +77,19 @@ export function normalize<Data extends object, ContextData extends AnyRecord = A
       return currentNormalizers(currentRecord, context);
     }
 
-    if (typeof currentNormalizers === 'object' && currentNormalizers !== null) {
-      if (typeof currentRecord === 'object' && currentRecord !== null) {
-        return getOwnProperties(currentNormalizers).reduce((data, key) => {
-          const innerNormalizers = currentNormalizers[key];
-          // If the value is undefined but there is a normalizer record, set value to empty object.
-          const value =
-            typeof data[key] === 'undefined' &&
-            isObject<NormalizersRecord<CurrentRecord[keyof CurrentRecord], Data, ContextData>>(innerNormalizers)
-              ? ({} as unknown as CurrentRecord[keyof CurrentRecord])
-              : data[key];
+    if (isObject(currentNormalizers) && isObject(currentRecord)) {
+      return getOwnProperties(currentNormalizers).reduce((data, key) => {
+        const innerNormalizers = currentNormalizers[key];
+        // If the value is undefined but there is a normalizer record, set value to empty object.
+        const value =
+          typeof data[key] === 'undefined' && isObject(innerNormalizers)
+            ? ({} as unknown as CurrentRecord[keyof CurrentRecord])
+            : data[key];
 
-          data[key] = walk(value, innerNormalizers);
+        data[key] = walk(value, innerNormalizers);
 
-          return data;
-        }, currentRecord);
-      }
+        return data;
+      }, currentRecord);
     }
 
     return currentRecord;
