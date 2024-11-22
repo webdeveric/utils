@@ -14,9 +14,9 @@ export type CombinationsOutput<Input extends CombinationsInput<unknown>> =
   Input extends CombinationsInput<infer Type> ? Type : never;
 
 export function* combinations<
-  Type extends UnknownRecord = UnknownRecord,
+  Type extends object = object,
   Input extends CombinationsInput<Type> = CombinationsInput<Type>,
->(input: Input): Generator<CombinationsOutput<Input>> {
+>(input: Input): Generator<CombinationsOutput<Input>, undefined> {
   const propertyNames = Object.keys(input);
   const propertyValues = Object.values(input).map((value) =>
     isObject(value) ? [...combinations(value)] : asArray(value),
