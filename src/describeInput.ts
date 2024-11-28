@@ -8,7 +8,7 @@ export const describeInput = (input: unknown): string => {
     case 'symbol':
       return input.toString();
     case 'function': {
-      const args = input.toString().match(/^(function\s*\w*)?(?<args>\([^)]*\))/)?.groups?.args;
+      const args = /^(function\s*\w*)?(?<args>\([^)]*\))/.exec(input.toString())?.groups?.['args'];
 
       return `${input.name || 'anonymous'}${args}`;
     }
@@ -18,7 +18,7 @@ export const describeInput = (input: unknown): string => {
           return 'Numeric String';
         }
 
-        const authType = input.match(/^(?<authType>Basic|Bearer)\s.+/i)?.groups?.authType;
+        const authType = /^(?<authType>Basic|Bearer)\s.+/i.exec(input)?.groups?.['authType'];
 
         if (authType) {
           return `${authType} Authorization`;

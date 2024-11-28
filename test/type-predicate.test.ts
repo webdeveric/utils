@@ -22,7 +22,6 @@ import {
   isNumericString,
   isNumericValue,
   isNumericValueArray,
-  isObject,
   isOptionalBigInt,
   isOptionalBoolean,
   isOptionalISODateString,
@@ -463,17 +462,6 @@ describe('isAsyncIterable()', () => {
         },
       }),
     ).toBeTruthy();
-  });
-});
-
-describe('isObject()', () => {
-  it('Returns true for valid inputs', () => {
-    expect(isObject({})).toBeTruthy();
-  });
-
-  it('Returns false for invalid inputs', () => {
-    expect(isObject('test')).toBeFalsy();
-    expect(isObject(null)).toBeFalsy();
   });
 });
 

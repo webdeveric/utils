@@ -206,13 +206,13 @@ describe('until()', () => {
     it('Keeps track of arbitrary data', async () => {
       const result = await until<UntilContext>(
         (resolve, _reject, context) => {
-          context.data.demo = true;
+          context.data['demo'] = true;
           resolve(context);
         },
         { delay: 0, timeout: 10 },
       );
 
-      expect(result.data.demo).toBeTruthy();
+      expect(result.data['demo']).toBeTruthy();
     });
 
     it('Keeps track of options', async () => {

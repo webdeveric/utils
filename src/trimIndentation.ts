@@ -2,8 +2,9 @@ const isWhitespaceOnly = (input: string): boolean => /^\s*$/.test(input);
 
 export function trimIndentation(input: string): string {
   const lines = input.split('\n');
-  const firstNonWhitespaceLine = lines.find((line) => !isWhitespaceOnly(line));
-  const whiteSpace = firstNonWhitespaceLine?.match(/^(?<whiteSpace>\s*)/)?.groups?.whiteSpace;
+  const whiteSpace = lines.find((line) => !isWhitespaceOnly(line))?.match(/^(?<whiteSpace>\s*)/)?.groups?.[
+    'whiteSpace'
+  ];
 
   if (whiteSpace) {
     const wsPattern = new RegExp(`^${whiteSpace}`);
