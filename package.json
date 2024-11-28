@@ -88,11 +88,11 @@
   },
   "prettier": "@webdeveric/prettier-config",
   "devDependencies": {
-    "@types/node": "^22.9.1",
-    "@vitest/coverage-v8": "^2.1.5",
+    "@types/node": "^22.10.1",
+    "@vitest/coverage-v8": "^2.1.6",
     "@webdeveric/eslint-config-ts": "^0.11.0",
     "@webdeveric/prettier-config": "^0.3.0",
-    "cspell": "^8.16.0",
+    "cspell": "^8.16.1",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.3",
@@ -100,10 +100,10 @@
     "husky": "^9.1.7",
     "jsdom": "^25.0.1",
     "lint-staged": "^15.2.10",
-    "prettier": "^3.3.3",
+    "prettier": "^3.4.1",
     "rimraf": "^6.0.1",
     "typescript": "^5.7.2",
     "validate-package-exports": "^0.7.0",
-    "vitest": "^2.1.5"
+    "vitest": "^2.1.6"
   }
 }
