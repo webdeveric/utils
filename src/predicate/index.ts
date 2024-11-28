@@ -1,3 +1,5 @@
+export * from './isAnyObject.js';
+export * from './isAnyObjectWith.js';
 export * from './isAsyncIterable.js';
 export * from './isBigInt.js';
 export * from './isBigIntArray.js';
