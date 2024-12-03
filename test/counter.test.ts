@@ -18,4 +18,14 @@ describe('counter()', () => {
 
     expect([...generator]).toEqual([10, 11, 12]);
   });
+
+  it('Can go negative', () => {
+    const generator = counter(0, -5, -2);
+
+    expect([...generator]).toEqual([0, -2, -4]);
+  });
+
+  it('Throws when given a zero step', () => {
+    expect(() => [...counter(0, 10, 0)]).toThrow();
+  });
 });
