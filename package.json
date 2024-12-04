@@ -66,7 +66,7 @@
     "url": "https://github.com/webdeveric/utils/issues"
   },
   "homepage": "https://github.com/webdeveric/utils/#readme",
-  "packageManager": "pnpm@9.14.2+sha512.6e2baf77d06b9362294152c851c4f278ede37ab1eba3a55fda317a4a17b209f4dbb973fb250a77abc463a341fcb1f17f17cfa24091c4eb319cda0d9b84278387",
+  "packageManager": "pnpm@9.14.4+sha512.c8180b3fbe4e4bca02c94234717896b5529740a6cbadf19fa78254270403ea2f27d4e1d46a08a0f56c89b63dc8ebfd3ee53326da720273794e6200fcf0d184ab",
   "scripts": {
     "clean": "rimraf ./dist/",
     "prebuild": "pnpm clean",
@@ -77,9 +77,10 @@
     "build": "pnpm build:cjs && pnpm build:mjs",
     "postbuild": "pnpm validate",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint ./*.{js,cjs,mjs,ts,cts,mts} ./src/ ./test/ --ext .ts,.mjs,.cjs",
+    "lint": "eslint ./*.{js,cjs,mjs,ts,cts,mts} ./src/ ./bench/ ./test/ --ext .ts,.mjs,.cjs",
+    "bench": "vitest bench",
     "test": "vitest",
-    "coverage": "vitest run  -c vitest.config.mts --coverage",
+    "coverage": "vitest run --coverage",
     "validate": "validate-package-exports --check --verify",
     "spellcheck": "cspell './{.github,src,test}/**/*.{ts,json}' './*.{md,mjs,mts}' './package.json' --no-progress",
     "prepublishOnly": "pnpm typecheck && pnpm spellcheck && pnpm lint && pnpm coverage && pnpm build",
@@ -89,13 +90,13 @@
   "prettier": "@webdeveric/prettier-config",
   "devDependencies": {
     "@types/node": "^22.10.1",
-    "@vitest/coverage-v8": "^2.1.6",
+    "@vitest/coverage-v8": "^2.1.8",
     "@webdeveric/eslint-config-ts": "^0.11.0",
     "@webdeveric/prettier-config": "^0.3.0",
     "cspell": "^8.16.1",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-import-resolver-typescript": "^3.6.3",
+    "eslint-import-resolver-typescript": "^3.7.0",
     "eslint-plugin-import": "^2.31.0",
     "husky": "^9.1.7",
     "jsdom": "^25.0.1",
@@ -103,7 +104,7 @@
     "prettier": "^3.4.1",
     "rimraf": "^6.0.1",
     "typescript": "^5.7.2",
-    "validate-package-exports": "^0.7.0",
-    "vitest": "^2.1.6"
+    "validate-package-exports": "^0.8.0",
+    "vitest": "^2.1.8"
   }
 }

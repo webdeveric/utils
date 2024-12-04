@@ -25,6 +25,6 @@
     "noErrorTruncation": true,
     "exactOptionalPropertyTypes": true
   },
-  "include": ["./*.mts", "./*.mjs", "./bin/**/*", "src/**/*", "test/**/*"],
+  "include": ["./*.mts", "./*.mjs", "./bin/**/*", "./src/**/*", "./bench/**/*", "./test/**/*"],
   "exclude": ["node_modules", "private"]
 }
