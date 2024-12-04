@@ -6,6 +6,7 @@
     "clonedeep",
     "codeql",
     "commitlint",
+    "conventionalcommits",
     "corejs",
     "escaperegexp",
     "fcrdns",
