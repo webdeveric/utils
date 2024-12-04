@@ -15,9 +15,9 @@
     "name": "Eric King",
     "url": "http://webdeveric.com/"
   },
-  "type": "commonjs",
+  "type": "module",
   "sideEffects": false,
-  "main": "./dist/cjs/index.js",
+  "main": "./dist/mjs/index.js",
   "types": "./dist/types/index.d.ts",
   "engines": {
     "node": ">=18.0.0"
@@ -60,7 +60,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/webdeveric/utils.git"
+    "url": "git+https://github.com/webdeveric/utils.git"
   },
   "bugs": {
     "url": "https://github.com/webdeveric/utils/issues"
@@ -70,21 +70,17 @@
   "scripts": {
     "clean": "rimraf ./dist/",
     "prebuild": "pnpm clean",
-    "build:cjs": "tsc -p ./tsconfig.build-cjs.json",
-    "build:mjs": "tsc -p ./tsconfig.build-mjs.json",
-    "postbuild:cjs": "echo '{\"type\":\"commonjs\"}' > ./dist/cjs/package.json",
-    "postbuild:mjs": "echo '{\"type\":\"module\"}' > ./dist/mjs/package.json",
-    "build": "pnpm build:cjs && pnpm build:mjs",
-    "postbuild": "pnpm validate",
-    "typecheck": "tsc --noEmit",
+    "build": "tsc --build tsconfig.cjs.json tsconfig.mjs.json --force",
+    "postbuild": "echo '{\"type\":\"commonjs\"}' > ./dist/cjs/package.json && echo '{\"type\":\"module\"}' > ./dist/mjs/package.json && pnpm validate",
+    "typecheck": "tsc --build --verbose --noEmit",
     "lint": "eslint ./*.{js,cjs,mjs,ts,cts,mts} ./src/ ./bench/ ./test/ --ext .ts,.mjs,.cjs",
     "bench": "vitest bench",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "validate": "validate-package-exports --check --verify",
-    "spellcheck": "cspell './{.github,src,test}/**/*.{ts,json}' './*.{md,mjs,mts}' './package.json' --no-progress",
+    "spellcheck": "cspell './{.github,src,bench,test}/**/*.{ts,json}' './*.{md,mjs,mts}' './package.json' --no-progress",
     "prepublishOnly": "pnpm typecheck && pnpm spellcheck && pnpm lint && pnpm coverage && pnpm build",
-    "format": "prettier --write ./*.{js,json,md} ./src/ ./test/",
+    "format": "prettier --write ./*.{js,json,md} ./src/ ./bench/ ./test/",
     "prepare": "husky"
   },
   "prettier": "@webdeveric/prettier-config",
