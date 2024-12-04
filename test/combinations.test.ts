@@ -3,6 +3,7 @@ import { isGeneratorObject } from 'node:util/types';
 import { describe, expect, it } from 'vitest';
 
 import { combinations } from '../src/combinations.js';
+import { counter } from '../src/counter.js';
 
 describe('combinations()', () => {
   it('Returns a Generator', () => {
@@ -34,6 +35,40 @@ describe('combinations()', () => {
         name: 'Demo',
       },
     ]);
+  });
+
+  it('Supports Generators', () => {
+    function* userGenerator(amount: number): Generator<object> {
+      for (const id of counter(1, amount)) {
+        yield {
+          id,
+          parents: counter(0, 2),
+          spouse: counter(0, 1),
+          children: counter(0, 2),
+        };
+      }
+    }
+
+    const users = Array.from(
+      combinations({
+        user: userGenerator(10),
+      }),
+    );
+
+    expect(users.length).toBe(180);
+
+    expect(users).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          user: {
+            id: expect.any(Number),
+            parents: expect.any(Number),
+            spouse: expect.any(Number),
+            children: expect.any(Number),
+          },
+        }),
+      ]),
+    );
   });
 
   it('Recursively generates nested objects', () => {
