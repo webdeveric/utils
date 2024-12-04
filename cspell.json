@@ -5,6 +5,7 @@
     "Autobuild",
     "clonedeep",
     "codeql",
+    "commitlint",
     "corejs",
     "escaperegexp",
     "fcrdns",
@@ -24,7 +25,11 @@
     "Unwritable",
     "vitest",
     "webcompat",
-    "webdeveric"
+    "webdeveric",
+    "Yottabyte",
+    "Yottabytes",
+    "Zettabyte",
+    "Zettabytes"
   ],
   "flagWords": [],
   "ignorePaths": ["pnpm-lock.yaml", "package-lock.json", "node_modules", ".vscode"],
