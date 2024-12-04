@@ -19,7 +19,7 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
       - name: Installing dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
       - name: Linting
         run: pnpm lint
       - name: Type checking
