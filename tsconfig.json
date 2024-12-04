@@ -1,30 +1,14 @@
 {
+  "extends": "./tsconfig.base.json",
+  "files": [],
   "compilerOptions": {
-    "noEmit": true,
-    "allowJs": true,
-    "target": "ES2020",
-    "module": "es2015",
-    "declaration": true,
-    "declarationMap": true,
-    "declarationDir": "./dist/types",
-    "sourceMap": true,
-    "outDir": "./dist/",
-    "strict": true,
-    "alwaysStrict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noUncheckedIndexedAccess": true,
-    "forceConsistentCasingInFileNames": true,
-    "allowUnusedLabels": false,
-    "allowUnreachableCode": false,
-    "verbatimModuleSyntax": true,
-    "noErrorTruncation": true,
-    "exactOptionalPropertyTypes": true
+    "incremental": true,
+    "tsBuildInfoFile": "./cache/.tsbuildinfo"
   },
-  "include": ["./*.mts", "./*.mjs", "./bin/**/*", "./src/**/*", "./bench/**/*", "./test/**/*"],
-  "exclude": ["node_modules", "private"]
+  "references": [
+    { "path": "./tsconfig.mjs.json" },
+    { "path": "./tsconfig.cjs.json" },
+    { "path": "./tsconfig.test.json" },
+    { "path": "./tsconfig.configs.json" }
+  ]
 }

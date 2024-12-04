@@ -8,6 +8,7 @@
   },
   "parserOptions": {
     "project": ["./tsconfig.json"],
+    "EXPERIMENTAL_useProjectService": true,
     "ecmaFeatures": {
       "jsx": false
     }

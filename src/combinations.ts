@@ -30,6 +30,8 @@ export function* combinations<
   );
 
   for (const combo of cartesian(...propertyValues)) {
-    yield Object.fromEntries(combo.map((value, index) => [propertyNames[index], value]));
+    const entries = combo.map((value, index) => [propertyNames[index], value]);
+
+    yield Object.fromEntries(entries);
   }
 }
