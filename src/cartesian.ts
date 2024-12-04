@@ -1,8 +1,7 @@
 /**
  * @see https://en.wikipedia.org/wiki/Cartesian_product
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function* cartesian(...input: any[][]): Generator<any[]> {
+export function* cartesian<T>(...input: T[][]): Generator<T[]> {
   const [head, ...tail] = input;
 
   if (!Array.isArray(head)) {

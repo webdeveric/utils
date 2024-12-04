@@ -10,7 +10,7 @@ describe('cartesian()', () => {
   });
 
   it('Generates cartesian product from input', () => {
-    expect(Array.from(cartesian(['a', 'b'], [1, 2]))).toEqual([
+    expect(Array.from(cartesian<string | number>(['a', 'b'], [1, 2]))).toEqual([
       ['a', 1],
       ['b', 1],
       ['a', 2],

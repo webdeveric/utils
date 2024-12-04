@@ -1,5 +1,6 @@
 import { asArray } from './asArray.js';
 import { cartesian } from './cartesian.js';
+import { isIterable } from './predicate/isIterable.js';
 import { isObject } from './predicate/isObject.js';
 
 import type { UnknownRecord } from './types/records.js';
@@ -19,7 +20,13 @@ export function* combinations<
 >(input: Input): Generator<CombinationsOutput<Input>, undefined> {
   const propertyNames = Object.keys(input);
   const propertyValues = Object.values(input).map((value) =>
-    isObject(value) ? [...combinations(value)] : asArray(value),
+    isIterable(value)
+      ? Array.from(value, (item) => {
+          return isObject(item) ? [...combinations(item)] : asArray(item);
+        }).flat()
+      : isObject(value)
+        ? [...combinations(value)]
+        : asArray(value),
   );
 
   for (const combo of cartesian(...propertyValues)) {

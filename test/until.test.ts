@@ -41,7 +41,6 @@ describe('until()', () => {
   it('timeout can be a callback that accepts a context', async () => {
     const mockFn = vi.fn((context) => context.callCount);
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const willTimeout = until(() => {}, { delay: 1, timeout: mockFn });
 
     await expect(willTimeout).rejects.toBeInstanceOf(Error);
@@ -89,7 +88,6 @@ describe('until()', () => {
   });
 
   it('Can timeout', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     await expect(until(() => {}, { delay: 1, timeout: 1 })).rejects.toBeInstanceOf(Error);
   });
 
@@ -120,7 +118,6 @@ describe('until()', () => {
       callLimit: 3,
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const results = until(() => {}, options);
 
     await expect(results).rejects.toBeInstanceOf(Error);

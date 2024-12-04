@@ -1,5 +1,5 @@
-import { isObjectWith } from './isObjectWith.js';
+import { isObject } from './isObject.js';
 
 export const isIterable = <T>(input: unknown): input is Iterable<T> => {
-  return isObjectWith(input, Symbol.iterator) && typeof input[Symbol.iterator] === 'function';
+  return isObject(input) && typeof input[Symbol.iterator] === 'function';
 };
