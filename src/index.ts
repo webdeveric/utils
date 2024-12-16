@@ -32,6 +32,7 @@ export * from './getOwnProperties.js';
 export * from './getType.js';
 export * from './inRange.js';
 export * from './isEmpty.js';
+export * from './iterateForever.js';
 export * from './joinStrings.js';
 export * from './looksLikeURL.js';
 export * from './normalize.js';
