@@ -37,6 +37,7 @@ export * from './joinStrings.js';
 export * from './looksLikeURL.js';
 export * from './normalize.js';
 export * from './parseNumber.js';
+export * from './prefix.js';
 export * from './redactCredentialsInURL.js';
 export * from './resultify.js';
 export * from './secToString.js';
