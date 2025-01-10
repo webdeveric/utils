@@ -1,6 +1,7 @@
 export * from './allOf.js';
 export * from './anyOf.js';
 export * from './createIsEnumPredicate.js';
+export * from './createIsTuplePredicate.js';
 export * from './createStringMatchingPredicate.js';
 export * from './everyItem.js';
 export * from './maybeArray.js';
