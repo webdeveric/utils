@@ -43,6 +43,7 @@ export * from './resultify.js';
 export * from './secToString.js';
 export * from './sort-factory.js';
 export * from './sort.js';
+export * from './stripWhitespace.js';
 export * from './suffix.js';
 export * from './toPascalCase.js';
 export * from './trimEnd.js';
