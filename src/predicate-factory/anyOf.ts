@@ -10,13 +10,6 @@ export const anyOf = <Predicates extends TypePredicateFn<unknown>[]>(
     throw new Error('Predicate functions not provided');
   }
 
-  return (input: unknown): input is InferPredicatesReturnType<Predicates> => {
-    for (const predicate of predicates) {
-      if (predicate(input)) {
-        return true;
-      }
-    }
-
-    return false;
-  };
+  return (input: unknown): input is InferPredicatesReturnType<Predicates> =>
+    predicates.some((predicate) => predicate(input));
 };
