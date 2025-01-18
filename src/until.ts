@@ -1,3 +1,4 @@
+import { asError } from './asError.js';
 import { getType } from './getType.js';
 
 import type { AnyRecord } from './types/records.js';
@@ -121,7 +122,7 @@ export function until<T>(fn: UntilCallback<T>, options: UntilOptions = defaultOp
           timer = setTimeout(callUntilDone, getDelay(delayValue, context), callback, delayValue, resolveFn, rejectFn);
         }
       } catch (error) {
-        rejectFn(error instanceof Error ? error : new Error(`${error}`));
+        rejectFn(asError(error));
       }
     };
 
