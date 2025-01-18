@@ -1,7 +1,7 @@
 import { isLengthAware } from './predicate/isLengthAware.js';
 
 export function isEmpty(input: unknown): boolean {
-  if (typeof input === 'undefined' || input === null || (typeof input === 'string' && !input.length)) {
+  if (input == null || (typeof input === 'string' && !input.length)) {
     return true;
   }
 
@@ -14,7 +14,7 @@ export function isEmpty(input: unknown): boolean {
   }
 
   if (typeof input === 'object') {
-    return Object.getOwnPropertyNames(input).length === 0 && Object.getOwnPropertySymbols(input).length === 0;
+    return Reflect.ownKeys(input).length === 0;
   }
 
   return false;

@@ -36,11 +36,13 @@ export type AlphanumericCharacter = AlphaCharacter | Capitalize<AlphaCharacter> 
 
 export type MaybePlural<T extends string> = T | `${T}s`;
 
-export type StripWhitespace<Type extends string> = Type extends `${infer First}${infer Rest}`
-  ? First extends Space
-    ? StripWhitespace<Rest>
-    : `${First}${StripWhitespace<Rest>}`
-  : EmptyString;
+export type StripWhitespace<Type extends string> = string extends Type
+  ? Type
+  : Type extends `${infer First}${infer Rest}`
+    ? First extends Space
+      ? StripWhitespace<Rest>
+      : `${First}${StripWhitespace<Rest>}`
+    : EmptyString;
 
 export type AlphanumericOnly<Type extends string> = Type extends EmptyString
   ? EmptyString
