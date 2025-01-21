@@ -11,13 +11,6 @@ export const allOf = <Predicates extends TypePredicateFn<unknown>[]>(
     throw new Error('Predicate functions not provided');
   }
 
-  return (input: unknown): input is UnionToIntersection<InferPredicatesReturnType<Predicates>> => {
-    for (const predicate of predicates) {
-      if (!predicate(input)) {
-        return false;
-      }
-    }
-
-    return true;
-  };
+  return (input: unknown): input is UnionToIntersection<InferPredicatesReturnType<Predicates>> =>
+    predicates.every((predicate) => predicate(input));
 };
