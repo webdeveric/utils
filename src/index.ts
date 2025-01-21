@@ -29,6 +29,7 @@ export * from './getMilliseconds.js';
 export * from './getMinValue.js';
 export * from './getOwnKeys.js';
 export * from './getOwnProperties.js';
+export * from './getPaths.js';
 export * from './getType.js';
 export * from './inRange.js';
 export * from './isEmpty.js';
