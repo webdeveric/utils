@@ -28,6 +28,7 @@ export * from './getMaxValue.js';
 export * from './getMilliseconds.js';
 export * from './getMinValue.js';
 export * from './getOwnKeys.js';
+export * from './getOwnPaths.js';
 export * from './getOwnProperties.js';
 export * from './getPaths.js';
 export * from './getType.js';
