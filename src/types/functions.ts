@@ -14,8 +14,7 @@ export type CompareFn<T> = (a: T, b: T) => number;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TypePredicateFn<T> = (input: unknown, ...args: any[]) => input is T;
 
-export type InferPredicateReturnType<Fn extends TypePredicateFn<unknown>> =
-  Fn extends TypePredicateFn<infer T> ? T : never;
+export type InferPredicateReturnType<Fn> = Fn extends TypePredicateFn<infer T> ? T : never;
 
 export type InferPredicatesReturnType<Predicates extends TypePredicateFn<unknown>[]> = {
   [K in keyof Predicates]: InferPredicateReturnType<Predicates[K]>;
@@ -24,8 +23,7 @@ export type InferPredicatesReturnType<Predicates extends TypePredicateFn<unknown
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TypeAssertionFn<T> = (input: unknown, ...args: any[]) => asserts input is T;
 
-export type InferAssertionReturnType<Fn extends TypeAssertionFn<unknown>> =
-  Fn extends TypeAssertionFn<infer T> ? T : never;
+export type InferAssertionReturnType<Fn> = Fn extends TypeAssertionFn<infer T> ? T : never;
 
 export type InferAssertionsReturnType<Fns extends TypeAssertionFn<unknown>[]> = {
   [K in keyof Fns]: InferAssertionReturnType<Fns[K]>;
