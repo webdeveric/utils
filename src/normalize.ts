@@ -78,7 +78,7 @@ export function normalize<Data extends object, ContextData extends AnyRecord = A
     }
 
     if (isObject(currentNormalizers) && isObject(currentRecord)) {
-      return getOwnProperties(currentNormalizers).reduce((data, key) => {
+      return getOwnProperties(currentNormalizers).reduce<CurrentRecord>((data, key) => {
         const innerNormalizers = currentNormalizers[key];
         // If the value is undefined but there is a normalizer record, set value to empty object.
         const value =
