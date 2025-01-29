@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+export type IfNever<Type, T, F> = [Type] extends [never] ? T : F;
+
 export type IfCommonKeys<Target, Source, T, F> = IfNever<keyof (Target | Source), F, T>;
 
-export type IfDefined<Type, D, U> = undefined extends Type ? U : D;
+export type IfDefined<Type, T, F> = undefined extends Type ? F : T;
+
+export type IfUnknown<Type, T, F> = unknown extends Type ? T : F;
 
 export type IfPromise<Type, T, F> = Type extends Promise<any> ? T : F;
 
-export type NotPromise<T> = T extends Promise<any> ? never : T;
-
-export type IfNever<Type, N, O> = [Type] extends [never] ? N : O;
+export type NotPromise<Type> = Type extends Promise<any> ? never : Type;
 
 export type CanBeUndefined<Type, T, F> = Type | undefined extends Type ? T : F;
 
