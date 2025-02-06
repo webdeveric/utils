@@ -7,6 +7,7 @@ export * from './assertIsBooleanArray.js';
 export * from './assertIsDigitsString.js';
 export * from './assertIsFiniteNumber.js';
 export * from './assertIsFunction.js';
+export * from './assertIsInt32.js';
 export * from './assertIsInteger.js';
 export * from './assertIsIntString.js';
 export * from './assertIsIterable.js';
