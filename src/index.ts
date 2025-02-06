@@ -36,6 +36,7 @@ export * from './inRange.js';
 export * from './isEmpty.js';
 export * from './iterateForever.js';
 export * from './joinStrings.js';
+export * from './jsonParse.js';
 export * from './looksLikeURL.js';
 export * from './normalize.js';
 export * from './parseNumber.js';
