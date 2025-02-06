@@ -9,6 +9,7 @@ export * from './isBooleanArray.js';
 export * from './isDigitsString.js';
 export * from './isFiniteNumber.js';
 export * from './isFunction.js';
+export * from './isInt32.js';
 export * from './isInteger.js';
 export * from './isIntString.js';
 export * from './isISODateString.js';
