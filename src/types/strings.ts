@@ -91,3 +91,10 @@ export type CamelCase<
 export type PascalCase<Type extends string, Delimiter extends string = Space> = Capitalize<
   CamelCase<AlphanumericOnly<AddSpaceAroundNumbers<Strip<Type, "'">>>, Delimiter>
 >;
+
+export type StringLength<Type extends string, Accumulator extends never[] = []> = string extends Type
+  ? never
+  : // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    Type extends `${infer _}${infer Rest}`
+    ? StringLength<Rest, [never, ...Accumulator]>
+    : Accumulator['length'];

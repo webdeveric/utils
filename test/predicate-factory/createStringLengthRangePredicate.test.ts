@@ -2,6 +2,8 @@ import { describe, it, expect } from 'vitest';
 
 import { createStringLengthRangePredicate } from '../../src/predicate-factory/createStringLengthRangePredicate.js';
 
+import type { AlphanumericCharacter } from '../../src/index.js';
+
 describe('createStringLengthRangePredicate()', () => {
   it('Returns a type predicate function', () => {
     const fn = createStringLengthRangePredicate(1, 10);
@@ -14,7 +16,7 @@ describe('createStringLengthRangePredicate()', () => {
   });
 
   it('Max is optional', () => {
-    const fn = createStringLengthRangePredicate(1);
+    const fn = createStringLengthRangePredicate<AlphanumericCharacter>(1);
 
     expect(fn('a'.repeat(20))).toBeTruthy();
   });
