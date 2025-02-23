@@ -3,6 +3,8 @@ export * from './anyOf.js';
 export * from './createIsEnumPredicate.js';
 export * from './createIsInstanceOfPredicate.js';
 export * from './createIsTuplePredicate.js';
+export * from './createNumberRangePredicate.js';
+export * from './createObjectShapePredicate.js';
 export * from './createStringLengthRangePredicate.js';
 export * from './createStringMatchingPredicate.js';
 export * from './everyItem.js';
