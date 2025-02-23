@@ -108,5 +108,10 @@
     "typescript": "^5.7.3",
     "validate-package-exports": "^0.8.0",
     "vitest": "^3.0.6"
+  },
+  "pnpm": {
+    "overrides": {
+      "esbuild@<=0.24.2": ">=0.25.0"
+    }
   }
 }
