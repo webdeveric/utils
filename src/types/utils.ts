@@ -113,3 +113,7 @@ export type UnionToIntersection<Union> = (Union extends any ? (union: Union) => 
 ) => void
   ? Type
   : never;
+
+export type Pretty<Type> = {
+  [Property in keyof Type]: Type[Property];
+} & unknown;
