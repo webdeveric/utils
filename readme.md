@@ -1,6 +1,6 @@
 # @webdeveric/utils
 
-[![NodeJS](https://github.com/webdeveric/utils/actions/workflows/node.js.yml/badge.svg)](https://github.com/webdeveric/utils/actions/workflows/node.js.yml) [![CodeQL](https://github.com/webdeveric/utils/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/webdeveric/utils/actions/workflows/codeql-analysis.yml)
+[![NodeJS](https://github.com/webdeveric/utils/actions/workflows/node.js.yml/badge.svg)](https://github.com/webdeveric/utils/actions/workflows/node.js.yml) [![CodeQL Advanced](https://github.com/webdeveric/utils/actions/workflows/codeql.yml/badge.svg)](https://github.com/webdeveric/utils/actions/workflows/codeql.yml)
 
 ## Install
 
