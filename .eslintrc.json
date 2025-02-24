@@ -35,7 +35,7 @@
     "import/no-extraneous-dependencies": [
       "error",
       {
-        "devDependencies": ["./bin/*", "./vitest.config.mts", "./lint-staged.config.mjs", "**/*.{bench,test}.ts"]
+        "devDependencies": ["./bin/*", "./vitest.config.mts", "./lint-staged.config.mjs", "**/*.{bench,test,test-d}.ts"]
       }
     ],
     "import/no-relative-packages": "error",
