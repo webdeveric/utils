@@ -43,3 +43,4 @@ export * from './assertIsSymbol.js';
 export * from './assertIsSymbolArray.js';
 export * from './assertIsUndefined.js';
 export * from './assertIsUndefinedArray.js';
+export * from './assertPredicate.js';
