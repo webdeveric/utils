@@ -72,7 +72,9 @@ export type RequiredKeys<Type, Keys extends keyof Type> = Type extends any
   ? Omit<Type, Keys> & Required<Pick<Type, Keys>>
   : never;
 
-export type NonVoid<Type> = Type extends void ? never : Type;
+export type NonVoid<Type> = Exclude<Type, void>;
+
+export type Defined<Type> = Exclude<Type, undefined | void>;
 
 export type RemoveNever<Type> = {
   [Key in keyof Type as [Type[Key]] extends [never] ? never : Key]: Type[Key];
@@ -113,6 +115,12 @@ export type UnionToIntersection<Union> = (Union extends any ? (union: Union) => 
 ) => void
   ? Type
   : never;
+
+export type IntersectionOf<T extends unknown[]> = T extends [infer First, ...infer Rest]
+  ? First & IntersectionOf<Rest>
+  : unknown;
+
+export type UnionOf<T extends unknown[]> = T extends [infer First, ...infer Rest] ? First | UnionOf<Rest> : never;
 
 export type Pretty<Type> = {
   [Property in keyof Type]: Type[Property];
