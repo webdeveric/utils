@@ -18,7 +18,7 @@ export type InferPredicateReturnType<Fn> = Fn extends TypePredicateFn<infer T> ?
 
 export type InferPredicatesReturnType<Predicates extends TypePredicateFn<unknown>[]> = {
   [K in keyof Predicates]: InferPredicateReturnType<Predicates[K]>;
-}[number];
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type TypeAssertionFn<T> = (input: unknown, ...args: any[]) => asserts input is T;
