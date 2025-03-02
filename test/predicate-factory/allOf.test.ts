@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
 
 import { isNumber } from '../../src/predicate/isNumber.js';
-import { isObjectWith } from '../../src/predicate/isObjectWith.js';
 import { isString } from '../../src/predicate/isString.js';
 import { allOf } from '../../src/predicate-factory/allOf.js';
+import { createObjectShapePredicate } from '../../src/predicate-factory/createObjectShapePredicate.js';
 
 describe('allOf()', () => {
   it('Requires one or more type predicate function', () => {
@@ -12,12 +12,12 @@ describe('allOf()', () => {
 
   it('Returns a type predicate function', () => {
     const fn = allOf(
-      (input): input is { name: string } => {
-        return isObjectWith(input, 'name') && isString(input.name);
-      },
-      (input): input is { age: number } => {
-        return isObjectWith(input, 'age') && isNumber(input.age);
-      },
+      createObjectShapePredicate({
+        name: isString,
+      }),
+      createObjectShapePredicate({
+        age: isNumber,
+      }),
     );
 
     expect(fn).instanceOf(Function);
