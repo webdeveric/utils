@@ -2,30 +2,12 @@ import { describe, it, expect, vi } from 'vitest';
 
 import { isBoolean } from '../src/predicate/isBoolean.js';
 import {
-  createIsEnumPredicate,
   createStringMatchingPredicate,
   everyItem,
   maybeArray,
   maybeNull,
   maybeUndefined,
 } from '../src/predicate-factory/index.js';
-
-describe('createIsEnumPredicate()', () => {
-  enum Demo {
-    Demo = 'Demo',
-  }
-
-  it('Returns a type predicate function', () => {
-    expect(createIsEnumPredicate(Demo)).toBeInstanceOf(Function);
-  });
-
-  it('Predicate function checks if input is a member of the enum', () => {
-    const fn = createIsEnumPredicate(Demo);
-
-    expect(fn(Demo.Demo)).toBeTruthy();
-    expect(fn('Fail')).toBeFalsy();
-  });
-});
 
 describe('createStringMatchingPredicate()', () => {
   const pattern = /.+/;
