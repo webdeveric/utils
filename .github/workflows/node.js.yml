@@ -11,6 +11,11 @@ jobs:
     name: Continuous Integration
     runs-on: ubuntu-24.04
     steps:
+      - name: Print Runner Specs
+        run: |
+          lscpu
+          cat /proc/meminfo
+
       - name: Checkout
         uses: actions/checkout@v4
 
