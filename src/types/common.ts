@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/ban-types */
 
 import type { NotPromise } from './utils.js';
 
@@ -16,7 +16,17 @@ export type JsonValue = string | number | boolean | null | object | JsonObject |
 
 export type TypeOf = 'undefined' | 'object' | 'boolean' | 'number' | 'bigint' | 'string' | 'symbol' | 'function';
 
-// eslint-disable-next-line @typescript-eslint/ban-types
+export type TypeOfMapping = {
+  undefined: undefined;
+  object: object;
+  boolean: boolean;
+  number: number;
+  bigint: bigint;
+  string: string;
+  symbol: symbol;
+  function: Function;
+};
+
 export type Builtin = Date | Error | Function | Primitive | RegExp;
 
 export type AnyFunction = (...args: any[]) => any;
