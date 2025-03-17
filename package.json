@@ -28,10 +28,10 @@
       "require": "./dist/cjs/index.js",
       "import": "./dist/mjs/index.js"
     },
-    "./predicate-factory": {
-      "types": "./dist/types/predicate-factory/index.d.ts",
-      "require": "./dist/cjs/predicate-factory/index.js",
-      "import": "./dist/mjs/predicate-factory/index.js"
+    "./predicate/factory": {
+      "types": "./dist/types/predicate/factory/index.d.ts",
+      "require": "./dist/cjs/predicate/factory/index.js",
+      "import": "./dist/mjs/predicate/factory/index.js"
     },
     "./predicate": {
       "types": "./dist/types/predicate/index.d.ts",
@@ -72,7 +72,7 @@
     "prebuild": "pnpm clean",
     "build": "tsc --build tsconfig.cjs.json tsconfig.mjs.json --force",
     "postbuild": "echo '{\"type\":\"commonjs\"}' > ./dist/cjs/package.json && echo '{\"type\":\"module\"}' > ./dist/mjs/package.json && pnpm validate",
-    "typecheck": "tsc --build --verbose --noEmit",
+    "typecheck": "tsc --build tsconfig.mjs.json tsconfig.test.json --verbose --noEmit",
     "lint": "eslint ./*.{js,cjs,mjs,ts,cts,mts} ./src/ ./bench/ ./test/ --ext .ts,.mjs,.cjs",
     "bench": "vitest bench",
     "test": "vitest --typecheck",
@@ -97,7 +97,7 @@
     "cspell": "^8.17.5",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.1",
-    "eslint-import-resolver-typescript": "^3.8.7",
+    "eslint-import-resolver-typescript": "^3.9.1",
     "eslint-plugin-import": "^2.31.0",
     "husky": "^9.1.7",
     "jsdom": "^26.0.0",
