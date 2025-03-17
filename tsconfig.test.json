@@ -5,5 +5,5 @@
     "verbatimModuleSyntax": true,
     "tsBuildInfoFile": "./cache/test.tsbuildinfo"
   },
-  "include": ["src/**/*", "test/**/*"]
+  "include": ["src/**/*", "test/**/*", "bench/**/*"]
 }
