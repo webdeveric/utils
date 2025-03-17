@@ -1,5 +1,5 @@
-import type { Primitive } from '../types/common.js';
-import type { TypePredicateFn } from '../types/functions.js';
+import type { Primitive } from '../../types/common.js';
+import type { TypePredicateFn } from '../../types/functions.js';
 
 export type TuplePredicateInput = (Primitive | TypePredicateFn<unknown>)[];
 
@@ -7,7 +7,7 @@ export type GetTupleFromInput<Type extends TuplePredicateInput> = {
   [Property in keyof Type]: Type[Property] extends TypePredicateFn<infer T> ? T : Type[Property];
 };
 
-export const createIsTuplePredicate = <const Input extends TuplePredicateInput>(
+export const tuple = <const Input extends TuplePredicateInput>(
   tupleShape: Input,
 ): TypePredicateFn<GetTupleFromInput<Input>> => {
   return (input: unknown): input is GetTupleFromInput<Input> =>
