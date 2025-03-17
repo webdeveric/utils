@@ -1,6 +1,6 @@
 // Folders
 export * from './assertion/index.js';
-export * from './predicate-factory/index.js';
+export * from './predicate/factory/index.js';
 export * from './predicate/index.js';
 export * from './types/index.js';
 
