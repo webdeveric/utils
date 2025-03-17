@@ -1,5 +1,5 @@
-import { createStringMatchingPredicate } from '../predicate-factory/createStringMatchingPredicate.js';
+import { matching } from './factory/matching.js';
 
 import type { NumericString } from '../types/common.js';
 
-export const isDigitsString = createStringMatchingPredicate<NumericString>(/^\d+$/);
+export const isDigitsString = matching<NumericString>(/^\d+$/);
