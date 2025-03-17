@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { is } from '../../src/predicate-factory/is.js';
+import { is } from '../../../src/predicate/factory/is.js';
 
 describe('is()', () => {
   it('Returns a type predicate function', () => {

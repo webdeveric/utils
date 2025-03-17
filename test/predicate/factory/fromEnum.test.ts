@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest';
 
-import { createIsEnumPredicate } from '../../src/predicate-factory/createIsEnumPredicate.js';
+import { fromEnum } from '../../../src/predicate/factory/fromEnum.js';
 
-describe('createIsEnumPredicate()', () => {
+describe('fromEnum()', () => {
   describe('enum with string values', () => {
     enum StringEnum {
       A = 'a',
@@ -10,7 +10,7 @@ describe('createIsEnumPredicate()', () => {
       C = 'c',
     }
 
-    const fn = createIsEnumPredicate(StringEnum);
+    const fn = fromEnum(StringEnum);
 
     it.each(Object.values(StringEnum))('Returns true for valid input: %s', (value) => {
       expect(fn(value)).toBeTruthy();
@@ -33,7 +33,7 @@ describe('createIsEnumPredicate()', () => {
       NotANumber = Number.NaN,
     }
 
-    const fn = createIsEnumPredicate(Demo);
+    const fn = fromEnum(Demo);
 
     it('Returns a type predicate function', () => {
       expect(fn).toBeInstanceOf(Function);

@@ -1,15 +1,12 @@
 import { describe, expectTypeOf, it } from 'vitest';
 
-import { createNumberRangePredicate, isNumber } from '../../src/index.js';
-import { isOptionalString } from '../../src/predicate/isOptionalString.js';
-import { isString } from '../../src/predicate/isString.js';
-import {
-  createObjectShapePredicate,
-  type InferTypeFromShape,
-  type ObjectShapeRecord,
-} from '../../src/predicate-factory/createObjectShapePredicate.js';
+import { range } from '../../../src/predicate/factory/range.js';
+import { shape, type InferTypeFromShape, type ObjectShapeRecord } from '../../../src/predicate/factory/shape.js';
+import { isNumber } from '../../../src/predicate/isNumber.js';
+import { isOptionalString } from '../../../src/predicate/isOptionalString.js';
+import { isString } from '../../../src/predicate/isString.js';
 
-describe('createObjectShapePredicate', () => {
+describe('shape()', () => {
   enum Role {
     Admin = 'admin',
     User = 'user',
@@ -44,7 +41,7 @@ describe('createObjectShapePredicate', () => {
   const userShape = {
     name: /^Test$/,
     role: Role.User,
-    value: createNumberRangePredicate(0, 100),
+    value: range(0, 100),
     age: isNumber,
     contact: {
       email: isString,
@@ -57,7 +54,7 @@ describe('createObjectShapePredicate', () => {
   type InferredUserTypeConst = InferTypeFromShape<typeof userShape>;
 
   it('Returns a type predicate function', () => {
-    const fn = createObjectShapePredicate(userShape);
+    const fn = shape(userShape);
 
     expectTypeOf(fn).toBeFunction();
     expectTypeOf(fn).parameter(0).toMatchTypeOf<unknown>();
@@ -65,7 +62,7 @@ describe('createObjectShapePredicate', () => {
 
   describe('Type parameters', () => {
     it('Infers type parameter values', () => {
-      const fn = createObjectShapePredicate(userShape);
+      const fn = shape(userShape);
 
       if (fn(user)) {
         expectTypeOf(user).toMatchTypeOf<InferredUserTypeConst>();
@@ -73,7 +70,7 @@ describe('createObjectShapePredicate', () => {
     });
 
     it('Can provide the Type to constrain the Shape', () => {
-      const fn = createObjectShapePredicate<User>(userShape);
+      const fn = shape<User>(userShape);
 
       if (fn(user)) {
         expectTypeOf(user).toMatchTypeOf<InferredUserType>();
@@ -81,7 +78,7 @@ describe('createObjectShapePredicate', () => {
     });
 
     it('Can provide the Type and Shape parameters', () => {
-      const fn = createObjectShapePredicate<{ name: string }, { name: string | RegExp }>({
+      const fn = shape<{ name: string }, { name: string | RegExp }>({
         name: 'test',
       });
 

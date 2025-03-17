@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest';
 
-import { createIsInstanceOfPredicate } from '../../src/predicate-factory/createIsInstanceOfPredicate.js';
+import { instanceOf } from '../../../src/predicate/factory/instanceOf.js';
 
-describe('createIsInstanceOfPredicate()', () => {
+describe('instanceOf()', () => {
   it('Returns a type predicate function', () => {
-    const fn = createIsInstanceOfPredicate(Date);
+    const fn = instanceOf(Date);
 
     expect(fn).toBeInstanceOf(Function);
     expect(fn(new Date())).toBeTruthy();

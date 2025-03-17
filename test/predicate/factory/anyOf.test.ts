@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import { anyOf } from '../../src/predicate-factory/anyOf.js';
+import { anyOf } from '../../../src/predicate/factory/anyOf.js';
 
 describe('anyOf()', () => {
   it('Requires one or more type predicate function', () => {
