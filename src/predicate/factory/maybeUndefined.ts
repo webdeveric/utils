@@ -1,4 +1,4 @@
-import type { TypePredicateFn } from '../types/functions.js';
+import type { TypePredicateFn } from '../../types/functions.js';
 
 export const maybeUndefined =
   <T>(predicate: TypePredicateFn<T>): TypePredicateFn<T | undefined> =>

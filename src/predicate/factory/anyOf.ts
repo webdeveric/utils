@@ -1,5 +1,5 @@
-import type { InferPredicatesReturnType, TypePredicateFn } from '../types/functions.js';
-import type { UnionOf } from '../types/utils.js';
+import type { InferPredicatesReturnType, TypePredicateFn } from '../../types/functions.js';
+import type { UnionOf } from '../../types/utils.js';
 
 /**
  * Any predicate can pass

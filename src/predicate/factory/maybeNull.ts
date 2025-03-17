@@ -1,4 +1,4 @@
-import type { TypePredicateFn } from '../types/functions.js';
+import type { TypePredicateFn } from '../../types/functions.js';
 
 export const maybeNull =
   <T>(predicate: TypePredicateFn<T>): TypePredicateFn<T | null> =>

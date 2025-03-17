@@ -1,5 +1,5 @@
-import type { InferPredicatesReturnType, TypePredicateFn } from '../types/functions.js';
-import type { IntersectionOf } from '../types/utils.js';
+import type { InferPredicatesReturnType, TypePredicateFn } from '../../types/functions.js';
+import type { IntersectionOf } from '../../types/utils.js';
 
 /**
  * All predicates must pass
