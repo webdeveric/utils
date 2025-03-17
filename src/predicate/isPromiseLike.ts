@@ -1,6 +1,7 @@
+import { shape } from './factory/shape.js';
+import { withLength } from './factory/withLength.js';
 import { isFunction } from './isFunction.js';
-import { isObjectWith } from './isObjectWith.js';
 
-export function isPromiseLike<T>(input: unknown): input is PromiseLike<T> {
-  return isObjectWith(input, 'then') && isFunction(input.then) && input.then.length === 2;
-}
+export const isPromiseLike = shape<PromiseLike<unknown>>({
+  then: withLength(isFunction, 2),
+});
