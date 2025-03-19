@@ -1,17 +1,17 @@
 import { describe, it, expect, vi } from 'vitest';
 
-import { maybeNull } from '../../../src/predicate/factory/maybeNull.js';
+import { nullable } from '../../../src/predicate/factory/nullable.js';
 import { isBoolean } from '../../../src/predicate/isBoolean.js';
 
-describe('maybeNull()', () => {
+describe('nullable()', () => {
   it('Returns a type predicate function', () => {
-    expect(maybeNull(isBoolean)).toBeInstanceOf(Function);
+    expect(nullable(isBoolean)).toBeInstanceOf(Function);
   });
 
   it('Calls a type predicate function', () => {
     const predicate = vi.fn(isBoolean) as unknown as typeof isBoolean;
 
-    const fn = maybeNull(predicate);
+    const fn = nullable(predicate);
 
     expect(fn(true)).toBeTruthy();
     expect(fn(null)).toBeTruthy();
