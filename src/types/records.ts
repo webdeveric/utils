@@ -7,6 +7,8 @@ export type NeverRecord = Record<PropertyKey, never>;
 
 export type StringRecord = Record<string, string>;
 
+export type EnumRecord = Record<string, string | number>;
+
 export type RemoveIndex<Type> = {
   [Key in keyof Type as symbol extends Key
     ? never

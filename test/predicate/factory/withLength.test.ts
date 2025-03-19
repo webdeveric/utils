@@ -16,6 +16,10 @@ describe('withLength()', () => {
     expect(() => {
       withLength(isString, [100, 1]);
     }).toThrowError();
+
+    expect(() => {
+      withLength(isString, [-100, 100]);
+    }).toThrowError();
   });
 
   it('Returns true for strings with the specified length', () => {

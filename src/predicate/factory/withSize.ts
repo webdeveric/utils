@@ -21,7 +21,11 @@ export function withSize<Fn extends TypePredicateFn<{ size: number }>, SizeOrRan
   sizeRange: SizeOrRange,
 ): TypePredicateFn<InferPredicateReturnType<Fn> & { size: number }> {
   if (Array.isArray(sizeRange)) {
-    const [min = Number.NEGATIVE_INFINITY, max = Number.POSITIVE_INFINITY] = sizeRange;
+    const [min = 0, max = Number.POSITIVE_INFINITY] = sizeRange;
+
+    if (min < 0) {
+      throw new RangeError('min must be greater than or equal to 0');
+    }
 
     if (min > max) {
       throw new RangeError('min cannot be greater than max');

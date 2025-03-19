@@ -15,6 +15,10 @@ describe('withSize()', () => {
     expect(() => {
       withSize(instanceOf(Set), [100, 1]);
     }).toThrowError();
+
+    expect(() => {
+      withSize(instanceOf(Set), [-100, 100]);
+    }).toThrowError();
   });
 
   it('Returns true for strings with the specified length', () => {
