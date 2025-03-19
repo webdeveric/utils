@@ -3,7 +3,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { optional } from '../../../src/predicate/factory/optional.js';
 import { isBoolean } from '../../../src/predicate/isBoolean.js';
 
-describe('maybeUndefined()', () => {
+describe('optional()', () => {
   it('Returns a type predicate function', () => {
     expect(optional(isBoolean)).toBeInstanceOf(Function);
   });
