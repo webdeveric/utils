@@ -1,4 +1,4 @@
-import { maybeUndefined } from './factory/maybeUndefined.js';
+import { optional } from './factory/optional.js';
 import { isNull } from './isNull.js';
 
-export const isOptionalNull = maybeUndefined(isNull);
+export const isOptionalNull = optional(isNull);

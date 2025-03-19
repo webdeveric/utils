@@ -1,17 +1,17 @@
 import { describe, it, expect, vi } from 'vitest';
 
-import { maybeUndefined } from '../../../src/predicate/factory/maybeUndefined.js';
+import { optional } from '../../../src/predicate/factory/optional.js';
 import { isBoolean } from '../../../src/predicate/isBoolean.js';
 
 describe('maybeUndefined()', () => {
   it('Returns a type predicate function', () => {
-    expect(maybeUndefined(isBoolean)).toBeInstanceOf(Function);
+    expect(optional(isBoolean)).toBeInstanceOf(Function);
   });
 
   it('Calls a type predicate function', () => {
     const predicate = vi.fn(isBoolean) as unknown as typeof isBoolean;
 
-    const fn = maybeUndefined(predicate);
+    const fn = optional(predicate);
 
     expect(fn(true)).toBeTruthy();
     expect(fn(undefined)).toBeTruthy();

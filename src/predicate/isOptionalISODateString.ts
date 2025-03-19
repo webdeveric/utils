@@ -1,4 +1,4 @@
-import { maybeUndefined } from './factory/maybeUndefined.js';
+import { optional } from './factory/optional.js';
 import { isISODateString } from './isISODateString.js';
 
-export const isOptionalISODateString = maybeUndefined(isISODateString);
+export const isOptionalISODateString = optional(isISODateString);
