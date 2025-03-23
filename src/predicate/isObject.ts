@@ -1,7 +1,5 @@
-import type { UnknownRecord } from '../types/records.js';
-
 /**
  * Determine if `input` is a non-null object and not an array.
  */
-export const isObject = <T>(input: T): input is T & UnknownRecord =>
+export const isObject = (input: unknown): input is object =>
   input !== null && typeof input === 'object' && !Array.isArray(input);
