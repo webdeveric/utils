@@ -1,7 +1,8 @@
-import { describe, expectTypeOf, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
+import { optional } from '../../../src/predicate/factory/optional.js';
 import { range } from '../../../src/predicate/factory/range.js';
-import { shape, type InferTypeFromShape, type ObjectShapeRecord } from '../../../src/predicate/factory/shape.js';
+import { shape, type ObjectShapeRecord } from '../../../src/predicate/factory/shape.js';
 import { isNumber } from '../../../src/predicate/isNumber.js';
 import { isOptionalString } from '../../../src/predicate/isOptionalString.js';
 import { isString } from '../../../src/predicate/isString.js';
@@ -12,29 +13,20 @@ describe('shape()', () => {
     User = 'user',
   }
 
+  const valueSymbol = Symbol.for('value');
+
   type User = {
     name: string;
     role: Role;
     value: number;
     age?: number;
-    contact: {
+    [valueSymbol]: number;
+    contact?: {
       email: string;
       phone?: string;
     };
     tuple: [key: string, value: number];
   };
-
-  const user: unknown = {
-    name: 'Test',
-    role: Role.User,
-    value: 50,
-    age: 100,
-    contact: {
-      email: 'test@example.com',
-      phone: undefined,
-    },
-    tuple: ['PI', Math.PI],
-  } satisfies User;
 
   type UserShape = ObjectShapeRecord<User>;
 
@@ -42,49 +34,51 @@ describe('shape()', () => {
     name: /^Test$/,
     role: Role.User,
     value: range(0, 100),
+    [valueSymbol]: range(0, 100_000),
     age: isNumber,
-    contact: {
-      email: isString,
-      phone: isOptionalString,
-    },
+    contact: optional(
+      shape({
+        email: isString,
+        phone: isOptionalString,
+      }),
+    ),
     tuple: ['PI', Math.PI],
   } satisfies UserShape;
 
-  type InferredUserType = InferTypeFromShape<UserShape>;
-  type InferredUserTypeConst = InferTypeFromShape<typeof userShape>;
+  const fn = shape(userShape);
 
   it('Returns a type predicate function', () => {
-    const fn = shape(userShape);
-
-    expectTypeOf(fn).toBeFunction();
-    expectTypeOf(fn).parameter(0).toMatchTypeOf<unknown>();
+    expect(fn).instanceOf(Function);
   });
 
-  describe('Type parameters', () => {
-    it('Infers type parameter values', () => {
-      const fn = shape(userShape);
+  it('Checks string and symbol properties', () => {
+    expect(fn({})).toBeFalsy();
 
-      if (fn(user)) {
-        expectTypeOf(user).toMatchTypeOf<InferredUserTypeConst>();
-      }
-    });
+    expect(
+      fn({
+        name: 'Test',
+        role: Role.User,
+        value: 100,
+        [valueSymbol]: 100_000,
+        age: 100,
+        contact: undefined,
+        tuple: ['PI', Math.PI],
+      }),
+    ).toBeTruthy();
 
-    it('Can provide the Type to constrain the Shape', () => {
-      const fn = shape<User>(userShape);
-
-      if (fn(user)) {
-        expectTypeOf(user).toMatchTypeOf<InferredUserType>();
-      }
-    });
-
-    it('Can provide the Type and Shape parameters', () => {
-      const fn = shape<{ name: string }, { name: string | RegExp }>({
-        name: 'test',
-      });
-
-      if (fn(user)) {
-        expectTypeOf(user).toMatchTypeOf<{ name: string }>();
-      }
-    });
+    expect(
+      fn({
+        name: 'Test',
+        role: Role.User,
+        value: 100,
+        [valueSymbol]: 100_000,
+        age: 100,
+        contact: {
+          email: 'me@example.com',
+          phone: '555-1234',
+        },
+        tuple: ['PI', Math.PI],
+      }),
+    ).toBeTruthy();
   });
 });

@@ -37,8 +37,10 @@ export type InferTypeFromShape<Shape extends ObjectShapeRecord<object>> = Pretty
 export const shape = <Type extends object, const Shape extends ObjectShapeRecord<Type> = ObjectShapeRecord<Type>>(
   objectShape: Shape,
 ): TypePredicateFn<InferTypeFromShape<Shape>> => {
-  const entries: [key: string, predicate: TypePredicateFn<unknown>][] = Object.entries(objectShape).map(
-    ([key, value]) => {
+  const entries: [key: string | symbol, predicate: TypePredicateFn<unknown>][] = Reflect.ownKeys(objectShape).map(
+    (key) => {
+      const value = Reflect.get(objectShape, key);
+
       const predicate =
         typeof value === 'function'
           ? (value as TypePredicateFn<unknown>)
@@ -53,5 +55,5 @@ export const shape = <Type extends object, const Shape extends ObjectShapeRecord
   );
 
   return (input: unknown): input is InferTypeFromShape<Shape> =>
-    isAnyObject(input) && entries.every(([key, predicate]) => predicate(input[key]));
+    isAnyObject(input) && entries.every(([key, predicate]) => predicate(Reflect.get(input, key)));
 };
