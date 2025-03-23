@@ -4,7 +4,12 @@ import type { NotPromise } from './utils.js';
 
 export type Primitive = string | number | boolean | bigint | symbol | undefined | null;
 
-export type NumericString<T extends string | number = number> = `${T}` extends `${number}` ? `${T}` : never;
+/**
+ * This is any number or bigint that has been stringified.
+ */
+export type NumericString<T extends string | number | bigint = number | bigint> = `${T}` extends `${number | bigint}`
+  ? `${T}`
+  : never;
 
 export type NumericValue = number | bigint | NumericString;
 

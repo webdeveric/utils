@@ -1,3 +1,5 @@
+import type { Digit } from './numbers.js';
+
 export type EmptyString = '';
 
 export type Space = ' ';
@@ -30,7 +32,7 @@ export type AlphaCharacter =
   | 'y'
   | 'z';
 
-export type NumericCharacter = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
+export type NumericCharacter = `${Digit}`;
 
 export type AlphanumericCharacter = AlphaCharacter | Capitalize<AlphaCharacter> | NumericCharacter;
 
