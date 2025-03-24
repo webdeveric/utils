@@ -1,5 +1,7 @@
-import { isObjectWith } from './isObjectWith.js';
+import { shape } from './factory/shape.js';
+import { isUnknown } from './isUnknown.js';
 
-export const isPromiseFulfilledResult = <T>(input: unknown): input is PromiseFulfilledResult<T> => {
-  return isObjectWith(input, 'status') && input.status === 'fulfilled';
-};
+export const isPromiseFulfilledResult = shape<PromiseFulfilledResult<unknown>>({
+  status: 'fulfilled',
+  value: isUnknown,
+});

@@ -1,5 +1,7 @@
-import { isObjectWith } from './isObjectWith.js';
+import { shape } from './factory/shape.js';
+import { isAny } from './isAny.js';
 
-export const isPromiseRejectedResult = (input: unknown): input is PromiseRejectedResult => {
-  return isObjectWith(input, ['status', 'reason']) && input.status === 'rejected';
-};
+export const isPromiseRejectedResult = shape<PromiseRejectedResult>({
+  status: 'rejected',
+  reason: isAny,
+});
