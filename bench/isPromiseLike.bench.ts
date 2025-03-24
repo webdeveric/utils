@@ -5,7 +5,7 @@ import { isObjectWith } from '../src/predicate/isObjectWith.js';
 import { isPromiseLike } from '../src/predicate/isPromiseLike.js';
 
 function isPromiseLike2<T>(input: unknown): input is PromiseLike<T> {
-  return isObjectWith(input, 'then') && isFunction(input.then) && input.then.length === 2;
+  return isObjectWith(input, ['then']) && isFunction(input.then) && input.then.length === 2;
 }
 
 const resolvedPromise = Promise.resolve();
