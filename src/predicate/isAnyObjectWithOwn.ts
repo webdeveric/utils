@@ -1,5 +1,3 @@
-import { asArray } from '../asArray.js';
-
 import { isAnyObject } from './isAnyObject.js';
 
 /**
@@ -7,7 +5,7 @@ import { isAnyObject } from './isAnyObject.js';
  */
 export const isAnyObjectWithOwn = <T, P extends PropertyKey>(
   input: T,
-  properties: P | P[],
+  properties: P[],
 ): input is T & Record<P, unknown> => {
-  return isAnyObject(input) && asArray(properties).every((property) => Object.hasOwn(input, property));
+  return isAnyObject(input) && properties.every((property) => Object.hasOwn(input, property));
 };
