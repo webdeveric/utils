@@ -4,9 +4,9 @@ import { isAnyObjectWithOwn } from '../../src/predicate/isAnyObjectWithOwn.js';
 
 describe('isAnyObjectWithOwn()', () => {
   it('Returns true for valid inputs', () => {
-    expect(isAnyObjectWithOwn({ property: true }, 'property')).toBeTruthy();
+    expect(isAnyObjectWithOwn({ property: true }, ['property'])).toBeTruthy();
     expect(isAnyObjectWithOwn({ name: 'Test Testerson', age: 100 }, ['name', 'age'])).toBeTruthy();
-    expect(isAnyObjectWithOwn(['item'], 'length')).toBeTruthy();
+    expect(isAnyObjectWithOwn(['item'], ['length'])).toBeTruthy();
   });
 
   it.each([
@@ -22,7 +22,6 @@ describe('isAnyObjectWithOwn()', () => {
       },
     ),
   ])('Returns false for invalid inputs', (item) => {
-    expect(isAnyObjectWithOwn(item, 'property')).toBeFalsy();
     expect(isAnyObjectWithOwn(item, ['property'])).toBeFalsy();
   });
 });
