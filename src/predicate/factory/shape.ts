@@ -38,7 +38,7 @@ export type InferTypeFromShape<Shape extends ObjectShapeRecord<object>> = {
   [Property in keyof Shape]: InferTypeFromShapeValue<Shape[Property]>;
 };
 
-export const shape = <Type extends object, const Shape extends ObjectShapeRecord<Type> = ObjectShapeRecord<Type>>(
+export const shape = <Type extends object, Shape extends ObjectShapeRecord<Type> = ObjectShapeRecord<Type>>(
   objectShape: Shape,
 ): TypePredicateFn<Pretty<Type & InferTypeFromShape<Shape>>> => {
   const entries: [key: string | symbol, predicate: TypePredicateFn<unknown>][] = Reflect.ownKeys(objectShape).map(
