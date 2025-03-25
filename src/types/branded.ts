@@ -1,6 +1,6 @@
 import type { Primitive } from './common.js';
 
-declare const brand: unique symbol;
+export declare const brand: unique symbol;
 
 export type Brand<Id> = {
   [brand]: Id;
