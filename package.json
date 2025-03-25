@@ -66,7 +66,7 @@
     "url": "https://github.com/webdeveric/utils/issues"
   },
   "homepage": "https://github.com/webdeveric/utils/#readme",
-  "packageManager": "pnpm@10.6.5+sha512.cdf928fca20832cd59ec53826492b7dc25dc524d4370b6b4adbf65803d32efaa6c1c88147c0ae4e8d579a6c9eec715757b50d4fa35eea179d868eada4ed043af",
+  "packageManager": "pnpm@10.6.5+sha256.47c8bca42b4b48534b5b1b28d573c506773937b02f68e52992fbd8269131c5c8",
   "scripts": {
     "clean": "rimraf ./dist/",
     "prebuild": "pnpm clean",
