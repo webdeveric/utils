@@ -1,9 +1,12 @@
 import { describe, expectTypeOf, it } from 'vitest';
 
-import { range, isNumber } from '../../../src/index.js';
+import { range } from '../../../src/predicate/factory/range.js';
 import { shape, type InferTypeFromShape, type ObjectShapeRecord } from '../../../src/predicate/factory/shape.js';
+import { isNumber } from '../../../src/predicate/isNumber.js';
 import { isOptionalString } from '../../../src/predicate/isOptionalString.js';
 import { isString } from '../../../src/predicate/isString.js';
+
+import type { Pretty } from '../../../src/types/utils.js';
 
 describe('shape()', () => {
   enum Role {
@@ -72,7 +75,7 @@ describe('shape()', () => {
       const fn = shape<User>(userShape);
 
       if (fn(user)) {
-        expectTypeOf(user).toEqualTypeOf<InferredUserType>();
+        expectTypeOf(user).toEqualTypeOf<Pretty<User & InferredUserType>>();
       }
     });
 

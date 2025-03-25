@@ -7,7 +7,13 @@ import { isNumber } from '../../../src/predicate/isNumber.js';
 import { isOptionalString } from '../../../src/predicate/isOptionalString.js';
 import { isString } from '../../../src/predicate/isString.js';
 
+import type { Branded } from '../../../src/types/branded.js';
+
 describe('shape()', () => {
+  type Name = Branded<string, 'Name'>;
+
+  const isName = (input: unknown): input is Name => typeof input === 'string';
+
   enum Role {
     Admin = 'admin',
     User = 'user',
@@ -16,7 +22,8 @@ describe('shape()', () => {
   const valueSymbol = Symbol.for('value');
 
   type User = {
-    name: string;
+    name: Name;
+    title: string;
     role: Role;
     value: number;
     age?: number;
@@ -31,7 +38,8 @@ describe('shape()', () => {
   type UserShape = ObjectShapeRecord<User>;
 
   const userShape = {
-    name: /^Test$/,
+    name: isName,
+    title: /software/i,
     role: Role.User,
     value: range(0, 100),
     [valueSymbol]: range(0, 100_000),
@@ -56,7 +64,8 @@ describe('shape()', () => {
 
     expect(
       fn({
-        name: 'Test',
+        name: 'Test Testerson',
+        title: 'Software Engineer',
         role: Role.User,
         value: 100,
         [valueSymbol]: 100_000,
@@ -68,7 +77,8 @@ describe('shape()', () => {
 
     expect(
       fn({
-        name: 'Test',
+        name: 'Test Testerson',
+        title: 'Senior Software Engineer',
         role: Role.User,
         value: 100,
         [valueSymbol]: 100_000,
