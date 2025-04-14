@@ -31,6 +31,10 @@ jobs:
       - name: Installing dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Linting last commit message
+        if: github.event_name == 'push'
+        run: pnpm exec commitlint --last --verbose
+
       - name: Linting
         run: pnpm lint
 
