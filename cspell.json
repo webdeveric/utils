@@ -23,6 +23,7 @@
     "tslib",
     "twasn't",
     "typecheck",
+    "unrs-resolver",
     "Unwritable",
     "vitest",
     "webcompat",
@@ -33,11 +34,5 @@
     "Zettabytes"
   ],
   "flagWords": [],
-  "ignorePaths": ["pnpm-lock.yaml", "package-lock.json", "node_modules", ".vscode"],
-  "languageSettings": [
-    {
-      "languageId": "commit-msg",
-      "ignoreRegExpList": ["/^#.*/gm"]
-    }
-  ]
+  "ignorePaths": ["pnpm-lock.yaml", "package-lock.json", "node_modules", ".vscode"]
 }
