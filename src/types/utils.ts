@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types */
 
 export type IfNever<Type, T, F> = [Type] extends [never] ? T : F;
 
@@ -125,3 +125,25 @@ export type UnionOf<T extends unknown[]> = T extends [infer First, ...infer Rest
 export type Pretty<Type> = {
   [Property in keyof Type]: Type[Property];
 } & unknown;
+
+export type Simplify<Type> = Type extends string
+  ? string
+  : Type extends number
+    ? number
+    : Type extends boolean
+      ? boolean
+      : Type extends bigint
+        ? bigint
+        : Type extends symbol
+          ? symbol
+          : Type extends undefined
+            ? undefined
+            : Type extends null
+              ? null
+              : Type extends Function
+                ? Type
+                : Type extends object
+                  ? {
+                      [Key in keyof Type]: Simplify<Type[Key]>;
+                    }
+                  : Type;
