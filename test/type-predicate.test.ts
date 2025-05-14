@@ -324,11 +324,15 @@ describe('isIntString()', () => {
 });
 
 describe('isISODateString()', () => {
-  it('Returns boolean indicating input is an ISODateString', () => {
-    expect(isISODateString(new Date(0).toISOString())).toBeTruthy();
-    expect(isISODateString(new Date('+9999-12-31').toISOString())).toBeTruthy();
-    expect(isISODateString(false)).toBeFalsy();
-    expect(isISODateString(null)).toBeFalsy();
+  it.each([new Date(0).toISOString(), new Date('+9999-12-31').toISOString()])(
+    'Returns true for valid input: "%s"',
+    (input) => {
+      expect(isISODateString(input)).toBeTruthy();
+    },
+  );
+
+  it.each(['9999-12-31T06:00:00', null, false, ''])('Returns false for invalid input: "%s"', (input) => {
+    expect(isISODateString(input)).toBeFalsy();
   });
 });
 
