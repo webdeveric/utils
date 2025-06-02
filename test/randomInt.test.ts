@@ -14,7 +14,7 @@ describe('randomInt()', () => {
     expect(value).lessThan(200);
   });
 
-  it('The returns value is inclusive of min and exclusive of max', () => {
+  it('The returned value is greater than or equal to min and less than max', () => {
     expect(randomInt(0, 1)).toEqual(0);
     expect(randomInt(-2, -1)).toEqual(-2);
     expect(randomInt(10, 11)).toEqual(10);
