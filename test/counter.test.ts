@@ -28,4 +28,19 @@ describe('counter()', () => {
   it('Throws when given a zero step', () => {
     expect(() => [...counter(0, 10, 0)]).toThrow();
   });
+
+  it('next() returns a number', () => {
+    const generator = counter();
+
+    expect(generator.next().value).toBe(0);
+    expect(generator.next().value).toBe(1);
+    expect(generator.next().value).toBe(2);
+  });
+
+  it('Can return()', () => {
+    const generator = counter();
+
+    expect(generator.return(10).value).toBe(10);
+    expect(generator.next()).toEqual({ done: true, value: undefined });
+  });
 });
