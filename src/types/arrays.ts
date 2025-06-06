@@ -14,3 +14,5 @@ export type IfLength<A extends any[], L extends number, T, F> = GetLength<A> ext
 export type IfEmpty<A extends any[], T, F> = GetLength<A> extends 0 ? T : F;
 
 export type IfArray<Type, T, F> = Type extends unknown[] ? T : F;
+
+export type NonEmptyArray<Type> = [Type, ...Type[]];
