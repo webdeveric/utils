@@ -1,10 +1,11 @@
+import type { NonEmptyArray } from '../../types/arrays.js';
 import type { InferPredicatesReturnType, TypePredicateFn } from '../../types/functions.js';
 import type { UnionOf } from '../../types/utils.js';
 
 /**
  * Any predicate can pass
  */
-export const anyOf = <Predicates extends TypePredicateFn<unknown>[]>(
+export const anyOf = <Predicates extends NonEmptyArray<TypePredicateFn<unknown>>>(
   ...predicates: Predicates
 ): TypePredicateFn<UnionOf<InferPredicatesReturnType<Predicates>>> => {
   if (!predicates.length) {

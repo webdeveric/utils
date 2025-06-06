@@ -4,7 +4,10 @@ import { anyOf } from '../../../src/predicate/factory/anyOf.js';
 
 describe('anyOf()', () => {
   it('Requires one or more type predicate function', () => {
-    expect(() => anyOf()).toThrow();
+    expect(() => {
+      // @ts-expect-error testing missing arguments
+      return anyOf();
+    }).toThrow();
   });
 
   it('Returns a type predicate function', () => {

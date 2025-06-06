@@ -7,7 +7,10 @@ import { isString } from '../../../src/predicate/isString.js';
 
 describe('allOf()', () => {
   it('Requires one or more type predicate function', () => {
-    expect(() => allOf()).toThrow();
+    expect(() => {
+      // @ts-expect-error testing missing arguments
+      allOf();
+    }).toThrow();
   });
 
   it('Returns a type predicate function', () => {

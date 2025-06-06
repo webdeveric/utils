@@ -1,10 +1,11 @@
+import type { NonEmptyArray } from '../../types/arrays.js';
 import type { InferPredicatesReturnType, TypePredicateFn } from '../../types/functions.js';
 import type { IntersectionOf } from '../../types/utils.js';
 
 /**
  * All predicates must pass
  */
-export const allOf = <Predicates extends TypePredicateFn<unknown>[]>(
+export const allOf = <Predicates extends NonEmptyArray<TypePredicateFn<unknown>>>(
   ...predicates: Predicates
 ): TypePredicateFn<IntersectionOf<InferPredicatesReturnType<Predicates>>> => {
   if (!predicates.length) {
