@@ -90,9 +90,9 @@ export type CamelCase<
   Delimiter extends string = Space,
 > = Type extends `${infer Left}${Delimiter}${infer Right}` ? `${Left}${CamelCase<Capitalize<Right>, Delimiter>}` : Type;
 
-export type PascalCase<Type extends string, Delimiter extends string = Space> = Capitalize<
-  CamelCase<AlphanumericOnly<AddSpaceAroundNumbers<Strip<Type, "'">>>, Delimiter>
->;
+export type PascalCase<Type extends string, Delimiter extends string = Space> = string extends Type
+  ? Capitalize<string>
+  : Capitalize<CamelCase<AlphanumericOnly<AddSpaceAroundNumbers<Strip<Type, "'">>>, Delimiter>>;
 
 export type StringLength<Type extends string, Accumulator extends never[] = []> = string extends Type
   ? never
