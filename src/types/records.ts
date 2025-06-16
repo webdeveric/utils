@@ -7,7 +7,15 @@ export type NeverRecord = Record<PropertyKey, never>;
 
 export type StringRecord = Record<string, string>;
 
-export type EnumRecord = Record<string, string | number>;
+/**
+ * This is an alternative to a TypeScript enum.
+ *
+ * It is useful for when you do not want reverse mapping of enum values to keys,
+ */
+export type EnumRecord<Key extends string = string, Value extends string | number = string | number> = Record<
+  Key,
+  Value
+>;
 
 export type RemoveIndex<Type> = {
   [Key in keyof Type as symbol extends Key
