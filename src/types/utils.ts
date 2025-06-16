@@ -84,7 +84,7 @@ export type RemoveNever<Type> = {
  * Return a list of keys where the property value match the `DataType`.
  */
 export type KeysWhere<Type, DataType, Key extends keyof Type = keyof Type> = Key extends PropertyKey
-  ? DataType extends Type[Key]
+  ? Type[Key] extends DataType
     ? Key
     : never
   : never;
