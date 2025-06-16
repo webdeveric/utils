@@ -2,6 +2,7 @@ export * from './arrays.js';
 export * from './branded.js';
 export * from './common.js';
 export * from './date-time.js';
+export * from './dom-events.js';
 export * from './functions.js';
 export * from './numbers.js';
 export * from './objects.js';
