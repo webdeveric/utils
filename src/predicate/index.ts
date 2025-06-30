@@ -56,3 +56,4 @@ export * from './isSymbolArray.js';
 export * from './isUndefined.js';
 export * from './isUndefinedArray.js';
 export * from './isUnknown.js';
+export * from './isUrlString.js';
