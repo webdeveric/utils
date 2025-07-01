@@ -29,6 +29,7 @@ export * from './isNumericString.js';
 export * from './isNumericValue.js';
 export * from './isNumericValueArray.js';
 export * from './isObject.js';
+export * from './isObjectLiteral.js';
 export * from './isObjectWith.js';
 export * from './isOctalNumberString.js';
 export * from './isOptionalArray.js';
