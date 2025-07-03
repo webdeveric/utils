@@ -1,7 +1,9 @@
 import type { TypePredicateFn } from '../../types/functions.js';
-import type { Pretty, Writable } from '../../types/utils.js';
 
+/**
+ * Use `Object.is()` to compare `input` against allowed values.
+ */
 export const is =
-  <const T extends unknown[]>(...options: T): TypePredicateFn<Pretty<Writable<T[number]>>> =>
+  <const T extends unknown[]>(...values: T): TypePredicateFn<T[number]> =>
   (input: unknown): input is T[number] =>
-    options.some((option) => Object.is(input, option));
+    values.some((value) => Object.is(input, value));
