@@ -35,6 +35,7 @@ export * from './getPackageName.js';
 export * from './getPaths.js';
 export * from './getRandomItem.js';
 export * from './getType.js';
+export * from './hasAdditionalProperties.js';
 export * from './inRange.js';
 export * from './isEmpty.js';
 export * from './iterateForever.js';

@@ -1,3 +1,4 @@
+export * from './assume.js';
 export * from './isAny.js';
 export * from './isAnyObject.js';
 export * from './isAnyObjectWith.js';
