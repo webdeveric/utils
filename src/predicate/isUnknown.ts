@@ -1,1 +1,3 @@
-export const isUnknown = (_input: unknown): _input is unknown => true;
+import { assume } from './assume.js';
+
+export const isUnknown = assume<unknown>;
