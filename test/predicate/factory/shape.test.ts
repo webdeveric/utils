@@ -23,7 +23,9 @@ describe('shape()', () => {
 
   type User = {
     name: Name;
-    title: string;
+    job: {
+      title: string;
+    };
     role: Role;
     value: number;
     age?: number;
@@ -39,7 +41,9 @@ describe('shape()', () => {
 
   const userShape = {
     name: isName,
-    title: /software/i,
+    job: {
+      title: /\bsoftware\b/i,
+    },
     role: Role.User,
     value: range(0, 100),
     [valueSymbol]: range(0, 100_000),
@@ -53,19 +57,21 @@ describe('shape()', () => {
     tuple: ['PI', Math.PI],
   } satisfies UserShape;
 
-  const fn = shape(userShape);
-
   it('Returns a type predicate function', () => {
-    expect(fn).instanceOf(Function);
+    expect(shape(userShape)).instanceOf(Function);
   });
 
   it('Checks string and symbol properties', () => {
+    const fn = shape(userShape);
+
     expect(fn({})).toBeFalsy();
 
     expect(
       fn({
         name: 'Test Testerson',
-        title: 'Software Engineer',
+        job: {
+          title: 'Software Engineer',
+        },
         role: Role.User,
         value: 100,
         [valueSymbol]: 100_000,
@@ -78,7 +84,9 @@ describe('shape()', () => {
     expect(
       fn({
         name: 'Test Testerson',
-        title: 'Senior Software Engineer',
+        job: {
+          title: 'Senior Software Engineer',
+        },
         role: Role.User,
         value: 100,
         [valueSymbol]: 100_000,
@@ -90,5 +98,27 @@ describe('shape()', () => {
         tuple: ['PI', Math.PI],
       }),
     ).toBeTruthy();
+  });
+
+  it('Can check for additional properties', () => {
+    const fn = shape(
+      {
+        name: isString,
+      },
+      false,
+    );
+
+    expect(
+      fn({
+        name: 'Test Testerson',
+      }),
+    ).toBeTruthy();
+
+    expect(
+      fn({
+        name: 'Test Testerson',
+        extra: 'not allowed',
+      }),
+    ).toBeFalsy();
   });
 });

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
+import { hasAdditionalProperties } from '../../hasAdditionalProperties.js';
 import { isAnyObject } from '../isAnyObject.js';
 
 import { literal } from './literal.js';
@@ -40,24 +41,26 @@ export type InferTypeFromShape<Shape extends ObjectShapeRecord<object>> = {
 
 export const shape = <Type extends object, Shape extends ObjectShapeRecord<Type> = ObjectShapeRecord<Type>>(
   objectShape: Shape,
+  additionalProperties = true,
 ): TypePredicateFn<Pretty<Type & InferTypeFromShape<Shape>>> => {
-  const entries: [key: string | symbol, predicate: TypePredicateFn<unknown>][] = Reflect.ownKeys(objectShape).map(
-    (key) => {
-      const value = Reflect.get(objectShape, key);
+  const knownProperties = Reflect.ownKeys(objectShape);
+  const entries: [key: string | symbol, predicate: TypePredicateFn<unknown>][] = knownProperties.map((key) => {
+    const value = Reflect.get(objectShape, key);
 
-      const predicate =
-        typeof value === 'function'
-          ? (value as TypePredicateFn<unknown>)
-          : value instanceof RegExp
-            ? matching(value)
-            : isAnyObject(value)
-              ? shape(value)
-              : literal(value);
+    const predicate =
+      typeof value === 'function'
+        ? (value as TypePredicateFn<unknown>)
+        : value instanceof RegExp
+          ? matching(value)
+          : isAnyObject(value)
+            ? shape(value)
+            : literal(value);
 
-      return [key, predicate];
-    },
-  );
+    return [key, predicate];
+  });
 
   return (input: unknown): input is Pretty<Type & InferTypeFromShape<Shape>> =>
-    isAnyObject(input) && entries.every(([key, predicate]) => predicate(Reflect.get(input, key)));
+    isAnyObject(input) &&
+    entries.every(([key, predicate]) => predicate(Reflect.get(input, key))) &&
+    (additionalProperties || !hasAdditionalProperties(input, knownProperties));
 };
