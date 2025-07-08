@@ -34,7 +34,7 @@ export type MethodNames<Type, Key extends keyof Type = keyof Type> = Key extends
  * @internal
  */
 export type ValidKeys<Type> = Type extends unknown[]
-  ? number
+  ? number | `${number}`
   : `${Exclude<keyof NonNullable<Type>, symbol | MethodNames<NonNullable<Type>>>}`;
 
 /**
@@ -81,6 +81,30 @@ export type PathDotNotation<Type, Key extends keyof Type = keyof Type> =
 export type Path<Type> = PathDotNotation<NonNullableProperties<Type>, keyof Type> | ValidKeys<Type>;
 
 /**
+ * @internal
+ */
+export type MaybeOptional<Type, Optional extends boolean> = Optional extends true ? Type | undefined : Type;
+
+/**
+ * @internal
+ */
+export type GetValueForKey<
+  Type,
+  Key extends PropertyKey,
+  Optional extends boolean = CanBeUndefined<Type, true, false>,
+> = Key extends keyof Type
+  ? MaybeOptional<Type[Key], Optional>
+  : Key extends `${infer InnerKey}`
+    ? InnerKey extends keyof Type
+      ? MaybeOptional<Type[InnerKey], Optional>
+      : Type extends unknown[]
+        ? InnerKey extends `${keyof Type & number}`
+          ? MaybeOptional<Type[number], Optional>
+          : never
+        : never
+    : never;
+
+/**
  * Get the type for a given dot notation path.
  *
  * @example
@@ -101,16 +125,12 @@ export type PathValue<
   TargetPath extends Path<Type>,
   Optional extends boolean = CanBeUndefined<Type, true, false>,
 > = TargetPath extends `${infer Key}.${infer Rest}`
-  ? Key extends keyof Type
-    ? Rest extends Path<NonNullable<Type[Key]>>
-      ? PathValue<NonNullable<Type[Key]>, Rest, CanBeUndefined<Type[Key], true, false>>
+  ? GetValueForKey<Type, Key, Optional> extends infer Value
+    ? Rest extends Path<NonNullable<Value>>
+      ? PathValue<NonNullable<Value>, Rest, CanBeUndefined<Value, true, false>>
       : never
     : never
-  : TargetPath extends keyof Type
-    ? Optional extends true
-      ? Type[TargetPath] | undefined
-      : Type[TargetPath]
-    : never;
+  : GetValueForKey<Type, TargetPath, Optional>;
 
 export type PathValues<Type, TargetPaths extends Path<Type>> = {
   [TargetPath in TargetPaths as CamelCase<`${TargetPath}`, '.'>]: PathValue<Type, TargetPath>;
