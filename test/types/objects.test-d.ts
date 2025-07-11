@@ -1,6 +1,35 @@
 import { describe, expectTypeOf, it } from 'vitest';
 
-import type { PathValue, GetValueForKey } from '../../src/types/objects.js';
+import type { PathValue, GetValueForKey, ValidKeys } from '../../src/types/objects.js';
+
+describe('ValidKeys', () => {
+  it('Returns valid keys for an object', () => {
+    const user = {
+      name: 'Test Testerson',
+      [Symbol('age')]: 42,
+      job: {
+        title: 'Tester',
+      },
+    };
+
+    expectTypeOf<ValidKeys<typeof user>>().toEqualTypeOf<'name' | 'job'>();
+    expectTypeOf<ValidKeys<object>>().toEqualTypeOf<never>();
+  });
+
+  it('Returns valid keys for an array', () => {
+    const tuple = ['a', 'b', 'c'] as const;
+
+    type SampleTuple = [a: string, b: string, c: string];
+
+    expectTypeOf<ValidKeys<string[]>>().toEqualTypeOf<number | 'length'>();
+
+    expectTypeOf<ValidKeys<never[]>>().toEqualTypeOf<'length'>();
+
+    expectTypeOf<ValidKeys<SampleTuple>>().toEqualTypeOf<number | '0' | '1' | '2' | 'length'>();
+
+    expectTypeOf<ValidKeys<typeof tuple>>().toEqualTypeOf<number | '0' | '1' | '2' | 'length'>();
+  });
+});
 
 describe('GetValueForKey', () => {
   it('Gets the value for a key in an object', () => {
@@ -12,8 +41,8 @@ describe('GetValueForKey', () => {
     expectTypeOf<GetValueForKey<[1, 2, 3], 0>>().toEqualTypeOf<1>();
     expectTypeOf<GetValueForKey<[1, 2, 3], 4>>().toEqualTypeOf<undefined>();
 
-    expectTypeOf<GetValueForKey<string[], '0'>>().toEqualTypeOf<string>();
-    expectTypeOf<GetValueForKey<string[], 0>>().toEqualTypeOf<string>();
+    expectTypeOf<GetValueForKey<string[], '0'>>().toEqualTypeOf<string | undefined>();
+    expectTypeOf<GetValueForKey<string[], 0>>().toEqualTypeOf<string | undefined>();
   });
 });
 
@@ -36,7 +65,7 @@ describe('PathValue', () => {
 
     expectTypeOf<PathValue<typeof input, 'name.first'>>().toEqualTypeOf<string>();
     expectTypeOf<PathValue<typeof input, 'age'>>().toEqualTypeOf<number>();
-    expectTypeOf<PathValue<typeof input, 'role.0.job.title'>>().toEqualTypeOf<string>();
+    expectTypeOf<PathValue<typeof input, 'role.0.job.title'>>().toEqualTypeOf<string | undefined>();
   });
 
   it('Gets the value from a const Type using path dot notation', () => {
