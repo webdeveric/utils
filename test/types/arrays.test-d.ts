@@ -54,7 +54,7 @@ describe('IfEmpty', () => {
 
 describe('IfArray', () => {
   it('returns the true type if the type is an array', () => {
-    expectTypeOf<IfArray<[], 'yes', 'no'>>().toEqualTypeOf<'yes'>();
+    expectTypeOf<IfArray<string[], 'yes', 'no'>>().toEqualTypeOf<'yes'>();
   });
 
   it('returns the false type if the type is not an array', () => {

@@ -13,6 +13,16 @@ export type IfLength<A extends any[], L extends number, T, F> = GetLength<A> ext
 
 export type IfEmpty<A extends any[], T, F> = GetLength<A> extends 0 ? T : F;
 
-export type IfArray<Type, T, F> = Type extends unknown[] ? T : F;
+/**
+ * Check if `Type` is an array (excluding tuples).
+ */
+export type IfArray<Type, T, F> = Type extends readonly unknown[] ? (number extends Type['length'] ? T : F) : F;
+
+export type IsArray<Type> = IfArray<Type, true, false>;
 
 export type NonEmptyArray<Type> = [Type, ...Type[]];
+
+// Arrays and tuples both extends readonly arrays, so we can use the same type guard.
+export type IfArrayLike<Type, T, F> = Type extends readonly unknown[] ? T : F;
+
+export type IsArrayLike<Type> = IfArrayLike<Type, true, false>;
