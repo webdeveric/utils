@@ -1,3 +1,4 @@
+import type { IfArray, IfArrayLike } from './arrays.js';
 import type { Primitive } from './common.js';
 import type { CamelCase } from './strings.js';
 import type { KeyValueTuple } from './tuples.js';
@@ -29,13 +30,13 @@ export type MethodNames<Type, Key extends keyof Type = keyof Type> = Key extends
 
 /**
  * Get keys of `Type` for use in `Path`.
- * Keys should not be method names or symbols.
+ * Keys should not be symbols.
  *
  * @internal
  */
-export type ValidKeys<Type> = Type extends unknown[]
-  ? number | `${number}`
-  : `${Exclude<keyof NonNullable<Type>, symbol | MethodNames<NonNullable<Type>>>}`;
+export type ValidKeys<Type extends object> = object extends Type
+  ? never
+  : Exclude<keyof Type, IfArrayLike<Type, symbol | MethodNames<Type>, symbol>>;
 
 /**
  * Get the possible dot notations for a given `Type`.
@@ -55,7 +56,7 @@ export type ValidKeys<Type> = Type extends unknown[]
  * type ExampleNotation = "job" | "job.title";
  * ```
  */
-export type PathDotNotation<Type, Key extends keyof Type = keyof Type> =
+export type PathDotNotation<Type extends object, Key extends keyof Type = keyof Type> =
   Key extends ValidKeys<Type>
     ? Type[Key] extends Primitive
       ? Key
@@ -78,7 +79,7 @@ export type PathDotNotation<Type, Key extends keyof Type = keyof Type> =
  * type ExampleNotation = "job" | "job.title";
  * ```
  */
-export type Path<Type> = PathDotNotation<NonNullableProperties<Type>, keyof Type> | ValidKeys<Type>;
+export type Path<Type extends object> = PathDotNotation<NonNullableProperties<Type>, keyof Type> | ValidKeys<Type>;
 
 /**
  * @internal
@@ -89,19 +90,15 @@ export type MaybeOptional<Type, Optional extends boolean> = Optional extends tru
  * @internal
  */
 export type GetValueForKey<
-  Type,
+  Type extends object,
   Key extends PropertyKey,
   Optional extends boolean = CanBeUndefined<Type, true, false>,
 > = Key extends keyof Type
-  ? MaybeOptional<Type[Key], Optional>
-  : Key extends `${infer InnerKey}`
-    ? InnerKey extends keyof Type
-      ? MaybeOptional<Type[InnerKey], Optional>
-      : Type extends unknown[]
-        ? InnerKey extends `${keyof Type & number}`
-          ? MaybeOptional<Type[number], Optional>
-          : never
-        : never
+  ? MaybeOptional<Type[Key], IfArray<Type, true, Optional>> // array items should always be checked for undefined
+  : Key extends `${infer Index extends number}`
+    ? Index extends keyof Type
+      ? MaybeOptional<Type[Index], IfArray<Type, true, Optional>>
+      : never
     : never;
 
 /**
@@ -121,7 +118,7 @@ export type GetValueForKey<
  * ```
  */
 export type PathValue<
-  Type,
+  Type extends object,
   TargetPath extends Path<Type>,
   Optional extends boolean = CanBeUndefined<Type, true, false>,
 > = TargetPath extends `${infer Key}.${infer Rest}`
@@ -132,6 +129,6 @@ export type PathValue<
     : never
   : GetValueForKey<Type, TargetPath, Optional>;
 
-export type PathValues<Type, TargetPaths extends Path<Type>> = {
+export type PathValues<Type extends object, TargetPaths extends Path<Type>> = {
   [TargetPath in TargetPaths as CamelCase<`${TargetPath}`, '.'>]: PathValue<Type, TargetPath>;
 };
