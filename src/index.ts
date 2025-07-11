@@ -23,6 +23,7 @@ export * from './delayAnimationFrame.js';
 export * from './delayAnimationFrames.js';
 export * from './describeInput.js';
 export * from './escapeRegExp.js';
+export * from './get.js';
 export * from './getDateString.js';
 export * from './getISODateString.js';
 export * from './getMaxValue.js';
