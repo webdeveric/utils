@@ -44,6 +44,7 @@ export * from './jsonParse.js';
 export * from './looksLikeURL.js';
 export * from './normalize.js';
 export * from './parseNumber.js';
+export * from './pathParts.js';
 export * from './prefix.js';
 export * from './randomInt.js';
 export * from './redactCredentialsInURL.js';
