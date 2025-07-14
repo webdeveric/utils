@@ -1,4 +1,8 @@
 export function* pathParts(input: PropertyKey): Generator<PropertyKey> {
+  if (input === '') {
+    return;
+  }
+
   if (typeof input !== 'string') {
     yield input;
 

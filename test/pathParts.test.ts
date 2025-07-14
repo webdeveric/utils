@@ -23,4 +23,8 @@ describe('pathParts()', () => {
   it('returns input for non-string input', () => {
     expect(Array.from(pathParts(123))).toEqual([123]);
   });
+
+  it('returns empty array for empty string input', () => {
+    expect(Array.from(pathParts(''))).toEqual([]);
+  });
 });
