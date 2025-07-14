@@ -2,14 +2,16 @@ import { pathParts } from './pathParts.js';
 
 import type { Path, PathValue } from './types/objects.js';
 
-export function get<Input extends object, const InputPath extends Path<Input>>(
+export function get<Input extends object>(input: Input, path: ''): Input;
+
+export function get<Input extends object, InputPath extends Path<Input>>(
   input: Input,
   path: InputPath,
 ): PathValue<Input, InputPath>;
 
-export function get<const Input extends object, const InputPath extends string>(input: Input, path: InputPath): unknown;
+export function get<Input extends object, InputPath extends string>(input: Input, path: InputPath): unknown;
 
-export function get<const Input extends object, const InputPath extends Path<Input> | string>(
+export function get<Input extends object, InputPath extends Path<Input> | string>(
   input: Input,
   path: InputPath,
 ): unknown {
