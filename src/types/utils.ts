@@ -149,3 +149,10 @@ export type Simplify<Type> = Type extends string
                       [Key in keyof Type]: Simplify<Type[Key]>;
                     }
                   : Type;
+
+/**
+ * Check if the keys of a type are only numeric.
+ */
+export type IfHasOnlyNumericKeys<Type, T, F> = `${Exclude<keyof Type, symbol>}` extends `${number}` ? T : F;
+
+export type HasOnlyNumericKeys<Type> = IfHasOnlyNumericKeys<Type, true, false>;
