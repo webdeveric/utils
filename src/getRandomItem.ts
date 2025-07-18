@@ -1,10 +1,12 @@
 import { randomInt } from './randomInt.js';
 
-export function getRandomItem(input: []): undefined;
+import type { NonEmptyArray } from './types/arrays.js';
 
-export function getRandomItem<T>(input: [T, ...T[]]): T;
+export function getRandomItem<Type>(input: NonEmptyArray<Type>): Type;
 
-export function getRandomItem<T>(input: T[]): T | undefined {
+export function getRandomItem<Type>(input: Type[]): Type | undefined;
+
+export function getRandomItem<Type>(input: Type[]): Type | undefined {
   switch (input.length) {
     case 0:
       return;
