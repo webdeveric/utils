@@ -10,6 +10,8 @@ export type IfUnknown<Type, T, F> = unknown extends Type ? T : F;
 
 export type IfPromise<Type, T, F> = Type extends Promise<any> ? T : F;
 
+export type IfSame<Left, Right, T, F> = [Left] extends [Right] ? ([Right] extends [Left] ? T : F) : F;
+
 export type NotPromise<Type> = Type extends Promise<any> ? never : Type;
 
 export type CanBeUndefined<Type, T, F> = Type | undefined extends Type ? T : F;
@@ -147,3 +149,10 @@ export type Simplify<Type> = Type extends string
                       [Key in keyof Type]: Simplify<Type[Key]>;
                     }
                   : Type;
+
+/**
+ * Check if the keys of a type are only numeric.
+ */
+export type IfHasOnlyNumericKeys<Type, T, F> = `${Exclude<keyof Type, symbol>}` extends `${number}` ? T : F;
+
+export type HasOnlyNumericKeys<Type> = IfHasOnlyNumericKeys<Type, true, false>;
