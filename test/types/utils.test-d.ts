@@ -1,6 +1,6 @@
 import { describe, expectTypeOf, it } from 'vitest';
 
-import type { HasOnlyNumericKeys } from '../../src/types/utils.js';
+import type { HasOnlyNumericKeys, ParseNumber } from '../../src/types/utils.js';
 
 describe('HasOnlyNumericKeys', () => {
   it('should return false for non-numeric keys', () => {
@@ -9,5 +9,18 @@ describe('HasOnlyNumericKeys', () => {
 
   it('should return true for objects with numeric keys', () => {
     expectTypeOf<HasOnlyNumericKeys<{ 0: string }>>().toEqualTypeOf<true>();
+  });
+});
+
+describe('ParseNumber', () => {
+  it('should return never for non-numeric strings', () => {
+    expectTypeOf<ParseNumber<'name'>>().toEqualTypeOf<never>();
+    expectTypeOf<ParseNumber<'Infinity'>>().toEqualTypeOf<never>();
+  });
+
+  it('should return the number for numeric strings', () => {
+    expectTypeOf<ParseNumber<'123' | '456'>>().toEqualTypeOf<123 | 456>();
+    expectTypeOf<ParseNumber<'123.456'>>().toEqualTypeOf<123.456>();
+    expectTypeOf<ParseNumber<'-789'>>().toEqualTypeOf<-789>();
   });
 });

@@ -156,3 +156,5 @@ export type Simplify<Type> = Type extends string
 export type IfHasOnlyNumericKeys<Type, T, F> = `${Exclude<keyof Type, symbol>}` extends `${number}` ? T : F;
 
 export type HasOnlyNumericKeys<Type> = IfHasOnlyNumericKeys<Type, true, false>;
+
+export type ParseNumber<T extends string> = T extends `${infer N extends number}` ? N : never;
