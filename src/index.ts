@@ -52,6 +52,7 @@ export * from './randomInt.js';
 export * from './redactCredentialsInURL.js';
 export * from './resultify.js';
 export * from './secToString.js';
+export * from './set.js';
 export * from './sort-factory.js';
 export * from './sort.js';
 export * from './stripWhitespace.js';
