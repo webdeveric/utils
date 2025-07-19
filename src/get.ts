@@ -9,9 +9,9 @@ export function get<Input extends object, InputPath extends Path<Input>>(
   path: InputPath,
 ): PathValue<Input, InputPath>;
 
-export function get<Input extends object, InputPath extends string>(input: Input, path: InputPath): unknown;
+export function get<Input extends object, InputPath extends PropertyKey>(input: Input, path: InputPath): unknown;
 
-export function get<Input extends object, InputPath extends Path<Input> | string>(
+export function get<Input extends object, InputPath extends Path<Input> | PropertyKey>(
   input: Input,
   path: InputPath,
 ): unknown {
