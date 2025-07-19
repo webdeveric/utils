@@ -24,7 +24,7 @@ export function assertPathExists<Input extends object, InputPath extends string 
     throw new Error(`object path (${path}) does not exist on input`);
   }
 
-  if (predicate && !predicate(get(input, `${path}`))) {
+  if (predicate && !predicate(get(input, path))) {
     throw new Error(`object path (${path}) failed predicate check`);
   }
 }
