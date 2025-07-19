@@ -138,6 +138,13 @@ export type FromPath<TargetPath extends PropertyKey, Value> = TargetPath extends
   ? { [K in Key]: FromPath<Rest, Value> }
   : { [K in TargetPath]: Value };
 
+/**
+ * Get a union of all intermediate paths, ending with `TargetPath`
+ */
+export type AllPaths<TargetPath extends PropertyKey> = TargetPath extends `${infer Head}.${infer Tail}`
+  ? Head | `${Head}.${AllPaths<Tail>}`
+  : TargetPath;
+
 export type WithPath<Input extends object, InputPath extends PropertyKey, Value = unknown> = Pretty<
   Input & Merge<Input, FromPath<InputPath, Value>>
 >;
