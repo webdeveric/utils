@@ -197,7 +197,7 @@ describe('Merge', () => {
 });
 
 describe('WithPath', () => {
-  it('Generate a new type of and object with a specific path', () => {
+  it('Generate a new type of an object with a specific path', () => {
     expectTypeOf<WithPath<{ name: string }, 'job.title'>>().toEqualTypeOf<{
       name: string;
       job: {
