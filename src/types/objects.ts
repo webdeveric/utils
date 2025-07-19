@@ -1,8 +1,9 @@
 import type { IfArray, IfArrayLike } from './arrays.js';
 import type { Primitive } from './common.js';
-import type { CamelCase } from './strings.js';
+import type { UnknownRecord } from './records.js';
+import type { AutoCompletableString, CamelCase } from './strings.js';
 import type { KeyValueTuple } from './tuples.js';
-import type { CanBeUndefined, IfNever } from './utils.js';
+import type { CanBeUndefined, IfNever, Pretty } from './utils.js';
 
 export type Assign<Target, Source> = IfNever<Target, Source, Omit<Target, keyof (Target | Source)> & Source>;
 
@@ -119,7 +120,7 @@ export type GetValueForKey<
  */
 export type PathValue<
   Type extends object,
-  TargetPath extends Path<Type>,
+  TargetPath extends Path<Type> | AutoCompletableString | number,
   Optional extends boolean = CanBeUndefined<Type, true, false>,
 > = TargetPath extends `${infer Key}.${infer Rest}`
   ? GetValueForKey<Type, Key, Optional> extends infer Value
@@ -131,4 +132,48 @@ export type PathValue<
 
 export type PathValues<Type extends object, TargetPaths extends Path<Type>> = {
   [TargetPath in TargetPaths as CamelCase<`${TargetPath}`, '.'>]: PathValue<Type, TargetPath>;
+};
+
+export type FromPath<TargetPath extends PropertyKey, Value> = TargetPath extends `${infer Key}.${infer Rest}`
+  ? { [K in Key]: FromPath<Rest, Value> }
+  : { [K in TargetPath]: Value };
+
+export type WithPath<Input extends object, InputPath extends PropertyKey, Value = unknown> = Pretty<
+  Input & Merge<Input, FromPath<InputPath, Value>>
+>;
+
+export type Merge<Left, Right> = Left extends unknown[]
+  ? Right extends Record<number, unknown>
+    ? MergeArrayWithObject<Left, Right>
+    : Right
+  : Left extends object
+    ? Right extends object
+      ? MergeObjects<Left, Right>
+      : Right
+    : Right;
+
+/**
+ * @internal
+ */
+export type MergeObjects<Left, Right> = {
+  [Key in keyof Left | keyof Right]: Key extends keyof Right
+    ? Key extends keyof Left // Key exists in both Left and Right
+      ? Merge<Left[Key], Right[Key]>
+      : Right[Key] // Key exists only in Right
+    : Key extends keyof Left
+      ? Left[Key] // Key exists only in Left
+      : never;
+};
+
+/**
+ * @internal
+ */
+export type MergeArrayWithObject<Left extends unknown[], Right extends UnknownRecord> = Left & {
+  [Key in keyof Right]: Key extends keyof Left
+    ? Merge<Left[Key & keyof Left], Right[Key]>
+    : Key extends `${infer Index extends number}`
+      ? Index extends keyof Left
+        ? Merge<Left[Index], Right[Key]>
+        : Right[Key]
+      : Right[Key];
 };
