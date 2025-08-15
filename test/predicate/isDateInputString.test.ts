@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest';
 
-import { isDateString } from '../../src/predicate/isDateString.js';
+import { isDateInputString } from '../../src/predicate/isDateInputString.js';
 
-describe('isDateString()', () => {
+describe('isDateInputString()', () => {
   it.each([
     new Date().toISOString(),
     new Date().toLocaleDateString('en-US'),
@@ -10,10 +10,10 @@ describe('isDateString()', () => {
     new Date().toUTCString(),
     new Date().toString(),
   ])('Returns true for valid input: %j', (input) => {
-    expect(isDateString(input)).toBeTruthy();
+    expect(isDateInputString(input)).toBeTruthy();
   });
 
   it.each([Date.now(), 'bad input', true, null, {}, undefined])('Returns false for invalid input: %j', (input) => {
-    expect(isDateString(input)).toBeFalsy();
+    expect(isDateInputString(input)).toBeFalsy();
   });
 });

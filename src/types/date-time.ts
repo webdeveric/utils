@@ -3,6 +3,11 @@ import type { NumericString } from './common.js';
 
 export type DateInput = ConstructorParameters<typeof Date>[0];
 
+/**
+ * This is used to represent a string can be used as input for a `Date` constructor.
+ */
+export type DateInputString = Branded<string, 'DateInputString'>;
+
 export type YearString = Branded<NumericString<number>, 'YearString'>;
 
 export type MonthString = Branded<NumericString<number>, 'MonthString'>;
