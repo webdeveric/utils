@@ -16,32 +16,34 @@ export type CommentOptions = {
   type?: CommentType | `${CommentType}`;
 } & Partial<CommentParts>;
 
-const commentTypes: Record<CommentType, CommentParts> = {
-  [CommentType.Block]: {
-    commentStart: '/**\n',
-    commentEnd: '\n */',
-    lineStart: ' * ',
-    lineEnd: '',
-  },
-  [CommentType.Legal]: {
-    commentStart: '/*!\n',
-    commentEnd: '\n */',
-    lineStart: ' * ',
-    lineEnd: '',
-  },
-  [CommentType.Single]: {
-    commentStart: '',
-    commentEnd: '',
-    lineStart: '// ',
-    lineEnd: '',
-  },
-  [CommentType.HTML]: {
-    commentStart: '<!-- ',
-    commentEnd: ' -->',
-    lineStart: '',
-    lineEnd: '',
-  },
-};
+function getCommentParts(type: CommentType | `${CommentType}`): CommentParts {
+  return {
+    [CommentType.Block]: {
+      commentStart: '/**\n',
+      commentEnd: '\n */',
+      lineStart: ' * ',
+      lineEnd: '',
+    },
+    [CommentType.Legal]: {
+      commentStart: '/*!\n',
+      commentEnd: '\n */',
+      lineStart: ' * ',
+      lineEnd: '',
+    },
+    [CommentType.Single]: {
+      commentStart: '',
+      commentEnd: '',
+      lineStart: '// ',
+      lineEnd: '',
+    },
+    [CommentType.HTML]: {
+      commentStart: '<!-- ',
+      commentEnd: ' -->',
+      lineStart: '',
+      lineEnd: '',
+    },
+  }[type];
+}
 
 export function comment(text: string, options?: CommentOptions): string {
   if (!text) {
@@ -56,7 +58,7 @@ export function comment(text: string, options?: CommentOptions): string {
     lineStart = '',
     lineEnd = '',
   } = {
-    ...commentTypes[type],
+    ...getCommentParts(type),
     ...partOptions,
   };
 
