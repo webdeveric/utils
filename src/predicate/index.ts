@@ -21,6 +21,7 @@ export * from './isInteger.js';
 export * from './isIntString.js';
 export * from './isISODateString.js';
 export * from './isIterable.js';
+export * from './isJSONable.js';
 export * from './isLengthAware.js';
 export * from './isNonNullable.js';
 export * from './isNull.js';
