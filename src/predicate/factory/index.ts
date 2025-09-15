@@ -9,6 +9,7 @@ export * from './matching.js';
 export * from './maybeArray.js';
 export * from './nonNullable.js';
 export * from './nullable.js';
+export * from './nullish.js';
 export * from './optional.js';
 export * from './range.js';
 export * from './shape.js';
