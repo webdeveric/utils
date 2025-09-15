@@ -43,3 +43,5 @@ export type AnyAsyncFunction = (...args: any[]) => Promise<any>;
 export type AnyNewable = {
   new (...args: any[]): any;
 };
+
+export type Nullish<T> = T | null | undefined;
