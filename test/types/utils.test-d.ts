@@ -1,6 +1,6 @@
 import { describe, expectTypeOf, it } from 'vitest';
 
-import type { HasOnlyNumericKeys, ParseNumber } from '../../src/types/utils.js';
+import type { DeepPartial, HasOnlyNumericKeys, ParseNumber } from '../../src/types/utils.js';
 
 describe('HasOnlyNumericKeys', () => {
   it('should return false for non-numeric keys', () => {
@@ -22,5 +22,41 @@ describe('ParseNumber', () => {
     expectTypeOf<ParseNumber<'123' | '456'>>().toEqualTypeOf<123 | 456>();
     expectTypeOf<ParseNumber<'123.456'>>().toEqualTypeOf<123.456>();
     expectTypeOf<ParseNumber<'-789'>>().toEqualTypeOf<-789>();
+  });
+});
+
+describe('DeepPartial', () => {
+  it('should make all properties optional', () => {
+    expectTypeOf<
+      DeepPartial<{
+        a: number;
+        b: { c: string };
+        d: {
+          e: boolean;
+          f: symbol[][];
+        }[];
+      }>
+    >().toEqualTypeOf<{
+      a?: number;
+      b?: {
+        c?: string;
+      };
+      d?: {
+        e?: boolean;
+        f?: symbol[][];
+      }[];
+    }>();
+  });
+
+  it('handles primitives', () => {
+    expectTypeOf<DeepPartial<string>>().toEqualTypeOf<string>();
+    expectTypeOf<DeepPartial<number>>().toEqualTypeOf<number>();
+    expectTypeOf<DeepPartial<boolean>>().toEqualTypeOf<boolean>();
+  });
+
+  it('handles arrays of primitives', () => {
+    expectTypeOf<DeepPartial<string[]>>().toEqualTypeOf<string[]>();
+    expectTypeOf<DeepPartial<number[]>>().toEqualTypeOf<number[]>();
+    expectTypeOf<DeepPartial<boolean[]>>().toEqualTypeOf<boolean[]>();
   });
 });
