@@ -106,11 +106,13 @@ export type SymbolKeys<Type> = keyof Type & symbol;
 
 export type Values<Type> = Type[keyof Type];
 
-export type DeepPartial<Type> = Type extends object
-  ? {
-      [Property in keyof Type]?: DeepPartial<Type[Property]>;
-    }
-  : Type;
+export type DeepPartial<Type> = Type extends unknown[]
+  ? DeepPartial<Type[number]>[]
+  : Type extends object
+    ? {
+        [Property in keyof Type]?: DeepPartial<Type[Property]>;
+      }
+    : Type;
 
 export type UnionToIntersection<Union> = (Union extends any ? (union: Union) => void : never) extends (
   union: infer Type extends Union,
