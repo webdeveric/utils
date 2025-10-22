@@ -12,6 +12,12 @@ describe('toPascalCase()', () => {
     expect(toPascalCase('word')).toBe('Word');
   });
 
+  it('Handles uppercase words', () => {
+    expect(toPascalCase('SomeDLQ')).toBe('SomeDLQ');
+    expect(toPascalCase('some UPPERCASE words')).toBe('SomeUPPERCASEWords');
+    expect(toPascalCase('abc123DEF456')).toBe('Abc123DEF456');
+  });
+
   it('Handles snake case', () => {
     expect(toPascalCase('do_something_cool')).toBe('DoSomethingCool');
   });
