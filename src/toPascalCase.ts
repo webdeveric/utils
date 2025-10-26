@@ -5,7 +5,7 @@ import type { PascalCase } from './types/strings.js';
 import type { KeyValueTuple } from './types/tuples.js';
 
 export function toPascalCase<Type extends string>(text: Type, customWords?: StringRecord): PascalCase<Type> {
-  const words = String(text).match(/[A-Z][a-z']+|\d+|[a-z']+|[A-Z]+(?![a-z])/g);
+  const words = String(text).match(/[A-Z][a-z']*|[a-z']+|\d+|[A-Z]+(?![a-z])/g);
 
   let fixedWords = words?.map<string>((word) => capitalize(word.replace(/'/g, '')));
 
