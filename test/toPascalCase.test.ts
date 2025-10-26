@@ -3,36 +3,65 @@ import { describe, it, expect } from 'vitest';
 import { toPascalCase } from '../src/toPascalCase.js';
 
 describe('toPascalCase()', () => {
-  it('Removes non alphanumeric', () => {
-    expect(toPascalCase('!@#$%^&*()')).toBe('');
+  it.each([
+    ['!@#$%^&*()', ''],
+    ['This is important!!!', 'ThisIsImportant'],
+  ])('Removes non alphanumeric: "%s" => "%s"', (input, expected) => {
+    expect(toPascalCase(input)).toBe(expected);
   });
 
-  it('Handles one lowercase word', () => {
-    expect(toPascalCase('a')).toBe('A');
-    expect(toPascalCase('word')).toBe('Word');
+  it.each([
+    ['abc', 'Abc'],
+    ['abc def', 'AbcDef'],
+  ])('Handles one lowercase word: "%s" => "%s"', (input, expected) => {
+    expect(toPascalCase(input)).toBe(expected);
   });
 
-  it('Handles snake case', () => {
-    expect(toPascalCase('do_something_cool')).toBe('DoSomethingCool');
+  it.each([
+    ['SomeDLQ', 'SomeDLQ'],
+    ['some UPPERCASE words', 'SomeUPPERCASEWords'],
+    ['abc123DEF456', 'Abc123DEF456'],
+  ])('Handles uppercase words: "%s" => "%s"', (input, expected) => {
+    expect(toPascalCase(input)).toBe(expected);
   });
 
-  it('Handles camel case', () => {
-    expect(toPascalCase('doSomethingCool')).toBe('DoSomethingCool');
+  it.each([
+    ['something_happens_at_1200', 'SomethingHappensAt1200'],
+    ['do_something_cool', 'DoSomethingCool'],
+  ])('Handles snake case: "%s" => "%s"', (input, expected) => {
+    expect(toPascalCase(input)).toBe(expected);
   });
 
-  it('Handles complex sentences', () => {
-    expect(toPascalCase('Hello world! How are you today?')).toBe('HelloWorldHowAreYouToday');
+  it.each([
+    ['Bender: do a flip!', 'BenderDoAFlip'],
+    ['doSomethingCool', 'DoSomethingCool'],
+  ])('Handles camel case: "%s" => "%s"', (input, expected) => {
+    expect(toPascalCase(input)).toBe(expected);
   });
 
-  it('Handles numbers', () => {
-    expect(toPascalCase('abc123def')).toBe('Abc123Def');
+  it.each([
+    ['The quick brown fox jumps over the lazy dog.', 'TheQuickBrownFoxJumpsOverTheLazyDog'],
+    ['Hello world! How are you today?', 'HelloWorldHowAreYouToday'],
+  ])('Handles complex sentences: "%s" => "%s"', (input, expected) => {
+    expect(toPascalCase(input)).toBe(expected);
   });
 
-  it('Handles apostrophe', () => {
+  it.each([
+    ['abc123def', 'Abc123Def'],
+    ['123abc456def', '123Abc456Def'],
+  ])('Handles numbers: "%s" => "%s"', (input, expected) => {
+    expect(toPascalCase(input)).toBe(expected);
+  });
+
+  it.each([
     // cspell:disable-next-line
-    expect(toPascalCase("Didn't can't isn't would've")).toBe('DidntCantIsntWouldve');
+    ["Didn't can't isn't would've", 'DidntCantIsntWouldve'],
     // cSpell:ignore TwasntShouldntve
-    expect(toPascalCase("'twasn't shouldn't've")).toBe('TwasntShouldntve');
+    ["'twasn't shouldn't've", 'TwasntShouldntve'],
+    // cSpell:ignore Twasnt123Shouldntve456
+    ["'twasn't123shouldn't've!456", 'Twasnt123Shouldntve456'],
+  ])('Handles apostrophe: "%s" => "%s"', (input, expected) => {
+    expect(toPascalCase(input)).toBe(expected);
   });
 
   it('Supports custom word mapping', () => {
