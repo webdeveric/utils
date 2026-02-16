@@ -29,7 +29,7 @@ export const describeInput = (input: unknown): string => {
             const url = new URL(input);
 
             return `${url.protocol.replace(':', '')} URL${url.username || url.password ? ' with credentials' : ''}`;
-          } catch (error) {
+          } catch {
             return 'Invalid URL';
           }
         }

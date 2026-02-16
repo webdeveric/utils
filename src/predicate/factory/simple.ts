@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import type { InferPredicateReturnType, TypePredicateFn } from '../../types/functions.js';
 
 export type Simple<Type> = Type extends string

@@ -23,8 +23,7 @@ export type NonNullableProperties<Type> = {
  * Return a type containing all method names
  */
 export type MethodNames<Type, Key extends keyof Type = keyof Type> = Key extends PropertyKey
-  ? // eslint-disable-next-line @typescript-eslint/ban-types
-    Type[Key] extends Function
+  ? Type[Key] extends Function
     ? Key
     : never
   : never;

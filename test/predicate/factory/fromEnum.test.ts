@@ -23,7 +23,6 @@ describe('fromEnum()', () => {
 
   describe('enum with number values', () => {
     enum Demo {
-      Demo = 'Demo',
       Example = 'Example',
       One = 1,
       Two = 2,
@@ -39,18 +38,12 @@ describe('fromEnum()', () => {
       expect(fn).toBeInstanceOf(Function);
     });
 
-    it.each([
-      Demo.Demo,
-      Demo.Example,
-      Demo.One,
-      Demo.Two,
-      Demo.Pi,
-      Demo.NegativeInfinity,
-      Demo.PositiveInfinity,
-      Demo.NotANumber,
-    ])('Returns true for valid input: %s', (value) => {
-      expect(fn(value)).toBeTruthy();
-    });
+    it.each([Demo.Example, Demo.One, Demo.Two, Demo.Pi, Demo.NegativeInfinity, Demo.PositiveInfinity, Demo.NotANumber])(
+      'Returns true for valid input: %s',
+      (value) => {
+        expect(fn(value)).toBeTruthy();
+      },
+    );
 
     it.each([1, 2, Math.PI, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, Number.NaN].map(String))(
       'Returns false for invalid input: "%s"',

@@ -6,9 +6,9 @@
     "es6": true,
     "node": true
   },
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": ["./tsconfig.json"],
-    "EXPERIMENTAL_useProjectService": true,
+    "projectService": true,
     "ecmaFeatures": {
       "jsx": false
     }
@@ -28,6 +28,7 @@
     }
   },
   "rules": {
+    "@typescript-eslint/no-unsafe-function-type": "off",
     "import/first": "error",
     "import/no-absolute-path": "error",
     "import/no-cycle": "error",
@@ -66,5 +67,13 @@
       }
     ],
     "sort-imports": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": "*.test-d.ts",
+      "rules": {
+        "@typescript-eslint/no-unused-vars": "off"
+      }
+    }
+  ]
 }

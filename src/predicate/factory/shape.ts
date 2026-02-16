@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import { hasAdditionalProperties } from '../../hasAdditionalProperties.js';
 import { isAnyObject } from '../isAnyObject.js';
 

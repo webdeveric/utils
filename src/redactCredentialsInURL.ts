@@ -21,7 +21,7 @@ export const redactCredentialsInURL = (
     }
 
     return url.toString();
-  } catch (error) {
+  } catch {
     return String(input);
   }
 };

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import { isFunction } from '../predicate/isFunction.js';
 
 import { getError } from './getError.js';
