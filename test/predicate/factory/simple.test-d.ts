@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import { describe, expectTypeOf, it } from 'vitest';
 
 import { allOf } from '../../../src/predicate/factory/allOf.js';

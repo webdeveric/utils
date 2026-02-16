@@ -1,6 +1,5 @@
 import type { Digit } from './numbers.js';
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 export type AutoCompletableString = string & {};
 
 export type EmptyString = '';

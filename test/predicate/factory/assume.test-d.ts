@@ -17,7 +17,6 @@ describe('assume()', () => {
     expectTypeOf(assume<undefined>).toEqualTypeOf<TypePredicateFn<undefined>>();
     expectTypeOf(assume<null>).toEqualTypeOf<TypePredicateFn<null>>();
     expectTypeOf(assume<object>).toEqualTypeOf<TypePredicateFn<object>>();
-    // eslint-disable-next-line @typescript-eslint/ban-types
     expectTypeOf(assume<Function>).toEqualTypeOf<TypePredicateFn<Function>>();
     expectTypeOf(assume<unknown>).toEqualTypeOf<TypePredicateFn<unknown>>();
     expectTypeOf(assume<string[]>).toEqualTypeOf<TypePredicateFn<string[]>>();
