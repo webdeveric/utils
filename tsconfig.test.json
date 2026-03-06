@@ -3,7 +3,8 @@
   "compilerOptions": {
     "noEmit": true,
     "verbatimModuleSyntax": true,
-    "tsBuildInfoFile": "./cache/test.tsbuildinfo"
+    "tsBuildInfoFile": "./cache/test.tsbuildinfo",
+    "types": ["node"]
   },
   "include": ["src/**/*", "test/**/*", "bench/**/*"]
 }
