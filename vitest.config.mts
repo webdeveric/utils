@@ -12,7 +12,6 @@ export default defineConfig({
       include: ['./test/**/*.test-d.ts'],
     },
     coverage: {
-      all: false,
       provider: 'v8',
     },
   },
