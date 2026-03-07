@@ -5,6 +5,7 @@ import { redactCredentialsInURL } from '../src/redactCredentialsInURL.js';
 describe('redactCredentialsInURL()', () => {
   it('Redacts credentials in a URL', () => {
     expect(redactCredentialsInURL('http://user:pass@example.com/')).toBe('http://REDACTED:REDACTED@example.com/');
+    expect(redactCredentialsInURL('http://user@example.com/')).toBe('http://REDACTED@example.com/');
   });
 
   it('Can customize the mask', () => {
