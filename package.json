@@ -88,12 +88,12 @@
     "@commitlint/config-conventional": "^20.4.3",
     "@commitlint/types": "^20.4.3",
     "@types/node": "^22.19.13",
-    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/coverage-v8": "^4.0.18",
     "@webdeveric/eslint-config-ts": "^0.12.0",
     "@webdeveric/prettier-config": "^0.3.0",
     "commitlint": "^20.4.3",
     "commitlint-plugin-cspell": "^0.6.0",
-    "conventional-changelog-conventionalcommits": "^9.2.0",
+    "conventional-changelog-conventionalcommits": "^9.3.0",
     "cspell": "^9.7.0",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.8",
@@ -107,7 +107,7 @@
     "semantic-release": "^24.2.9",
     "typescript": "6.0.0-dev.20260304",
     "validate-package-exports": "^0.19.1",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.18"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
