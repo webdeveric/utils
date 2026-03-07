@@ -17,7 +17,7 @@ export function deepFreeze<Input extends object>(
 ): Readonly<Input> {
   const {
     filterProperties = new Set<PropertyKey>(['prototype', '__proto__']),
-    doNotFreeze = new WeakSet(typeof globalThis !== 'undefined' ? [globalThis] : []),
+    doNotFreeze = new WeakSet([globalThis]),
     frozen = new WeakSet(),
   } = partialOptions;
 
@@ -32,9 +32,7 @@ export function deepFreeze<Input extends object>(
   const freeze = <InputObject extends object>(inputObject: InputObject): Readonly<InputObject> => {
     if (Array.isArray(inputObject)) {
       inputObject.forEach((item) => {
-        if (shouldFreeze(item)) {
-          freeze(item);
-        }
+        shouldFreeze(item) && freeze(item);
       });
     } else {
       const properties = Reflect.ownKeys(inputObject).filter((prop) => !filterProperties.has(prop));
@@ -48,9 +46,7 @@ export function deepFreeze<Input extends object>(
       }
     }
 
-    if (!frozen.has(inputObject)) {
-      frozen.add(Object.freeze(inputObject));
-    }
+    !frozen.has(inputObject) && frozen.add(Object.freeze(inputObject));
 
     return inputObject;
   };

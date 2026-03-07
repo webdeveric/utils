@@ -1,5 +1,3 @@
-import { setTimeout } from 'timers/promises';
-
 import { describe, it, expect } from 'vitest';
 
 import { isTimeoutError } from '../../src/predicate/isTimeoutError.js';
@@ -12,9 +10,11 @@ describe('isTimeoutError()', () => {
   });
 
   it('recognizes timeouts from AbortSignal', async () => {
-    const signal = AbortSignal.timeout(0);
+    const signal = AbortSignal.timeout(1);
 
-    await setTimeout(1);
+    await new Promise<void>((resolve) => {
+      signal.addEventListener('abort', () => resolve(), { once: true });
+    });
 
     try {
       signal.throwIfAborted();

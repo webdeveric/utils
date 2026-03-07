@@ -21,7 +21,7 @@ describe('describeInput()', () => {
     expect(describeInput(-1)).toBe('Safe Integer');
     expect(describeInput(2 ** 52)).toBe('Safe Integer');
     expect(describeInput(2 ** 53)).toBe('Integer');
-    expect(describeInput(1.2)).toBe('Finite Number');
+    expect(describeInput(1.2)).toBe('Float');
     expect(describeInput(Number.NaN)).toBe('NaN');
     expect(describeInput('123')).toBe('Numeric String');
     expect(describeInput('Basic TOKEN')).toBe('Basic Authorization');

@@ -52,13 +52,13 @@ export const describeInput = (input: unknown): string => {
         return 'Integer';
       }
 
-      if (Number.isFinite(input)) {
-        return 'Finite Number';
-      }
-
       if (Number.isNaN(input)) {
         return 'NaN';
       }
+
+      // Only remaining option is finite number, which we will
+      // call "Float" since we've already covered integers
+      return 'Float';
     }
   }
 
