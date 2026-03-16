@@ -78,10 +78,6 @@ importers:
         specifier: ^4.0.18
         version: 4.0.18(@types/node@24.12.0)(jiti@2.6.1)(jsdom@28.1.0)(yaml@2.8.2)
 
-  dist/cjs: {}
-
-  dist/mjs: {}
-
 packages:
 
   '@acemir/cssom@0.9.31':
