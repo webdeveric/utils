@@ -108,11 +108,5 @@
     "typescript": "6.0.0-dev.20260304",
     "validate-package-exports": "^0.19.1",
     "vitest": "^4.1.0"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "unrs-resolver"
-    ]
   }
 }
