@@ -26,6 +26,7 @@ export * from './isLengthAware.js';
 export * from './isNonNullable.js';
 export * from './isNull.js';
 export * from './isNullArray.js';
+export * from './isNullish.js';
 export * from './isNumber.js';
 export * from './isNumberArray.js';
 export * from './isNumericString.js';
