@@ -4,8 +4,10 @@
 export const byRandom = (): number => {
   let value: number;
 
+  const data = new Uint8Array(1);
+
   do {
-    value = crypto.getRandomValues(new Uint8Array(1))[0]!;
+    value = crypto.getRandomValues(data)[0]!;
   } while (value >= 252); // Avoid modulo bias
 
   return (value % 3) - 1;

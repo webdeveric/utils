@@ -1,4 +1,4 @@
-import { assertIsInteger } from './assertion/assertIsInteger.js';
+import { assertIsSafeInteger } from './assertion/assertIsSafeInteger.js';
 import { isObject } from './predicate/isObject.js';
 
 import type { RequireAtLeastOne } from './types/records.js';
@@ -18,20 +18,26 @@ export function randomInt(options?: RandomIntOptions): number;
 export function randomInt(min: number, max?: number): number;
 
 export function randomInt(arg1?: number | RandomIntOptions, arg2?: number): number {
-  const { min = Number.MIN_SAFE_INTEGER, max = Number.MAX_SAFE_INTEGER } = isObject(arg1)
-    ? arg1
-    : { min: arg1, max: arg2 };
+  const { min = 0, max = Number.MAX_SAFE_INTEGER } = isObject(arg1) ? arg1 : { min: arg1, max: arg2 };
 
-  assertIsInteger(min, 'min must be an integer');
-  assertIsInteger(max, 'max must be an integer');
+  assertIsSafeInteger(min, 'min must be a safe integer');
+  assertIsSafeInteger(max, 'max must be a safe integer');
 
-  if (min === max) {
-    return min;
-  }
-
-  if (min > max) {
+  if (min >= max) {
     throw new RangeError('min must be less than max');
   }
 
-  return Math.floor(Math.random() * (max - min)) + min;
+  const minBigInt = BigInt(min);
+  const range = BigInt(max) - minBigInt;
+  const limit = (2n ** 64n / range) * range;
+  const data = new BigInt64Array(1);
+
+  let value: bigint;
+
+  do {
+    crypto.getRandomValues(data);
+    value = BigInt.asUintN(64, data[0]!);
+  } while (value >= limit);
+
+  return Number(minBigInt + (value % range));
 }
