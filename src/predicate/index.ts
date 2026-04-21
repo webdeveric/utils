@@ -52,6 +52,7 @@ export * from './isPromiseFulfilledResult.js';
 export * from './isPromiseLike.js';
 export * from './isPromiseRejectedResult.js';
 export * from './isPropertyKey.js';
+export * from './isSafeInteger.js';
 export * from './isSizeAware.js';
 export * from './isString.js';
 export * from './isStringArray.js';
