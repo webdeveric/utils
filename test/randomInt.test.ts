@@ -3,10 +3,6 @@ import { describe, expect, it } from 'vitest';
 import { randomInt } from '../src/randomInt.js';
 
 describe('randomInt()', () => {
-  it('Returns early when min and max are the same', () => {
-    expect(randomInt(0, 0)).toEqual(0);
-  });
-
   it('Returns a random integer', () => {
     const value = randomInt(100, 200);
 
@@ -27,16 +23,28 @@ describe('randomInt()', () => {
     expect(value).lessThan(1000);
   });
 
-  it('Defaults to SAFE_INTEGER range', () => {
+  it('Defaults to [0, MAX_SAFE_INTEGER) range', () => {
     const value = randomInt();
 
-    expect(value).greaterThanOrEqual(Number.MIN_SAFE_INTEGER);
+    expect(value).greaterThanOrEqual(0);
     expect(value).lessThan(Number.MAX_SAFE_INTEGER);
+  });
+
+  it('Throws when min and max are equal', () => {
+    expect(() => {
+      randomInt(0, 0);
+    }).toThrow();
   });
 
   it('Throws when min > max', () => {
     expect(() => {
       randomInt(100, 0);
+    }).toThrow();
+  });
+
+  it('Throws when range is too large', () => {
+    expect(() => {
+      randomInt(Number.MIN_VALUE, Number.MAX_VALUE);
     }).toThrow();
   });
 });
