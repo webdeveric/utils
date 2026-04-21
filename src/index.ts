@@ -45,6 +45,7 @@ export * from './joinStrings.js';
 export * from './jsonParse.js';
 export * from './looksLikeURL.js';
 export * from './normalize.js';
+export * from './numbers.js';
 export * from './parseNumber.js';
 export * from './pathParts.js';
 export * from './prefix.js';
