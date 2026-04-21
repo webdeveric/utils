@@ -33,6 +33,7 @@ export * from './assertIsPrimitive.js';
 export * from './assertIsPromiseFulfilledResult.js';
 export * from './assertIsPromiseRejectedResult.js';
 export * from './assertIsPropertyKey.js';
+export * from './assertIsSafeInteger.js';
 export * from './assertIsSizeAware.js';
 export * from './assertIsString.js';
 export * from './assertIsStringArray.js';
