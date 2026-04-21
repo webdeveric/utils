@@ -27,7 +27,15 @@ export type BinaryNumberString = `0${'b' | 'B'}${number}`;
  */
 export type ExponentiationString = `${number}${'e' | 'E'}${number}`;
 
+/**
+ * Signed int 32
+ */
 export type Int32 = Branded<number, 'Int32'>;
+
+/**
+ * Unsigned int 32
+ */
+export type UInt32 = Branded<number, 'UInt32'>;
 
 export type NumberRange =
   | [min: number]

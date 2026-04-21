@@ -60,6 +60,7 @@ export * from './isStringRecord.js';
 export * from './isStringWithLength.js';
 export * from './isSymbol.js';
 export * from './isSymbolArray.js';
+export * from './isUInt32.js';
 export * from './isUndefined.js';
 export * from './isUndefinedArray.js';
 export * from './isUnknown.js';
