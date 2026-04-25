@@ -13,6 +13,7 @@ export * from './nullish.js';
 export * from './optional.js';
 export * from './range.js';
 export * from './shape.js';
+export * from './simple.js';
 export * from './stringLength.js';
 export * from './tuple.js';
 export * from './typeOf.js';
