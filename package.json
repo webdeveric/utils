@@ -88,7 +88,7 @@
     "@commitlint/config-conventional": "^20.5.0",
     "@commitlint/types": "^20.5.0",
     "@types/node": "^24.12.2",
-    "@typescript/native-preview": "7.0.0-dev.20260422.1",
+    "@typescript/native-preview": "7.0.0-dev.20260423.1",
     "@vitest/coverage-v8": "^4.1.5",
     "@webdeveric/eslint-config-ts": "^0.12.0",
     "@webdeveric/prettier-config": "^0.4.0",
