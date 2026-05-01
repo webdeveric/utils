@@ -4,6 +4,8 @@ allowBuilds:
 
 autoInstallPeers: true
 
+blockExoticSubdeps: true
+
 enablePrePostScripts: true
 
 engineStrict: true
