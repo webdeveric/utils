@@ -3,6 +3,7 @@
   "language": "en-US",
   "words": [
     "Autobuild",
+    "blockExoticSubdeps",
     "clonedeep",
     "codeql",
     "commitlint",
@@ -21,6 +22,7 @@
     "resultified",
     "resultify",
     "Testerson",
+    "tsgo",
     "tslib",
     "twasn't",
     "typecheck",
