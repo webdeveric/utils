@@ -28,6 +28,7 @@
     "typecheck",
     "unrs-resolver",
     "Unwritable",
+    "vite",
     "vitest",
     "webcompat",
     "webdeveric",
