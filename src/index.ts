@@ -15,6 +15,8 @@ export * from './combinations.js';
 export * from './comment.js';
 export * from './compose.js';
 export * from './convert.js';
+export * from './countCharacter.js';
+export * from './countCharCode.js';
 export * from './counter.js';
 export * from './deepDecodeURI.js';
 export * from './deepFreeze.js';
