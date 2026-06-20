@@ -1,19 +1,9 @@
-import { isGeneratorFunction } from 'node:util/types';
-
 import { describe, expect, it } from 'vitest';
 
 import { unique } from '../src/unique.js';
 
 describe('unique()', () => {
-  it('Is a generator', () => {
-    expect(isGeneratorFunction(unique)).toBeTruthy();
-  });
-
-  it('Delegate iteration to Set', () => {
-    expect([...unique(new Set([1, 2, 3]))]).toEqual([1, 2, 3]);
-  });
-
-  it('Yields unique items', () => {
+  it('Yields unique items from an Iterable', () => {
     // cSpell:ignore abbccc
     expect([...unique('abbccc')]).toEqual(['a', 'b', 'c']);
 
@@ -25,12 +15,59 @@ describe('unique()', () => {
           ['one', 'test'],
           ['two', 'test'],
         ]),
-        (item) => item[1],
+        {
+          identity: (item) => item[1],
+        },
       ),
     ]).toEqual([['one', 'test']]);
   });
 
+  it('Yields unique items from an AsyncIterable', async () => {
+    const demo = async function* (): AsyncGenerator<number> {
+      yield 1;
+      yield 2;
+      yield 2;
+      yield 3;
+      yield 3;
+      yield 3;
+    };
+
+    await expect(Array.fromAsync(unique(demo()))).resolves.toEqual([1, 2, 3]);
+
+    await expect(
+      Array.fromAsync(
+        unique(demo(), {
+          filter(item) {
+            return item > 1;
+          },
+        }),
+      ),
+    ).resolves.toEqual([2, 3]);
+  });
+
   it('Can use a function to identify uniqueness', () => {
-    expect([...unique('AaBbCc', (item) => item.toLowerCase())]).toEqual(['A', 'B', 'C']);
+    expect([
+      ...unique('AaBbCc', {
+        identity(item) {
+          return item.toLowerCase();
+        },
+      }),
+    ]).toEqual(['A', 'B', 'C']);
+  });
+
+  it('Can filter items', () => {
+    expect([
+      ...unique('ABC', {
+        filter(item) {
+          return item !== 'C';
+        },
+      }),
+    ]).toEqual(['A', 'B']);
+  });
+
+  it('Throws when not given an Iterable or AsyncIterable', () => {
+    expect(() => {
+      unique(false as unknown as Iterable<boolean>);
+    }).toThrow();
   });
 });
