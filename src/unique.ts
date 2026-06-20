@@ -14,11 +14,14 @@ export type UniqueOptions<Type> = {
   filter?: (item: Type) => boolean;
 };
 
-export function unique<Type>(items: AsyncIterable<Type>, options?: UniqueOptions<Type>): AsyncIterable<string>;
+export function unique<Type>(items: AsyncIterable<Type>, options?: UniqueOptions<Type>): AsyncIterable<Type>;
 
 export function unique<Type>(items: Iterable<Type>, options?: UniqueOptions<Type>): Iterable<Type>;
 
-export function unique(items: string, options?: UniqueOptions<string>): Iterable<string>;
+export function unique<Type>(
+  items: AsyncIterable<Type> | Iterable<Type>,
+  options?: UniqueOptions<Type>,
+): AsyncIterable<Type> | Iterable<Type>;
 
 export function unique<Type>(
   items: AsyncIterable<Type> | Iterable<Type>,
