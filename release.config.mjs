@@ -10,6 +10,22 @@ export default {
       {
         releaseRules: [
           {
+            type: 'chore',
+            scope: 'deps',
+            release: 'patch',
+          },
+          // Use this one when we want to release a minor version for dependency updates.
+          {
+            type: 'chore',
+            scope: 'deps-minor',
+            release: 'minor',
+          },
+          {
+            type: 'chore',
+            scope: 'deps-dev',
+            release: false,
+          },
+          {
             type: 'docs',
             release: 'patch',
           },
@@ -25,8 +41,29 @@ export default {
         ],
       },
     ],
-    '@semantic-release/release-notes-generator',
-    '@semantic-release/npm',
+    [
+      '@semantic-release/release-notes-generator',
+      {
+        preset: 'conventionalcommits',
+        presetConfig: {
+          types: [
+            { type: 'feat', section: 'Features' },
+            { type: 'fix', section: 'Bug Fixes' },
+            { type: 'chore', scope: 'deps', section: 'Dependencies' },
+            { type: 'chore', scope: 'deps-minor', section: 'Dependencies' },
+            { type: 'docs', section: 'Documentation' },
+            { type: 'refactor', section: 'Refactoring' },
+            { type: 'chore', scope: 'spelling', section: 'Other' },
+          ],
+        },
+      },
+    ],
+    [
+      '@semantic-release/npm',
+      {
+        provenance: true,
+      },
+    ],
     [
       '@semantic-release/github',
       {
