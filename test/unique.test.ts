@@ -1,6 +1,6 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
-import { unique } from '../src/unique.js';
+import { unique, type MembershipStore } from '../src/unique.js';
 
 describe('unique()', () => {
   it('Yields unique items from an Iterable', () => {
@@ -69,5 +69,39 @@ describe('unique()', () => {
     expect(() => {
       unique(false as unknown as Iterable<boolean>);
     }).toThrow();
+  });
+
+  it('Can use a custom MembershipStore via the `store` option', () => {
+    const has = vi.fn((value: unknown) => value === 2);
+    const add = vi.fn();
+
+    const store: MembershipStore<unknown> = { has, add };
+
+    expect([...unique([1, 2, 3], { store })]).toEqual([1, 3]);
+
+    expect(has).toHaveBeenCalledWith(1);
+    expect(has).toHaveBeenCalledWith(2);
+    expect(has).toHaveBeenCalledWith(3);
+    expect(add).toHaveBeenCalledWith(1);
+    expect(add).not.toHaveBeenCalledWith(2);
+    expect(add).toHaveBeenCalledWith(3);
+  });
+
+  it('Shares uniqueness state across calls when the same `store` is reused', () => {
+    const store: MembershipStore<unknown> = new Set();
+
+    expect([...unique([1, 2, 3], { store })]).toEqual([1, 2, 3]);
+    expect([...unique([2, 3, 4], { store })]).toEqual([4]);
+  });
+
+  it('Uses the `store` option with an AsyncIterable', async () => {
+    const demo = async function* (): AsyncGenerator<number> {
+      yield 1;
+      yield 2;
+      yield 2;
+      yield 3;
+    };
+
+    await expect(Array.fromAsync(unique(demo(), { store: new Set([2]) }))).resolves.toEqual([1, 3]);
   });
 });
