@@ -1,6 +1,11 @@
 import { isAsyncIterable } from './predicate/isAsyncIterable.js';
 import { isIterable } from './predicate/isIterable.js';
 
+export type MembershipStore<T> = {
+  has(value: T): boolean;
+  add(value: T): void;
+};
+
 export type UniqueOptions<Type> = {
   /**
    * Return a custom ID to uniquely identify an item.
@@ -9,9 +14,19 @@ export type UniqueOptions<Type> = {
   /**
    * Return `true` to yield the item.
    *
-   * Use https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator/filter when available.
+   * @todo Refactor to use `filter` on the (async)iterator when available.
+   * @see https://github.com/tc39/proposal-async-iterator-helpers
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator/filter
    */
   filter?: (item: Type) => boolean;
+  /**
+   * A store to keep track of which items have been seen.
+   *
+   * If you have a large dataset, you may want to use a more memory-efficient store than a `Set`, such as a Bloom filter.
+   *
+   * @default `Set<unknown>`.
+   */
+  store?: MembershipStore<unknown>;
 };
 
 export function unique<Type>(items: AsyncIterable<Type>, options?: UniqueOptions<Type>): AsyncIterable<Type>;
@@ -27,8 +42,7 @@ export function unique<Type>(
   items: AsyncIterable<Type> | Iterable<Type>,
   options: UniqueOptions<Type> = {},
 ): AsyncIterable<Type> | Iterable<Type> {
-  const ids = new Set<unknown>();
-  const { filter, identity } = options;
+  const { filter, identity, store = new Set<unknown>() } = options;
 
   if (typeof items === 'string' || isIterable(items)) {
     return {
@@ -37,8 +51,8 @@ export function unique<Type>(
           if (!filter || filter(item) === true) {
             const id = identity?.(item) ?? item;
 
-            if (!ids.has(id)) {
-              ids.add(id);
+            if (!store.has(id)) {
+              store.add(id);
 
               yield item;
             }
@@ -55,8 +69,8 @@ export function unique<Type>(
           if (!filter || filter(item) === true) {
             const id = identity?.(item) ?? item;
 
-            if (!ids.has(id)) {
-              ids.add(id);
+            if (!store.has(id)) {
+              store.add(id);
 
               yield item;
             }
