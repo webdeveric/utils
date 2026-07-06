@@ -1,3 +1,4 @@
+import { BloomFilter } from '@webdeveric/ts-data-structures/bloom-filter';
 import { describe, expect, it, vi } from 'vitest';
 
 import { unique, type MembershipStore } from '../src/unique.js';
@@ -85,6 +86,26 @@ describe('unique()', () => {
     expect(add).toHaveBeenCalledWith(1);
     expect(add).not.toHaveBeenCalledWith(2);
     expect(add).toHaveBeenCalledWith(3);
+  });
+
+  it('Can use a BloomFilter as the MembershipStore via the `store` option', () => {
+    const store = BloomFilter.optimal(4, 0.01, (input) => {
+      let h1 = 0;
+      let h2 = 0;
+
+      const value = JSON.stringify(input);
+
+      for (let i = 0; i < value.length; i++) {
+        const code = value.charCodeAt(i);
+
+        h1 = (h1 * 31 + code) | 0;
+        h2 = (h2 * 17 + code) | 0;
+      }
+
+      return [h1, h2];
+    });
+
+    expect([...unique([1, 2, 2, 3, 3, 3], { store })]).toEqual([1, 2, 3]);
   });
 
   it('Shares uniqueness state across calls when the same `store` is reused', () => {
