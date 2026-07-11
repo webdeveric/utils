@@ -32,13 +32,9 @@ export type Writable<Type> = {
 export type Unwritable<Type> = Type extends Writable<infer Inner> ? Readonly<Inner> : Readonly<Type>;
 
 export type GetIndex<Type> = {
-  [Key in keyof Type as symbol extends Key
-    ? Key
-    : string extends Key
-      ? Key
-      : number extends Key
-        ? Key
-        : never]: Type[Key];
+  [
+    Key in keyof Type as symbol extends Key ? Key : string extends Key ? Key : number extends Key ? Key : never
+  ]: Type[Key];
 };
 
 /**
