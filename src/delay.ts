@@ -2,17 +2,17 @@ import { isPositiveInteger } from './predicate/isPositiveInteger.js';
 
 const MAX_DELAY_MS = 2 ** 31 - 1;
 
+export function delay(milliseconds: number, signal?: AbortSignal): Promise<undefined>;
+
+export function delay<T>(milliseconds: number, value: T, signal?: AbortSignal): Promise<T>;
+
 /**
  * Delay a specified number of milliseconds before resolving.
  *
  * The `ms` value can be between zero and the max delay value for `setTimeout()`, which is `2 ** 31 - 1`.
  *
- * {@link https://developer.mozilla.org/en-US/docs/Web/API/setTimeout#maximum_delay_value}
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/setTimeout#maximum_delay_value}
  */
-export function delay(milliseconds: number, signal?: AbortSignal): Promise<undefined>;
-
-export function delay<T>(milliseconds: number, value: T, signal?: AbortSignal): Promise<T>;
-
 export function delay<T>(milliseconds: number, value?: T, signal?: AbortSignal): Promise<T | undefined> {
   return new Promise((resolve, reject) => {
     if (!isPositiveInteger(milliseconds)) {
