@@ -38,6 +38,14 @@ export function unique<Type>(
   options?: UniqueOptions<Type>,
 ): AsyncIterable<Type> | Iterable<Type>;
 
+/**
+ * Lazily yield only the unique items from an `Iterable` or `AsyncIterable`, preserving order.
+ *
+ * @example
+ * ```ts
+ * [...unique([1, 2, 2, 3, 1])]; // [1, 2, 3]
+ * ```
+ */
 export function unique<Type>(
   items: AsyncIterable<Type> | Iterable<Type>,
   options: UniqueOptions<Type> = {},

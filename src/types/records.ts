@@ -18,13 +18,9 @@ export type EnumRecord<Key extends string = string, Value extends string | numbe
 >;
 
 export type RemoveIndex<Type> = {
-  [Key in keyof Type as symbol extends Key
-    ? never
-    : string extends Key
-      ? never
-      : number extends Key
-        ? never
-        : Key]: Type[Key];
+  [
+    Key in keyof Type as symbol extends Key ? never : string extends Key ? never : number extends Key ? never : Key
+  ]: Type[Key];
 };
 
 export type StringPropertyKeys<Type extends UnknownRecord> = Extract<keyof RemoveIndex<Type>, string>;

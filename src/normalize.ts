@@ -22,8 +22,7 @@ export type NormalizersRecord<RecordType, OwnerRecordType, ContextData extends A
 };
 
 export type AnyNormalizer<RecordType, OwnerRecordType, ContextData extends AnyRecord = AnyRecord> =
-  | NormalizerFn<RecordType, OwnerRecordType, ContextData>
-  | NormalizersRecord<RecordType, OwnerRecordType, ContextData>;
+  NormalizerFn<RecordType, OwnerRecordType, ContextData> | NormalizersRecord<RecordType, OwnerRecordType, ContextData>;
 
 export type ContextInitializer<OwnerRecordType, ContextData extends AnyRecord = AnyRecord> = (
   data: OwnerRecordType,
