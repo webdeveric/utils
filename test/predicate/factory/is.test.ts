@@ -13,8 +13,9 @@ describe('is()', () => {
     expect(fn('bad input')).toBeFalsy();
   });
 
-  it('Empty args gets a predicate function that always returns false', () => {
-    expect(is()('test')).toBeFalsy();
+  it('Throws if no arguments are provided', () => {
+    // @ts-expect-error testing no arguments
+    expect(() => is()).toThrow();
   });
 
   it('Uses Object.is()', () => {
