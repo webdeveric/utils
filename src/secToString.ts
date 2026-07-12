@@ -13,6 +13,14 @@ export enum Seconds {
 
 type SecondsTuple = [key: Lowercase<keyof typeof Seconds>, seconds: Seconds];
 
+/**
+ * Convert `time`, in seconds, to a human-readable string.
+ *
+ * @example
+ * ```ts
+ * secToString(90061); // '1 day 1 hour 1 minute 1 second'
+ * ```
+ */
 export function secToString(time: number, joinString = ' '): string {
   const secTime: SecondsTuple[] = [
     ['millennium', Seconds.Millennium],

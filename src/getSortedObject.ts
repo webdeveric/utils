@@ -13,6 +13,14 @@ export function getSortedObject<Data extends object>(
   compareFunction?: CompareFn<string | symbol>,
 ): Data[];
 
+/**
+ * Recursively sort the keys of `data`, optionally using a custom `compareFunction`.
+ *
+ * @example
+ * ```ts
+ * getSortedObject({ b: 2, a: 1 }); // { a: 1, b: 2 }
+ * ```
+ */
 export function getSortedObject<Data extends object>(
   data: Data | Data[],
   compareFunction: CompareFn<string | symbol> = defaultCompareFunction,

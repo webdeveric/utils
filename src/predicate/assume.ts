@@ -5,6 +5,11 @@
  * @privateRemarks
  * The `is` prefix is omitted because there is not any conditional logic in the function.
  * It is more of a command to `tsc` to assume the type rather than a check.
+ *
+ * @example
+ * ```ts
+ * assume<string>(42); // true (no runtime check is performed)
+ * ```
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
 export const assume = <Type>(_input: unknown, ..._args: any[]): _input is Type => true;

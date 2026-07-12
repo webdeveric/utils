@@ -2,6 +2,16 @@ import { getType } from './getType.js';
 import { looksLikeURL } from './looksLikeURL.js';
 import { isNumericString } from './predicate/isNumericString.js';
 
+/**
+ * Describe `input` with a short, human-readable label based on its type and shape.
+ *
+ * @example
+ * ```ts
+ * describeInput(true); // 'true'
+ * describeInput('https://example.com'); // 'https URL'
+ * describeInput(42); // 'Safe Integer'
+ * ```
+ */
 export const describeInput = (input: unknown): string => {
   switch (typeof input) {
     case 'boolean':

@@ -4,6 +4,13 @@ import type { UnionOf } from '../../types/utils.js';
 
 /**
  * Use `Object.is()` to compare `input` against allowed values.
+ *
+ * @example
+ * ```ts
+ * const isRedGreenOrBlue = is('red', 'green', 'blue');
+ * isRedGreenOrBlue('red'); // true
+ * isRedGreenOrBlue('yellow'); // false
+ * ```
  */
 export const is = <const Values extends NonEmptyArray<unknown>>(
   ...values: Values

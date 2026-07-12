@@ -2,6 +2,14 @@ import { assertIsNumericValueArray } from './assertion/assertIsNumericValueArray
 
 import type { NumericValue } from './types/common.js';
 
+/**
+ * Get the largest value among `values`.
+ *
+ * @example
+ * ```ts
+ * getMaxValue(1, 5, 3); // 5
+ * ```
+ */
 export function getMaxValue<T extends NumericValue>(...values: [T, ...T[]]): T {
   if (values.length === 0) {
     throw new Error('Expected at least one numeric value');

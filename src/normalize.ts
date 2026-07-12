@@ -29,9 +29,21 @@ export type ContextInitializer<OwnerRecordType, ContextData extends AnyRecord = 
   normalizers: AnyNormalizer<OwnerRecordType, OwnerRecordType, ContextData>,
 ) => ContextData;
 
+export function normalize<Data extends object, ContextData extends AnyRecord = AnyRecord>(
+  input: Readonly<Data>,
+  normalizers: AnyNormalizer<Data, Data, Partial<ContextData>>, // No initializer so data must be partial
+): Data;
+
+export function normalize<Data extends object, ContextData extends AnyRecord = AnyRecord>(
+  input: Readonly<Data>,
+  normalizers: AnyNormalizer<Data, Data, ContextData>,
+  initContextData: ContextInitializer<Data, ContextData>,
+): Data;
+
 /**
- * @example
+ * Recursively transform the properties of `input` using `normalizers`.
  *
+ * @example
  * ```ts
  * normalize({ demo: true }, { demo: () => false });
  * ```
@@ -44,17 +56,6 @@ export type ContextInitializer<OwnerRecordType, ContextData extends AnyRecord = 
  * normalize(true, () => false );
  * ```
  */
-export function normalize<Data extends object, ContextData extends AnyRecord = AnyRecord>(
-  input: Readonly<Data>,
-  normalizers: AnyNormalizer<Data, Data, Partial<ContextData>>, // No initializer so data must be partial
-): Data;
-
-export function normalize<Data extends object, ContextData extends AnyRecord = AnyRecord>(
-  input: Readonly<Data>,
-  normalizers: AnyNormalizer<Data, Data, ContextData>,
-  initContextData: ContextInitializer<Data, ContextData>,
-): Data;
-
 export function normalize<Data extends object, ContextData extends AnyRecord = AnyRecord>(
   input: Readonly<Data>,
   normalizers: AnyNormalizer<Data, Data, ContextData>,

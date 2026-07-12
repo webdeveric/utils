@@ -13,6 +13,14 @@ export type ConvertRecord<Input, Output> = {
 
 export type AnyConverter<Input, Output> = ConvertRecord<Input, Output> | ConvertFn<Input, Output>;
 
+/**
+ * Convert `input` using `converter`, which may be a function or a record of nested converters.
+ *
+ * @example
+ * ```ts
+ * convert({ name: 'Andy' }, { greeting: (data) => `Hi, ${data.name}` }); // { greeting: 'Hi, Andy' }
+ * ```
+ */
 export const convert = <Input, Output>(input: Readonly<Input>, converter: AnyConverter<Input, Output>): Output => {
   if (typeof converter === 'function') {
     return converter(input);

@@ -16,6 +16,21 @@ export function withLength<Fn extends TypePredicateFn<{ length: number }>, Range
   range: Range,
 ): TypePredicateFn<InferPredicateReturnType<Fn> & { length: number }>;
 
+/**
+ * Create a type predicate function that checks if `input` passes `fn` and has a `length` matching the given `length` or falling within the given range.
+ *
+ * @example
+ * ```ts
+ * const twoCharString = withLength(isString, 2);
+ * twoCharString('ab'); // true
+ * twoCharString('abc'); // false
+ *
+ * const stringRange = withLength(isString, [1, 3]);
+ * stringRange('a'); // true
+ * stringRange('abc'); // true
+ * stringRange('abcd'); // false
+ * ```
+ */
 export function withLength<Fn extends TypePredicateFn<{ length: number }>, LengthOrRange extends number | NumberRange>(
   fn: Fn,
   lengthRange: LengthOrRange,

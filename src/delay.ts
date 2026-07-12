@@ -12,6 +12,12 @@ export function delay<T>(milliseconds: number, value: T, signal?: AbortSignal): 
  * The `ms` value can be between zero and the max delay value for `setTimeout()`, which is `2 ** 31 - 1`.
  *
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/setTimeout#maximum_delay_value}
+ *
+ * @example
+ * ```ts
+ * await delay(1000); // resolves with `undefined` after 1 second
+ * await delay(1000, 'done'); // resolves with 'done' after 1 second
+ * ```
  */
 export function delay<T>(milliseconds: number, value?: T, signal?: AbortSignal): Promise<T | undefined> {
   return new Promise((resolve, reject) => {

@@ -7,6 +7,17 @@ export function tryFn<Fn extends AnyFunction, DefaultValue>(
   defaultValue: DefaultValue,
 ): (...args: Parameters<Fn>) => ReturnType<Fn> | DefaultValue;
 
+/**
+ * Wrap `fn` so calling it returns `defaultValue` instead of throwing.
+ *
+ * @example
+ * ```ts
+ * const parse = tryFn(JSON.parse, {});
+ *
+ * parse('invalid'); // {}
+ * parse('{"a":1}'); // { a: 1 }
+ * ```
+ */
 export function tryFn<Fn extends AnyFunction, DefaultType>(
   fn: Fn,
   defaultValue?: DefaultType,

@@ -2,6 +2,14 @@ import { assertIsNumericValueArray } from './assertion/assertIsNumericValueArray
 
 import type { NumericValue } from './types/common.js';
 
+/**
+ * Get the smallest value among `values`.
+ *
+ * @example
+ * ```ts
+ * getMinValue(1, 5, 3); // 1
+ * ```
+ */
 export function getMinValue<T extends NumericValue>(...values: [T, ...T[]]): T {
   if (values.length === 0) {
     throw new Error('Expected at least one numeric value');

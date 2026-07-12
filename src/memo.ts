@@ -11,7 +11,16 @@ export type MemoizedFn<Fn extends AnyFunction, CkFn extends CacheKeyFn<Fn>> = Fn
 /**
  * Memoize a function
  *
- * @todo use `Map.getOrInsertComputed()` once it is widely available.
+ * @privateRemarks
+ * TODO: use `Map.getOrInsertComputed()` once it is widely available.
+ *
+ * @example
+ * ```ts
+ * const square = memo((n: number) => n * n);
+ *
+ * square(4); // 16, computed and cached
+ * square(4); // 16, returned from the cache
+ * ```
  */
 export function memo<Fn extends AnyFunction, CkFn extends CacheKeyFn<Fn>>(
   fn: Fn,

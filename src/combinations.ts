@@ -14,6 +14,14 @@ export type CombinationsInput<Type> = {
 export type CombinationsOutput<Input extends CombinationsInput<unknown>> =
   Input extends CombinationsInput<infer Type> ? Type : never;
 
+/**
+ * Generate every combination of `input`'s property values, recursing into nested objects.
+ *
+ * @example
+ * ```ts
+ * [...combinations({ a: [1, 2], b: 'x' })]; // [{ a: 1, b: 'x' }, { a: 2, b: 'x' }]
+ * ```
+ */
 export function* combinations<
   Type extends object = object,
   Input extends CombinationsInput<Type> = CombinationsInput<Type>,

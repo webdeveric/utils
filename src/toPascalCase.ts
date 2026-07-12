@@ -4,6 +4,15 @@ import type { StringRecord } from './types/records.js';
 import type { PascalCase } from './types/strings.js';
 import type { KeyValueTuple } from './types/tuples.js';
 
+/**
+ * Convert `text` to PascalCase, optionally replacing individual words using `customWords`.
+ *
+ * @example
+ * ```ts
+ * toPascalCase('hello world'); // 'HelloWorld'
+ * toPascalCase('foo-bar', { bar: 'BAR' }); // 'FooBAR'
+ * ```
+ */
 export function toPascalCase<Type extends string>(text: Type, customWords?: StringRecord): PascalCase<Type> {
   let words: string[] = String(text)
     .replaceAll(/['.]/g, '')
