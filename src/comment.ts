@@ -16,6 +16,9 @@ export type CommentOptions = {
   type?: CommentType | `${CommentType}`;
 } & Partial<CommentParts>;
 
+/**
+ * @internal
+ */
 function getCommentParts(type: CommentType | `${CommentType}`): CommentParts {
   return {
     [CommentType.Block]: {
@@ -45,6 +48,14 @@ function getCommentParts(type: CommentType | `${CommentType}`): CommentParts {
   }[type];
 }
 
+/**
+ * Wrap `text` in a comment of the given `type`.
+ *
+ * @example
+ * ```ts
+ * comment('Hello\nWorld'); // '/**\n * Hello\n * World\n *\/'
+ * ```
+ */
 export function comment(text: string, options?: CommentOptions): string {
   if (!text) {
     return '';

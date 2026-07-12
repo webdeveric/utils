@@ -1,5 +1,14 @@
 import { isLengthAware } from './predicate/isLengthAware.js';
 
+/**
+ * Determine if `input` is empty.
+ *
+ * @example
+ * ```ts
+ * isEmpty(''); // true
+ * isEmpty([1]); // false
+ * ```
+ */
 export function isEmpty(input: unknown): boolean {
   if (input == null || (typeof input === 'string' && !input.length)) {
     return true;

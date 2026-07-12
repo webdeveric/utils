@@ -9,7 +9,15 @@ export type DeepFreezeOptions = {
 /**
  * Deep freeze an object or array.
  *
- * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze}
+ *
+ * @example
+ * ```ts
+ * const frozen = deepFreeze({ nested: { value: 1 } });
+ *
+ * Object.isFrozen(frozen); // true
+ * Object.isFrozen(frozen.nested); // true
+ * ```
  */
 export function deepFreeze<Input extends object>(
   input: Input,

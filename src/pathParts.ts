@@ -1,3 +1,11 @@
+/**
+ * Yield each part of `input`, splitting a string path on non-word characters.
+ *
+ * @example
+ * ```ts
+ * [...pathParts('a.b[0]')]; // ['a', 'b', '0']
+ * ```
+ */
 export function* pathParts(input: PropertyKey): Generator<PropertyKey> {
   if (input === '') {
     return;

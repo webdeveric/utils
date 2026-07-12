@@ -17,6 +17,15 @@ export function randomInt(options?: RandomIntOptions): number;
 
 export function randomInt(min: number, max?: number): number;
 
+/**
+ * Get a cryptographically secure random integer between `min` (inclusive) and `max` (exclusive).
+ *
+ * @example
+ * ```ts
+ * randomInt(1, 10); // a random integer >= 1 and < 10
+ * randomInt({ min: 1, max: 10 }); // a random integer >= 1 and < 10
+ * ```
+ */
 export function randomInt(arg1?: number | RandomIntOptions, arg2?: number): number {
   const { min = 0, max = Number.MAX_SAFE_INTEGER } = isObject(arg1) ? arg1 : { min: arg1, max: arg2 };
 

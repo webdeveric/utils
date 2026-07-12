@@ -5,6 +5,14 @@ export type URLMaskOptions =
       password: string;
     };
 
+/**
+ * Replace the username and password in `input`, a URL, with `mask`.
+ *
+ * @example
+ * ```ts
+ * redactCredentialsInURL('https://user:pass@example.com'); // 'https://REDACTED:REDACTED@example.com/'
+ * ```
+ */
 export const redactCredentialsInURL = (
   input: ConstructorParameters<typeof URL>[0],
   mask: URLMaskOptions = 'REDACTED',

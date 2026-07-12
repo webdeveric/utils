@@ -2,9 +2,6 @@ import { pathParts } from './pathParts.js';
 
 import type { Path, PathValue } from './types/objects.js';
 
-/**
- * Set the value of a property
- */
 export function set<Input extends object, InputPath extends Path<Input>, Value extends PathValue<Input, InputPath>>(
   input: Input,
   path: InputPath,
@@ -17,6 +14,17 @@ export function set<Input extends object, InputPath extends string, Value>(
   value: Value,
 ): Value;
 
+/**
+ * Set the value of a property
+ *
+ * @example
+ * ```ts
+ * const data = { a: { b: 1 } };
+ *
+ * set(data, 'a.b', 2); // 2
+ * data; // { a: { b: 2 } }
+ * ```
+ */
 export function set<Input extends object, InputPath extends Path<Input> | string, Value>(
   input: Input,
   path: InputPath,

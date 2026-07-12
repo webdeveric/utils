@@ -9,6 +9,12 @@ export const ISO_DATE_PATTERN =
  * This checks to see if the input matches the format that `toISOString()`
  * returns, which is a simplified format based on ISO 8601.
  *
- * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString}
+ *
+ * @example
+ * ```ts
+ * isISODateString('2024-01-01T00:00:00.000Z'); // true
+ * isISODateString('2024-01-01'); // false
+ * ```
  */
 export const isISODateString = matching<ISODateString>(ISO_DATE_PATTERN);

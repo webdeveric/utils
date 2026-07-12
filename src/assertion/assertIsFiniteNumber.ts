@@ -2,6 +2,15 @@ import { isFiniteNumber } from '../predicate/isFiniteNumber.js';
 
 import { getError } from './getError.js';
 
+/**
+ * Assert that `input` is a finite number.
+ *
+ * @example
+ * ```ts
+ * assertIsFiniteNumber(42); // does not throw
+ * assertIsFiniteNumber(Infinity); // throws TypeError: input is not a finite number
+ * ```
+ */
 export function assertIsFiniteNumber(
   input: unknown,
   error: string | Error = 'input is not a finite number',

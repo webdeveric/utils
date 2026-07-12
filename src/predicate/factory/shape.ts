@@ -38,6 +38,19 @@ export type InferTypeFromShape<Shape extends ObjectShapeRecord<object>> = {
   [Property in keyof Shape]: InferTypeFromShapeValue<Shape[Property]>;
 };
 
+/**
+ * Create a type predicate function that checks if `input` is an object matching the given `objectShape`. Set `additionalProperties` to `false` to reject objects with extra properties.
+ *
+ * @example
+ * ```ts
+ * const isPerson = shape({ name: isString, age: isNumber });
+ * isPerson({ name: 'Andy', age: 30 }); // true
+ * isPerson({ name: 'Andy' }); // false
+ *
+ * const isStrictPerson = shape({ name: isString, age: isNumber }, false);
+ * isStrictPerson({ name: 'Andy', age: 30, extra: true }); // false
+ * ```
+ */
 export const shape = <Type extends object, Shape extends ObjectShapeRecord<Type> = ObjectShapeRecord<Type>>(
   objectShape: Shape,
   additionalProperties = true,

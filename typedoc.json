@@ -1,0 +1,14 @@
+{
+  "entryPoints": ["src/**/*.ts"],
+  "out": "docs",
+  "excludeInternal": true,
+  "excludeNotDocumented": false,
+  "cleanOutputDir": true,
+  "readme": "readme.md",
+  "gitRevision": "master",
+  "treatWarningsAsErrors": true,
+  "validation": {
+    "notExported": true,
+    "invalidLink": true
+  }
+}

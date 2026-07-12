@@ -2,6 +2,7 @@
 npm-debug.log
 cache/
 coverage/
+docs/
 dist/
 dist-mjs/
 node_modules/

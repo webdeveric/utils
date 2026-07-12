@@ -4,9 +4,6 @@ import { isAnyObject } from './predicate/isAnyObject.js';
 import type { FromPath, Merge, Path, PathValue } from './types/objects.js';
 import type { IfNever, Pretty } from './types/utils.js';
 
-/**
- * Determine if the path exists on an object.
- */
 // Known path so the `Input` type is unchanged
 export function has<Input extends object, InputPath extends Path<Input>>(input: Input, path: InputPath): input is Input;
 
@@ -22,6 +19,14 @@ export function has<InputPath extends string | number>(
   path: InputPath,
 ): input is FromPath<InputPath, unknown>;
 
+/**
+ * Determine if the path exists on an object.
+ *
+ * @example
+ * ```ts
+ * has({ a: { b: 1 } }, 'a.b'); // true
+ * ```
+ */
 export function has<Input extends object, InputPath extends Path<Input> | string | number>(
   input: Input,
   path: InputPath,

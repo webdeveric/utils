@@ -7,6 +7,17 @@ export type GetTupleFromInput<Type extends TuplePredicateInput> = {
   [Property in keyof Type]: Type[Property] extends TypePredicateFn<infer T> ? T : Type[Property];
 };
 
+/**
+ * Create a type predicate function that checks if `input` is an array matching the given `tupleShape`.
+ *
+ * @example
+ * ```ts
+ * const isNameAgeTuple = tuple([isString, isNumber]);
+ * isNameAgeTuple(['Andy', 30]); // true
+ * isNameAgeTuple([30, 'Andy']); // false
+ * isNameAgeTuple(['Andy', 30, 'extra']); // false
+ * ```
+ */
 export const tuple = <const Input extends TuplePredicateInput>(
   tupleShape: Input,
 ): TypePredicateFn<GetTupleFromInput<Input>> => {

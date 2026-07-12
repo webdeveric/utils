@@ -1,5 +1,16 @@
 import type { TypePredicateFn } from '../../types/functions.js';
 
+/**
+ * Create a type predicate function that checks if `input` is a string whose length is between `min` and `max`, inclusive.
+ *
+ * @example
+ * ```ts
+ * const isShortString = stringLength(1, 10);
+ * isShortString('hello'); // true
+ * isShortString(''); // false
+ * isShortString('this is too long'); // false
+ * ```
+ */
 export const stringLength = <Type extends string = string>(
   min: number,
   max: number = Number.POSITIVE_INFINITY,

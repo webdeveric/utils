@@ -11,6 +11,14 @@ export function get<Input extends object, InputPath extends Path<Input>>(
 
 export function get<Input extends object, InputPath extends PropertyKey>(input: Input, path: InputPath): unknown;
 
+/**
+ * Get the value at `path` within `input`.
+ *
+ * @example
+ * ```ts
+ * get({ a: { b: 1 } }, 'a.b'); // 1
+ * ```
+ */
 export function get<Input extends object, InputPath extends Path<Input> | PropertyKey>(
   input: Input,
   path: InputPath,

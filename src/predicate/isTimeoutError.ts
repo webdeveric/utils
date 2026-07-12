@@ -12,6 +12,12 @@ import type { TimeoutError } from '../types/errors.js';
  * @privateRemarks
  * Using `instanceof` is not reliable for cross-realm errors.
  * We must check the shape of the input instead. 🦆
+ *
+ * @example
+ * ```ts
+ * isTimeoutError(new DOMException('Timed out', 'TimeoutError')); // true
+ * isTimeoutError(new Error('Timed out')); // false
+ * ```
  */
 export const isTimeoutError = shape<TimeoutError>({
   name: literal('TimeoutError'),

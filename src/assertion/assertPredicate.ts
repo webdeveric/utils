@@ -4,6 +4,17 @@ import type { TypePredicateFn } from '../types/functions.js';
 
 export type ErrorFactory = (input: unknown) => Error;
 
+/**
+ * Assert that `input` satisfies the given `predicate`.
+ *
+ * @example
+ * ```ts
+ * const isNumber = (value: unknown): value is number => typeof value === 'number';
+ *
+ * assertPredicate(42, isNumber); // does not throw
+ * assertPredicate('42', isNumber); // throws TypeError: invalid input
+ * ```
+ */
 export function assertPredicate<T>(
   input: unknown,
   predicate: TypePredicateFn<T>,

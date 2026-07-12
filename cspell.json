@@ -26,6 +26,7 @@
     "tslib",
     "twasn't",
     "typecheck",
+    "typedoc",
     "unrs-resolver",
     "Unwritable",
     "vite",

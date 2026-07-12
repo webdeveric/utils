@@ -32,13 +32,43 @@ const defaultOptions: Readonly<UntilOptions> = {
   delay: 10,
 };
 
+/**
+ * Determine if `input` is a valid `Delay`.
+ *
+ * @example
+ * ```ts
+ * isDelay(10); // true
+ * isDelay(() => 10); // true
+ * isDelay('10'); // false
+ * ```
+ */
 export const isDelay = (input: unknown): input is Delay => Number.isInteger(input) || typeof input === 'function';
 
+/**
+ * Resolve `delay` to a number of milliseconds, calling it with `context` if it's a function.
+ *
+ * @example
+ * ```ts
+ * const context = { callCount: 2, lastCall: Date.now(), data: {}, options: { delay: 100 } };
+ *
+ * getDelay(100, context); // 100
+ * getDelay((ctx) => ctx.callCount * 50, context); // 100
+ * ```
+ */
 export const getDelay = (delay: Delay, context: UntilContext): number =>
   typeof delay === 'function' ? delay(context) : delay;
 
 /**
  * Return a Promise that delegates resolving/rejecting to the passed in function.
+ *
+ * @example
+ * ```ts
+ * await until((resolve, reject, context) => {
+ *   if (context.callCount >= 3) {
+ *     resolve('done');
+ *   }
+ * }, { delay: 100, callLimit: 5 }); // resolves with 'done' after being called 3 times
+ * ```
  */
 export function until<T>(fn: UntilCallback<T>, options: UntilOptions = defaultOptions): Promise<T> {
   if (typeof fn !== 'function') {

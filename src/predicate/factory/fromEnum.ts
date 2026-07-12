@@ -26,6 +26,20 @@ const getEnumValues = <T extends EnumRecord>(enumObject: T): Set<unknown> => {
 
 /**
  * Create a type predicate function that checks if the input is a member of the TypeScript `enum`
+ *
+ * @example
+ * ```ts
+ * enum Color {
+ *   Red,
+ *   Green,
+ *   Blue,
+ * }
+ *
+ * const isColor = fromEnum(Color);
+ * isColor(Color.Red); // true
+ * isColor(0); // true
+ * isColor(3); // false
+ * ```
  */
 export const fromEnum = <T extends EnumRecord>(enumObject: T): TypePredicateFn<T[keyof T]> => {
   const values = getEnumValues(enumObject);

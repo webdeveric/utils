@@ -4,6 +4,14 @@ import type { IntersectionOf } from '../../types/utils.js';
 
 /**
  * All predicates must pass
+ *
+ * @example
+ * ```ts
+ * const isPositiveInteger = allOf(isNumber, isInteger, (input: unknown): input is number => (input as number) > 0);
+ * isPositiveInteger(5); // true
+ * isPositiveInteger(-5); // false
+ * isPositiveInteger(1.5); // false
+ * ```
  */
 export const allOf = <Predicates extends NonEmptyArray<TypePredicateFn<unknown>>>(
   ...predicates: Predicates

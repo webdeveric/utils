@@ -4,6 +4,14 @@ import type { UnionOf } from '../../types/utils.js';
 
 /**
  * Any predicate can pass
+ *
+ * @example
+ * ```ts
+ * const isStringOrNumber = anyOf(isString, isNumber);
+ * isStringOrNumber('hello'); // true
+ * isStringOrNumber(5); // true
+ * isStringOrNumber(true); // false
+ * ```
  */
 export const anyOf = <Predicates extends NonEmptyArray<TypePredicateFn<unknown>>>(
   ...predicates: Predicates

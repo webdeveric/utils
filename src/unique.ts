@@ -14,7 +14,8 @@ export type UniqueOptions<Type> = {
   /**
    * Return `true` to yield the item.
    *
-   * @todo Refactor to use `filter` on the (async)iterator when available.
+   * @privateRemarks
+   * TODO: Refactor to use `filter` on the (async)iterator when available.
    * @see https://github.com/tc39/proposal-async-iterator-helpers
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Iterator/filter
    */

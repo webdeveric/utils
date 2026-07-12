@@ -22,6 +22,16 @@ export type Simple<Type> = Type extends string
                     ? object
                     : never;
 
+/**
+ * Create a type predicate function that narrows the result of `fn` down to its simple (non-branded) type.
+ *
+ * @example
+ * ```ts
+ * const isSimpleNumber = simple(isInt32); // narrows from branded `Int32` down to plain `number`
+ * isSimpleNumber(5); // true
+ * isSimpleNumber('5'); // false
+ * ```
+ */
 export const simple =
   <Fn extends TypePredicateFn<unknown>>(fn: Fn): TypePredicateFn<Simple<InferPredicateReturnType<Fn>>> =>
   (input): input is Simple<InferPredicateReturnType<Fn>> =>

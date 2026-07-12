@@ -1,3 +1,11 @@
+/**
+ * Split `items` into consecutive chunks of at most `chunkSize` items each.
+ *
+ * @example
+ * ```ts
+ * [...chunk([1, 2, 3, 4, 5], 2)]; // [[1, 2], [3, 4], [5]]
+ * ```
+ */
 export function* chunk<T>(items: T[], chunkSize: number): Generator<T[], undefined, undefined> {
   if (!Number.isSafeInteger(chunkSize) || chunkSize <= 0) {
     throw new RangeError('Chunk size must be an integer greater than 0');

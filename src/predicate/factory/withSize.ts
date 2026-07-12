@@ -16,6 +16,20 @@ export function withSize<Fn extends TypePredicateFn<{ size: number }>, Range ext
   range: Range,
 ): TypePredicateFn<InferPredicateReturnType<Fn> & { size: number }>;
 
+/**
+ * Create a type predicate function that checks if `input` passes `fn` and has a `size` matching the given `size` or falling within the given range.
+ *
+ * @example
+ * ```ts
+ * const twoItemSet = withSize(instanceOf(Set), 2);
+ * twoItemSet(new Set([1, 2])); // true
+ * twoItemSet(new Set([1])); // false
+ *
+ * const setWithRange = withSize(instanceOf(Set), [1, 3]);
+ * setWithRange(new Set([1, 2])); // true
+ * setWithRange(new Set()); // false
+ * ```
+ */
 export function withSize<Fn extends TypePredicateFn<{ size: number }>, SizeOrRange extends number | NumberRange>(
   fn: Fn,
   sizeRange: SizeOrRange,

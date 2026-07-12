@@ -2,6 +2,15 @@ import { matching } from '../predicate/factory/matching.js';
 
 import { getError } from './getError.js';
 
+/**
+ * Assert that `input` is a string that matches the given `pattern`.
+ *
+ * @example
+ * ```ts
+ * assertIsStringMatching('hello', /^h/); // does not throw
+ * assertIsStringMatching('world', /^h/); // throws TypeError: input is not a string that matches the pattern
+ * ```
+ */
 export function assertIsStringMatching(
   input: unknown,
   pattern: RegExp,
