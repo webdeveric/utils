@@ -10,6 +10,10 @@ export default {
       {
         releaseRules: [
           {
+            breaking: true,
+            release: 'major',
+          },
+          {
             type: 'chore',
             scope: 'deps',
             release: 'patch',
