@@ -42,6 +42,7 @@ export * from './getPaths.js';
 export * from './getRandomItem.js';
 export * from './getSortedObject.js';
 export * from './getType.js';
+export * from './graphemeLength.js';
 export * from './has.js';
 export * from './hasAdditionalProperties.js';
 export * from './inRange.js';
