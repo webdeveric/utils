@@ -11,6 +11,7 @@ export * from './capitalize.js';
 export * from './cartesian.js';
 export * from './chunk.js';
 export * from './clamp.js';
+export * from './codePointLength.js';
 export * from './combinations.js';
 export * from './comment.js';
 export * from './compose.js';
