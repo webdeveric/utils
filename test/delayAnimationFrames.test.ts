@@ -3,8 +3,10 @@ import { afterEach, beforeEach, describe, it, expect, vi } from 'vitest';
 import { delayAnimationFrames } from '../src/delayAnimationFrames.js';
 
 describe('delayAnimationFrames()', () => {
+  let requestAnimationFrameSpy: ReturnType<typeof vi.spyOn>;
+
   beforeEach(() => {
-    vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => setTimeout(cb, 0));
+    requestAnimationFrameSpy = vi.spyOn(window, 'requestAnimationFrame').mockImplementation((cb) => setTimeout(cb, 0));
   });
 
   afterEach(() => {
@@ -16,7 +18,7 @@ describe('delayAnimationFrames()', () => {
 
     await expect(delayAnimationFrames(frameCount, 'value')).resolves.toBe('value');
 
-    expect(window.requestAnimationFrame).toHaveBeenCalledTimes(frameCount);
+    expect(requestAnimationFrameSpy).toHaveBeenCalledTimes(frameCount);
   });
 
   it('Specifies the return value', async () => {
