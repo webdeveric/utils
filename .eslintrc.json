@@ -29,6 +29,18 @@
   },
   "rules": {
     "@typescript-eslint/no-unsafe-function-type": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "args": "all",
+        "argsIgnorePattern": "^_",
+        "caughtErrors": "all",
+        "caughtErrorsIgnorePattern": "^_",
+        "destructuredArrayIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "ignoreRestSiblings": true
+      }
+    ],
     "import/first": "error",
     "import/no-absolute-path": "error",
     "import/no-cycle": "error",
