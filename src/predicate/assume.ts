@@ -11,5 +11,5 @@
  * assume<string>(42); // true (no runtime check is performed)
  * ```
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const assume = <Type>(_input: unknown, ..._args: any[]): _input is Type => true;
