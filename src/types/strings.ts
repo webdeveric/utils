@@ -70,7 +70,6 @@ export type Replace<
 
 export type Strip<Type extends string, Remove extends string> = Replace<Type, Remove, EmptyString>;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type FirstChar<Type extends string> = Type extends `${infer First}${infer _Rest}` ? First : never;
 
 export type AddSpaceAroundNumbers<Type extends string> = Type extends `${infer First}${infer Rest}`
@@ -98,7 +97,6 @@ export type PascalCase<Type extends string, Delimiter extends string = Space> = 
 
 export type StringLength<Type extends string, Accumulator extends never[] = []> = string extends Type
   ? never
-  : // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    Type extends `${infer _}${infer Rest}`
+  : Type extends `${infer _}${infer Rest}`
     ? StringLength<Rest, [never, ...Accumulator]>
     : Accumulator['length'];

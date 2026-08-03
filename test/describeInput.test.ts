@@ -10,9 +10,7 @@ describe('describeInput()', () => {
     expect(describeInput([])).toBe('Array');
     expect(describeInput(new Set())).toBe('Set');
     expect(describeInput(() => {})).toBe('anonymous()');
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     expect(describeInput(function namedFunction(_name: unknown) {})).toBe('namedFunction(_name)');
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     expect(describeInput(function (_name: unknown) {})).toBe('anonymous(_name)');
     expect(describeInput(Infinity)).toBe('Positive Infinity');
     expect(describeInput(Number.POSITIVE_INFINITY)).toBe('Positive Infinity');

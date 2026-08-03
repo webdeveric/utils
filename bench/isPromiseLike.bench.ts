@@ -11,7 +11,6 @@ function isPromiseLike2<T>(input: unknown): input is PromiseLike<T> {
 const resolvedPromise = Promise.resolve();
 
 const promiseLikeObject = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   then(_onfulfilled: unknown, _onrejected: unknown): void {
     // noop
   },

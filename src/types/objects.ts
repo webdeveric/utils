@@ -3,7 +3,7 @@ import type { Primitive } from './common.js';
 import type { UnknownRecord } from './records.js';
 import type { AutoCompletableString, CamelCase } from './strings.js';
 import type { KeyValueTuple } from './tuples.js';
-import type { CanBeUndefined, IfNever, Pretty } from './utils.js';
+import type { CanBeUndefined, IfNever, IsReadonlyKey, Pretty } from './utils.js';
 
 export type Assign<Target, Source> = IfNever<Target, Source, Omit<Target, keyof (Target | Source)> & Source>;
 
@@ -183,3 +183,69 @@ export type MergeArrayWithObject<Left extends unknown[], Right extends UnknownRe
         : Right[Key]
       : Right[Key];
 };
+
+export type GetPropertyType<Type, Property extends PropertyKey, Default = unknown> = Property extends keyof Type
+  ? Type[Property]
+  : Default;
+
+/**
+ * Whether redefining `Property` on `Type` should keep the property mutable when
+ * the new attribute doesn't say either way. This mirrors `Object.defineProperty()`,
+ * which keeps a property's existing `writable` flag when it isn't part of the new
+ * descriptor and the property already exists.
+ */
+export type RetainMutability<Type, Property extends PropertyKey> = Property extends keyof Type
+  ? IsReadonlyKey<Type, Property> extends true
+    ? false
+    : true
+  : false;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type AnyThisType = ThisType<any>;
+
+export type PropertyAttribute = PropertyDescriptor & AnyThisType;
+
+export type PropertyAttributeMap = PropertyDescriptorMap & AnyThisType;
+
+export type ApplyPropertyAttribute<
+  Type,
+  Attribute extends PropertyAttribute,
+  Retain extends boolean = false,
+> = Attribute extends
+  | {
+      writable: true;
+    }
+  | {
+      set(value: never): void;
+    }
+  ? Type
+  : Attribute extends {
+        writable: false;
+      }
+    ? Readonly<Type>
+    : Retain extends true
+      ? Type
+      : Readonly<Type>;
+
+export type GetTypeFromAttributes<Attribute extends PropertyAttribute, DefaultType = unknown> = Attribute extends
+  | {
+      value: infer Type;
+    }
+  | { get(): infer Type }
+  | { set(value: infer Type): void }
+  ? Type
+  : DefaultType;
+
+export type GetPropertyRecordFromAttribute<
+  Type,
+  Property extends PropertyKey,
+  Attribute extends PropertyAttribute,
+  DefaultType = GetPropertyType<Type, Property>,
+> = Attribute extends
+  | {
+      value: infer PropertyType;
+    }
+  | { get(): infer PropertyType }
+  | { set(value: infer PropertyType): void }
+  ? Record<Property, PropertyType>
+  : Record<Property, DefaultType>;

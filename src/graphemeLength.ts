@@ -13,7 +13,7 @@ const segmenter = new Intl.Segmenter(undefined, { granularity: 'grapheme' });
 export function graphemeLength(input: string): number {
   let count = 0;
 
-  // eslint-disable-next-line @typescript-eslint/naming-convention,@typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   for (const _ of segmenter.segment(input)) {
     count++;
   }

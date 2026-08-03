@@ -12,6 +12,13 @@ export type IfPromise<Type, T, F> = Type extends Promise<any> ? T : F;
 
 export type IfSame<Left, Right, T, F> = [Left] extends [Right] ? ([Right] extends [Left] ? T : F) : F;
 
+/**
+ * Strict type equality check. Unlike `IfSame`, this distinguishes `readonly` modifiers,
+ * since ordinary mutual `extends` checks ignore them.
+ */
+export type Equals<Left, Right> =
+  (<Type>() => Type extends Left ? 1 : 2) extends <Type>() => Type extends Right ? 1 : 2 ? true : false;
+
 export type NotPromise<Type> = Type extends Promise<any> ? never : Type;
 
 export type CanBeUndefined<Type, T, F> = Type | undefined extends Type ? T : F;
@@ -30,6 +37,9 @@ export type Writable<Type> = {
 };
 
 export type Unwritable<Type> = Type extends Writable<infer Inner> ? Readonly<Inner> : Readonly<Type>;
+
+export type IsReadonlyKey<Type, Keys extends keyof Type> =
+  Equals<Pick<Type, Keys>, { -readonly [Property in Keys]: Type[Property] }> extends true ? false : true;
 
 export type GetIndex<Type> = {
   [
