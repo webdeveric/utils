@@ -1,5 +1,6 @@
 import { getOwnProperties } from './getOwnProperties.js';
 import { getType } from './getType.js';
+import { isPrototypePollutionPropertyKey } from './predicate/isPrototypePollutionPropertyKey.js';
 
 import type { Builtin } from './types/common.js';
 
@@ -27,11 +28,13 @@ export const convert = <Input, Output>(input: Readonly<Input>, converter: AnyCon
   }
 
   if (typeof converter === 'object' && converter !== null) {
-    return getOwnProperties(converter).reduce<Partial<Output>>((data, key) => {
-      data[key] = convert(input, converter[key]);
+    return getOwnProperties(converter)
+      .filter((key) => !isPrototypePollutionPropertyKey(key))
+      .reduce<Partial<Output>>((data, key) => {
+        data[key] = convert(input, converter[key]);
 
-      return data;
-    }, {}) as Output;
+        return data;
+      }, {}) as Output;
   }
 
   throw new TypeError(`${getType(converter)} is not a valid converter`);

@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 
-import { convert, type ConvertFn } from '../src/convert.js';
+import { convert, type AnyConverter, type ConvertFn } from '../src/convert.js';
 
 describe('convert()', () => {
   it('Converts from one type to another using a function', () => {
@@ -96,5 +96,41 @@ describe('convert()', () => {
     expect(() => {
       convert(false, null as unknown as ConvertFn<unknown, unknown>);
     }).toThrow(TypeError);
+  });
+
+  describe('Prototype pollution protection', () => {
+    afterEach(() => {
+      // Guard other tests in case an assertion fails before pollution is verified absent.
+      Reflect.deleteProperty(Object.prototype, 'polluted');
+    });
+
+    it('Ignores a "__proto__" key so it cannot reach Object.prototype', () => {
+      const maliciousConverter = {
+        name: (input: { name: string }) => input.name,
+        ['__proto__']: {
+          polluted: () => 'polluted',
+        },
+      };
+
+      const result = convert({ name: 'Test' }, maliciousConverter);
+
+      expect(Object.prototype).not.toHaveProperty('polluted');
+      expect(Object.getPrototypeOf(result)).toBe(Object.prototype);
+    });
+
+    it('Never invokes converters keyed by "constructor" or "prototype"', () => {
+      const constructorConverter = vi.fn(() => 'polluted');
+      const prototypeConverter = vi.fn(() => 'polluted');
+
+      const maliciousConverter = {
+        ['constructor']: constructorConverter,
+        ['prototype']: prototypeConverter,
+      };
+
+      convert({}, maliciousConverter as unknown as AnyConverter<unknown, unknown>);
+
+      expect(constructorConverter).not.toHaveBeenCalled();
+      expect(prototypeConverter).not.toHaveBeenCalled();
+    });
   });
 });
