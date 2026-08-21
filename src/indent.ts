@@ -1,5 +1,7 @@
 import { NEWLINE_RAW_PATTERN } from './constants.js';
 
+const newLinePattern = new RegExp(String.raw`(?<newLine>${NEWLINE_RAW_PATTERN})`, 'g');
+
 /**
  * Add `indent` before each line in `input`.
  *
@@ -9,8 +11,5 @@ import { NEWLINE_RAW_PATTERN } from './constants.js';
  * ```
  */
 export function indent(input: string, indentation: string): string {
-  return (
-    indentation +
-    input.replaceAll(new RegExp(String.raw`(?<newLine>${NEWLINE_RAW_PATTERN})`, 'g'), `$<newLine>${indentation}`)
-  );
+  return indentation + input.replaceAll(newLinePattern, `$<newLine>${indentation}`);
 }
