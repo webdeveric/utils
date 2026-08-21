@@ -29,9 +29,7 @@ export function* combinations<
   const propertyNames = Object.keys(input);
   const propertyValues = Object.values(input).map((value) =>
     isIterable(value)
-      ? Array.from(value, (item) => {
-          return isObject(item) ? [...combinations(item)] : asArray(item);
-        }).flat()
+      ? Array.from(value).flatMap((item) => (isObject(item) ? [...combinations(item)] : asArray(item)))
       : isObject(value)
         ? [...combinations(value)]
         : asArray(value),

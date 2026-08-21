@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, afterEach, vi } from 'vitest';
 
-import { normalize, type NormalizerFn } from '../src/normalize.js';
+import { normalize, type AnyNormalizer, type NormalizerFn } from '../src/normalize.js';
 
 type Person = {
   name: string;
@@ -83,6 +83,41 @@ describe('normalize()', () => {
     ).toEqual(person);
 
     expect(normalize(person, null as unknown as NormalizerFn<Person, Person>)).toEqual(person);
+  });
+
+  describe('Prototype pollution protection', () => {
+    afterEach(() => {
+      // Guard other tests in case an assertion fails before pollution is verified absent.
+      Reflect.deleteProperty(Object.prototype, 'polluted');
+    });
+
+    it('Ignores a "__proto__" key so it cannot reach Object.prototype', () => {
+      const maliciousNormalizers = {
+        name: (name: string) => name,
+        ['__proto__']: {
+          polluted: () => 'polluted',
+        },
+      };
+
+      normalize(person, maliciousNormalizers);
+
+      expect(Object.prototype).not.toHaveProperty('polluted');
+    });
+
+    it('Never invokes normalizers keyed by "constructor" or "prototype"', () => {
+      const constructorNormalizer = vi.fn(() => ({ polluted: () => 'polluted' }));
+      const prototypeNormalizer = vi.fn(() => ({ polluted: () => 'polluted' }));
+
+      const maliciousNormalizers = {
+        ['constructor']: constructorNormalizer,
+        ['prototype']: prototypeNormalizer,
+      };
+
+      normalize(person, maliciousNormalizers as unknown as AnyNormalizer<Person, Person>);
+
+      expect(constructorNormalizer).not.toHaveBeenCalled();
+      expect(prototypeNormalizer).not.toHaveBeenCalled();
+    });
   });
 
   describe('NormalizeFn', () => {

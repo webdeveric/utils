@@ -2,6 +2,8 @@ import { pathParts } from './pathParts.js';
 
 import type { Path, PathValue } from './types/objects.js';
 
+const prototypePollutionPattern = /\b(__proto__|constructor|prototype)\b/;
+
 export function set<Input extends object, InputPath extends Path<Input>, Value extends PathValue<Input, InputPath>>(
   input: Input,
   path: InputPath,
@@ -34,7 +36,7 @@ export function set<Input extends object, InputPath extends Path<Input> | string
     throw new Error('Path cannot be an empty string');
   }
 
-  if (typeof path === 'string' && /\b(__proto__|constructor|prototype)\b/.test(path)) {
+  if (typeof path === 'string' && prototypePollutionPattern.test(path)) {
     throw new Error('Cannot pollute prototype');
   }
 

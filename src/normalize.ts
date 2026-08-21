@@ -1,5 +1,6 @@
 import { getOwnProperties } from './getOwnProperties.js';
 import { isObject } from './predicate/isObject.js';
+import { isPrototypePollutionPropertyKey } from './predicate/isPrototypePollutionPropertyKey.js';
 
 import type { Builtin } from './types/common.js';
 import type { AnyRecord } from './types/records.js';
@@ -78,18 +79,20 @@ export function normalize<Data extends object, ContextData extends AnyRecord = A
     }
 
     if (isObject(currentNormalizers) && isObject(currentRecord)) {
-      return getOwnProperties(currentNormalizers).reduce<CurrentRecord>((data, key) => {
-        const innerNormalizers = currentNormalizers[key];
-        // If the value is undefined but there is a normalizer record, set value to empty object.
-        const value =
-          typeof data[key] === 'undefined' && isObject(innerNormalizers)
-            ? ({} as unknown as CurrentRecord[keyof CurrentRecord])
-            : data[key];
+      return getOwnProperties(currentNormalizers)
+        .filter((key) => !isPrototypePollutionPropertyKey(key))
+        .reduce<CurrentRecord>((data, key) => {
+          const innerNormalizers = currentNormalizers[key];
+          // If the value is undefined but there is a normalizer record, set value to empty object.
+          const value =
+            typeof data[key] === 'undefined' && isObject(innerNormalizers)
+              ? ({} as unknown as CurrentRecord[keyof CurrentRecord])
+              : data[key];
 
-        data[key] = walk(value, innerNormalizers);
+          data[key] = walk(value, innerNormalizers);
 
-        return data;
-      }, currentRecord);
+          return data;
+        }, currentRecord);
     }
 
     return currentRecord;

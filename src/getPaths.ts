@@ -18,7 +18,9 @@ export const getPaths = <Type extends AnyRecord>(input: Type): Path<Type>[] => {
     const value = input[key];
 
     if (value && typeof value === 'object') {
-      paths.push(...getPaths(value).map((childKey) => `${key}.${childKey}`));
+      for (const childKey of getPaths(value)) {
+        paths.push(`${key}.${childKey}`);
+      }
     }
   }
 

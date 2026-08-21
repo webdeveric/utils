@@ -1,3 +1,5 @@
+const wordPattern = /\w+/g;
+
 /**
  * Yield each part of `input`, splitting a string path on non-word characters.
  *
@@ -17,9 +19,7 @@ export function* pathParts(input: PropertyKey): Generator<PropertyKey> {
     return;
   }
 
-  const regexp = /\w+/g;
-
-  const iterator = input.matchAll(regexp);
+  const iterator = input.matchAll(wordPattern);
 
   for (const part of iterator) {
     yield part[0];
