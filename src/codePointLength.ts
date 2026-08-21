@@ -9,5 +9,12 @@
  * ```
  */
 export function codePointLength(input: string): number {
-  return [...input].length;
+  let count = 0;
+
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  for (const _ of input) {
+    count++;
+  }
+
+  return count;
 }
