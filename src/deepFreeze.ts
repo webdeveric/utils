@@ -24,7 +24,7 @@ export function deepFreeze<Input extends object>(
   partialOptions: Partial<DeepFreezeOptions> = {},
 ): Readonly<Input> {
   const {
-    filterProperties = new Set<PropertyKey>(['prototype', '__proto__']),
+    filterProperties = new Set<PropertyKey>(['__proto__', 'constructor', 'prototype']),
     doNotFreeze = new WeakSet([globalThis]),
     frozen = new WeakSet(),
   } = partialOptions;
