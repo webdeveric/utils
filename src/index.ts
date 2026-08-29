@@ -54,6 +54,7 @@ export * from './iterateForever.js';
 export * from './joinStrings.js';
 export * from './jsonParse.js';
 export * from './lazyProp.js';
+export * from './lazyRecord.js';
 export * from './looksLikeURL.js';
 export * from './memo.js';
 export * from './normalize.js';
