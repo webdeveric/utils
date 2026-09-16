@@ -47,6 +47,7 @@ export * from './getType.js';
 export * from './graphemeLength.js';
 export * from './has.js';
 export * from './hasAdditionalProperties.js';
+export * from './hasSameOrigin.js';
 export * from './indent.js';
 export * from './inRange.js';
 export * from './isEmpty.js';
