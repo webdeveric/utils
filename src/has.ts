@@ -1,3 +1,4 @@
+import { getNode } from './internal/getNode.js';
 import { pathParts } from './pathParts.js';
 import { isAnyObject } from './predicate/isAnyObject.js';
 
@@ -31,24 +32,9 @@ export function has<Input extends object, InputPath extends Path<Input> | string
   input: Input,
   path: InputPath,
 ): input is Input & FromPath<InputPath, IfNever<PathValue<Input, InputPath>, unknown, PathValue<Input, InputPath>>> {
-  if (!isAnyObject(input)) {
+  if (!isAnyObject(input) || path === '') {
     return false;
   }
 
-  if (path === '') {
-    return false;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let current: any = input;
-
-  for (const part of pathParts(path)) {
-    if (typeof current === 'object' && current !== null && part in current) {
-      current = current[part];
-    } else {
-      return false;
-    }
-  }
-
-  return true;
+  return getNode(input, pathParts(path)).found;
 }

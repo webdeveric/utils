@@ -12,6 +12,7 @@ export * from './nullable.js';
 export * from './nullish.js';
 export * from './optional.js';
 export * from './range.js';
+export * from './record.js';
 export * from './shape.js';
 export * from './simple.js';
 export * from './stringLength.js';

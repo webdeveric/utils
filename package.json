@@ -110,7 +110,7 @@
     "commitlint": "^21.2.3",
     "commitlint-plugin-cspell": "^0.9.5",
     "conventional-changelog-conventionalcommits": "^9.3.1",
-    "cspell": "^10.3.4",
+    "cspell": "^10.3.5",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.5",

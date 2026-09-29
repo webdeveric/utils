@@ -1,3 +1,5 @@
+import { assertIsObject } from './assertion/assertIsObject.js';
+import { getNode } from './internal/getNode.js';
 import { pathParts } from './pathParts.js';
 
 import type { Path, PathValue } from './types/objects.js';
@@ -48,21 +50,13 @@ export function set<Input extends object, InputPath extends Path<Input> | string
     throw new Error('Path must have at least one part');
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let current: any = input;
+  const result = getNode(input, parts);
 
-  const useParts: PropertyKey[] = [];
-
-  // get a reference to the last node that will be updated
-  for (const part of parts) {
-    useParts.push(part);
-
-    if (typeof current === 'object' && current !== null && part in current) {
-      current = current[part];
-    } else {
-      throw new Error(`Path "${useParts.join('.')}" does not exist in the input object`);
-    }
+  if (!result.found) {
+    throw new Error(`Path "${result.visitedNodes.join('.')}" does not exist in the input object`);
   }
 
-  return (current[lastPart] = value);
+  assertIsObject(result.value);
+
+  return (result.value[lastPart] = value);
 }
