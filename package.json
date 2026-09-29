@@ -22,6 +22,20 @@
   "engines": {
     "node": ">=18.0.0"
   },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": ">=12.0.0 <13.0.0",
+      "onFail": "warn"
+    },
+    "runtime": [
+      {
+        "name": "node",
+        "version": "^26.10.0",
+        "onFail": "download"
+      }
+    ]
+  },
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
@@ -66,7 +80,6 @@
     "url": "https://github.com/webdeveric/utils/issues"
   },
   "homepage": "https://github.com/webdeveric/utils/#readme",
-  "packageManager": "pnpm@11.27.0+sha512.ad12821463bb143295f1fa3ecde77a6b9b97a7990386da800ff57bffc3964dc64b7b1c7559d5dbe5c337aea659ed9c8937d4370bd198ca2009bc6fa0249808e7",
   "scripts": {
     "clean": "rimraf ./dist/ ./cache/ ./coverage/",
     "prebuild": "pnpm clean",
@@ -78,7 +91,7 @@
     "bench": "vitest bench",
     "test": "vitest --typecheck",
     "coverage": "vitest run --coverage --typecheck",
-    "validate": "validate-package-exports --check",
+    "validate": "validate-package-exports --check --strict-module-type",
     "spellcheck": "cspell './{.github,src,bench,test}/**/*.{ts,json}' './*.{md,mjs,mts}' './package.json' --no-progress",
     "prepublishOnly": "pnpm typecheck && pnpm spellcheck && pnpm lint && pnpm coverage && pnpm build",
     "format": "prettier --write ./*.{js,json,md} ./src/ ./bench/ ./test/",
@@ -86,31 +99,31 @@
   },
   "prettier": "@webdeveric/prettier-config",
   "devDependencies": {
-    "@commitlint/config-conventional": "^21.2.2",
-    "@commitlint/types": "^21.2.0",
-    "@types/node": "^24.13.4",
+    "@commitlint/config-conventional": "^21.2.3",
+    "@commitlint/types": "^21.2.3",
+    "@types/node": "^24.19.0",
     "@typescript/native": "npm:typescript@^7.0.2",
     "@vitest/coverage-v8": "^4.1.11",
     "@webdeveric/eslint-config-ts": "^0.12.1",
     "@webdeveric/prettier-config": "^0.4.0",
     "@webdeveric/ts-data-structures": "^1.0.1",
-    "commitlint": "^21.2.2",
-    "commitlint-plugin-cspell": "^0.9.4",
+    "commitlint": "^21.2.3",
+    "commitlint-plugin-cspell": "^0.9.5",
     "conventional-changelog-conventionalcommits": "^9.3.1",
-    "cspell": "^10.3.1",
+    "cspell": "^10.3.4",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.5",
     "eslint-plugin-import": "^2.32.0",
     "husky": "^9.1.7",
-    "jsdom": "^30.0.1",
-    "lint-staged": "^17.5.1",
-    "prettier": "^3.9.6",
+    "jsdom": "^30.1.1",
+    "lint-staged": "^17.6.0",
+    "prettier": "^3.9.9",
     "rimraf": "^6.1.3",
     "semantic-release": "^25.0.9",
     "typedoc": "^0.28.20",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
-    "validate-package-exports": "^1.4.4",
+    "validate-package-exports": "^1.5.0",
     "vitest": "^4.1.11"
   }
 }
