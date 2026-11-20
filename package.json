@@ -67,6 +67,7 @@
       "require": "./dist/cjs/*.js",
       "import": "./dist/mjs/*.js"
     },
+    "./internal/*": null,
     "./package.json": "./package.json"
   },
   "files": [
