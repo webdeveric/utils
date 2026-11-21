@@ -86,7 +86,7 @@
     "prebuild": "pnpm clean",
     "build": "tsc --build tsconfig.cjs.json tsconfig.mjs.json --force",
     "build:docs": "typedoc",
-    "postbuild": "echo '{\"type\":\"commonjs\"}' > ./dist/cjs/package.json && echo '{\"type\":\"module\"}' > ./dist/mjs/package.json && pnpm validate",
+    "postbuild": "echo '{\"type\":\"commonjs\"}' > ./dist/cjs/package.json",
     "typecheck": "tsc --build --verbose --noEmit",
     "lint": "eslint ./*.{js,cjs,mjs,ts,cts,mts} ./src/ ./bench/ ./test/ --ext .ts,.mjs,.cjs",
     "bench": "vitest bench",
