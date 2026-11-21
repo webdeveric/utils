@@ -104,7 +104,7 @@
     "@commitlint/types": "^21.2.3",
     "@types/node": "^24.19.2",
     "@typescript/native": "npm:typescript@^7.0.2",
-    "@vitest/coverage-v8": "^4.1.12",
+    "@vitest/coverage-v8": "^5.1.1",
     "@webdeveric/eslint-config-ts": "^0.12.1",
     "@webdeveric/prettier-config": "^0.4.0",
     "@webdeveric/ts-data-structures": "^1.0.1",
@@ -125,6 +125,6 @@
     "typedoc": "^0.28.20",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
     "validate-package-exports": "^1.7.0",
-    "vitest": "^4.1.12"
+    "vitest": "^5.1.1"
   }
 }
