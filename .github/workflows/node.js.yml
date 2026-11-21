@@ -53,3 +53,6 @@ jobs:
 
       - name: Building
         run: pnpm build
+
+      - name: Validate package exports
+        run: pnpm exec validate-package-exports --check --strict-module-type --reporter=github

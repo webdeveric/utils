@@ -41,6 +41,9 @@ jobs:
       - name: Building
         run: pnpm build
 
+      - name: Validate package exports
+        run: pnpm exec validate-package-exports --check --strict-module-type --reporter=github
+
       - name: Install npm for Trusted Publishing
         run: pnpm add --global npm@latest
 
