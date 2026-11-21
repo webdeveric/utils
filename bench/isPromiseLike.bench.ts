@@ -1,4 +1,4 @@
-import { bench } from 'vitest';
+import { test } from 'vitest';
 
 import { isFunction } from '../src/predicate/isFunction.js';
 import { isObjectWith } from '../src/predicate/isObjectWith.js';
@@ -16,12 +16,15 @@ const promiseLikeObject = {
   },
 };
 
-bench('isPromiseLike()', () => {
-  isPromiseLike(resolvedPromise);
-  isPromiseLike(promiseLikeObject);
-});
-
-bench('isPromiseLike2()', () => {
-  isPromiseLike2(resolvedPromise);
-  isPromiseLike2(promiseLikeObject);
+test('isPromiseLike()', async ({ bench }) => {
+  await bench.compare(
+    bench('isPromiseLike()', () => {
+      isPromiseLike(resolvedPromise);
+      isPromiseLike(promiseLikeObject);
+    }),
+    bench('isPromiseLike2()', () => {
+      isPromiseLike2(resolvedPromise);
+      isPromiseLike2(promiseLikeObject);
+    }),
+  );
 });

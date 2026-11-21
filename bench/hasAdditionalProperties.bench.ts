@@ -1,4 +1,4 @@
-import { bench } from 'vitest';
+import { test } from 'vitest';
 
 import { hasAdditionalProperties } from '../src/hasAdditionalProperties.js';
 
@@ -17,7 +17,9 @@ const input2 = {
 
 const knownProperties = ['name', 'age', 'job'];
 
-bench('hasAdditionalProperties()', () => {
-  hasAdditionalProperties(input, knownProperties);
-  hasAdditionalProperties(input2, knownProperties);
+test('hasAdditionalProperties()', async ({ bench }) => {
+  await bench('hasAdditionalProperties()', () => {
+    hasAdditionalProperties(input, knownProperties);
+    hasAdditionalProperties(input2, knownProperties);
+  }).run();
 });

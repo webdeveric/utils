@@ -1,7 +1,9 @@
-import { bench } from 'vitest';
+import { test } from 'vitest';
 
 import { getOwnProperties } from '../src/getOwnProperties.js';
 
-bench('getOwnProperties()', () => {
-  getOwnProperties(globalThis);
+test('getOwnProperties()', async ({ bench }) => {
+  await bench('getOwnProperties()', () => {
+    getOwnProperties(globalThis);
+  }).run();
 });
