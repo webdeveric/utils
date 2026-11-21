@@ -1,4 +1,4 @@
-import { bench } from 'vitest';
+import { test } from 'vitest';
 
 import { isNumericValue } from '../src/predicate/isNumericValue.js';
 
@@ -8,22 +8,22 @@ const bigIntValue = BigInt(Number.MAX_VALUE) + BigInt(Number.MAX_VALUE);
 const stringifiedMaxInt = String(maxSafeInt);
 const stringifiedBigInt = String(bigIntValue);
 
-bench('isNumericValue() - simple decimal numbers', () => {
-  isNumericValue(simpleNumber);
-});
-
-bench('isNumericValue() - Number.MAX_SAFE_INTEGER', () => {
-  isNumericValue(maxSafeInt);
-});
-
-bench('isNumericValue() - bigint', () => {
-  isNumericValue(bigIntValue);
-});
-
-bench('isNumericValue() - stringified Number.MAX_SAFE_INTEGER', () => {
-  isNumericValue(stringifiedMaxInt);
-});
-
-bench('isNumericValue() - stringified BigInt', () => {
-  isNumericValue(stringifiedBigInt);
+test('isNumericValue()', async ({ bench }) => {
+  await bench.compare(
+    bench('simple decimal numbers', () => {
+      isNumericValue(simpleNumber);
+    }),
+    bench('Number.MAX_SAFE_INTEGER', () => {
+      isNumericValue(maxSafeInt);
+    }),
+    bench('bigint', () => {
+      isNumericValue(bigIntValue);
+    }),
+    bench('stringified Number.MAX_SAFE_INTEGER', () => {
+      isNumericValue(stringifiedMaxInt);
+    }),
+    bench('stringified BigInt', () => {
+      isNumericValue(stringifiedBigInt);
+    }),
+  );
 });

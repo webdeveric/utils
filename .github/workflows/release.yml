@@ -27,7 +27,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup
-        uses: pnpm/setup@fbda4c85fc2e1e08721cd8763afea8f48d60f024 # v3.0.0
+        uses: pnpm/setup@731dfb6463bbd11c11fd0ee11fe00ed0e36d48a1 # v3.2.0
         with:
           cache: true
           install: false # Audit before installing dependencies
@@ -40,6 +40,9 @@ jobs:
 
       - name: Building
         run: pnpm build
+
+      - name: Validate package exports
+        run: pnpm exec validate-package-exports --check --strict-module-type --reporter=github
 
       - name: Install npm for Trusted Publishing
         run: pnpm add --global npm@latest

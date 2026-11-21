@@ -1,4 +1,4 @@
-import { bench } from 'vitest';
+import { test } from 'vitest';
 
 import { convert, type ConvertRecord } from '../src/convert.js';
 
@@ -13,6 +13,8 @@ const converter: ConvertRecord<typeof input, { fullName: string; age: number }> 
   age: (data) => data.age,
 };
 
-bench('convert()', () => {
-  convert(input, converter);
+test('convert()', async ({ bench }) => {
+  await bench('convert()', () => {
+    convert(input, converter);
+  }).run();
 });

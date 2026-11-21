@@ -1,9 +1,11 @@
-import { bench } from 'vitest';
+import { test } from 'vitest';
 
 import { isIterable } from '../src/predicate/isIterable.js';
 
 const data: unknown[] = [];
 
-bench('isIterable()', () => {
-  isIterable(data);
+test('isIterable()', async ({ bench }) => {
+  await bench('isIterable()', () => {
+    isIterable(data);
+  }).run();
 });
